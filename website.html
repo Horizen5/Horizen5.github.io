@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站聚合</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-body: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255,255,255,0.95);
+            --card-hover: white;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --border-color: #eee;
+            --sidebar-bg: rgba(255,255,255,0.95);
+            --item-hover-bg: #f5f3ff;
+            --item-active-bg: #f0edff;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-md: rgba(0,0,0,0.15);
+            --shadow-lg: rgba(0,0,0,0.2);
+        }
+        [data-theme="dark"] {
+            --primary: #8b9dc3;
+            --secondary: #a78bfa;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --bg-body: #0f0f23;
+            --card-bg: rgba(30,30,50,0.95);
+            --card-hover: rgba(40,40,70,0.98);
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #333;
+            --sidebar-bg: rgba(20,20,40,0.98);
+            --item-hover-bg: rgba(102,126,234,0.15);
+            --item-active-bg: rgba(102,126,234,0.25);
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-md: rgba(0,0,0,0.4);
+            --shadow-lg: rgba(0,0,0,0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            transition: background 0.5s ease;
+            color: var(--text-primary);
+        }
+        body.custom-wallpaper {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        body.custom-wallpaper::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: -1;
+        }
+
+        /* ===== 汉堡菜单按钮 ===== */
+        .hamburger-btn {
+            position: fixed;
+            left: 16px;
+            top: 16px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .hamburger-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--shadow-lg);
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== 固定主页按钮 ===== */
+        .fixed-home-btn {
+            position: fixed;
+            right: 20px;
+            top: 16px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-gradient);
+            border: none;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        .fixed-home-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+        }
+        .fixed-home-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* ===== 回到顶部按钮 ===== */
+        .back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 30px;
+            z-index: 200;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-gradient);
+            border: none;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            color: white;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+        }
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* ===== 暗黑模式切换按钮 ===== */
+        .theme-toggle {
+            position: fixed;
+            right: 20px;
+            top: 72px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--shadow-lg);
+        }
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* ===== 搜索框 ===== */
+        .search-box {
+            position: fixed;
+            left: 50%;
+            top: 16px;
+            transform: translateX(-50%);
+            z-index: 199;
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-md);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .search-box:focus-within {
+            box-shadow: 0 6px 20px var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .search-box svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+            flex-shrink: 0;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        .search-box .search-clear {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 18px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: none;
+        }
+        .search-box .search-clear:hover {
+            background: var(--item-hover-bg);
+            color: var(--primary);
+        }
+        .search-box .search-clear.show {
+            display: block;
+        }
+        .search-count {
+            position: absolute;
+            bottom: -24px;
+            left: 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--card-bg);
+            padding: 2px 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow);
+            display: none;
+        }
+        .search-count.show {
+            display: block;
+        }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .sidebar {
+            width: 280px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 0 24px 24px 0;
+            padding: 20px 0;
+            box-shadow: 4px 0 30px var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 199;
+            transform: translateX(-100%);
+        }
+        .sidebar.show {
+            transform: translateX(0);
+        }
+        .sidebar-header {
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            white-space: nowrap;
+        }
+        .sidebar-header span {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+        .sidebar-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-muted);
+            padding: 6px;
+            line-height: 1;
+            border-radius: 8px;
+            transition: all 0.2s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-close:hover {
+            background: var(--item-hover-bg);
+            color: var(--primary);
+        }
+        .sidebar-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 8px;
+            margin: 0 4px;
+        }
+        .sidebar-items::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-items::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            margin: 2px 0;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.25s ease;
+            border-radius: 10px;
+            border-left: none;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--bg-gradient);
+            border-radius: 0 3px 3px 0;
+            transition: height 0.25s ease;
+        }
+        .sidebar-item:hover {
+            background: var(--item-hover-bg);
+            color: var(--primary);
+        }
+        .sidebar-item:hover::before {
+            height: 60%;
+        }
+        .sidebar-item.active {
+            background: var(--item-active-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .sidebar-item.active::before {
+            height: 70%;
+        }
+        .sidebar-item .badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: var(--bg-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.25);
+        }
+        .sidebar-item .badge svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .sidebar-item .item-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+        .home-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            margin: 12px 16px 8px;
+            background: var(--bg-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+        }
+        .home-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+            opacity: 0.95;
+        }
+        .home-link svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+        .sidebar-tools {
+            padding: 16px 16px 8px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .sidebar-tools button {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .sidebar-tools button:hover {
+            background: var(--item-hover-bg);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* ===== 主内容区 ===== */
+        .page-wrap {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 80px 20px 20px;
+            transition: padding 0.3s ease;
+        }
+        .main-content {
+            min-width: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        header p {
+            opacity: 0.9;
+        }
+
+        /* ===== 分类卡片 ===== */
+        .category {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px var(--shadow);
+            scroll-margin-top: 80px;
+            transition: all 0.3s ease;
+        }
+        .category.hidden {
+            display: none;
+        }
+        .category h2 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--bg-gradient);
+            border-radius: 2px;
+        }
+        .site-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .site-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        .site-card:hover {
+            background: var(--card-hover);
+            box-shadow: 0 4px 15px var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        .site-card.hidden {
+            display: none;
+        }
+        .site-card .edit-hint {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .site-card:hover .edit-hint {
+            display: flex;
+        }
+        .favicon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .favicon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            background: white;
+        }
+        .site-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .site-title {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .site-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            margin-top: 2px;
+        }
+        .site-url {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ===== 搜索结果高亮 ===== */
+        .highlight {
+            background: rgba(102,126,234,0.3);
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            fill: var(--text-muted);
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            width: 90%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px var(--shadow-lg);
+            color: var(--text-primary);
+        }
+        .modal h3 {
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+        .modal .form-group {
+            margin-bottom: 14px;
+        }
+        .modal label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .modal input[type="text"],
+        .modal input[type="url"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+        .modal input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .modal .icon-preview {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        .modal .icon-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .modal .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            color: var(--text-secondary);
+        }
+        .modal .upload-area:hover {
+            border-color: var(--primary);
+            background: var(--item-hover-bg);
+        }
+        .modal .upload-area input[type="file"] {
+            display: none;
+        }
+        .modal .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .modal .btn-primary {
+            background: var(--bg-gradient);
+            color: white;
+        }
+        .modal .btn-primary:hover {
+            opacity: 0.9;
+        }
+        .modal .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-secondary);
+        }
+        .modal .btn-secondary:hover {
+            background: var(--text-muted);
+            color: white;
+        }
+        .modal .btn-danger {
+            background: #ff4757;
+            color: white;
+        }
+        .modal .btn-danger:hover {
+            background: #ff3344;
+        }
+
+        /* ===== Theme colors ===== */
+        .theme-colors {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+        .theme-color {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .theme-color:hover,
+        .theme-color.active {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* ===== Wallpaper presets ===== */
+        .wallpaper-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .wallpaper-preset {
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background-size: cover;
+            background-position: center;
+        }
+        .wallpaper-preset:hover,
+        .wallpaper-preset.active {
+            border-color: var(--primary);
+        }
+
+        /* ===== 响应式 - 平板端 (769px - 1024px) ===== */
+        @media (max-width: 1024px) {
+            .site-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+
+        /* ===== 响应式 - 手机端 (<= 768px) ===== */
+        @media (max-width: 768px) {
+            .page-wrap {
+                padding: 140px 12px 20px;
+            }
+            .sidebar {
+                border-radius: 0 16px 16px 0;
+                z-index: 199;
+                box-shadow: 0 0 40px var(--shadow-lg);
+                width: 240px;
+            }
+            header h1 {
+                font-size: 1.6rem;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            .site-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .category {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+            .category h2 {
+                font-size: 1.1rem;
+            }
+            .site-card {
+                padding: 10px 14px;
+            }
+            .favicon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .site-title {
+                font-size: 13px;
+            }
+            .modal {
+                width: 95%;
+                padding: 16px;
+            }
+            /* 搜索框放到第二行 */
+            .search-box {
+                width: calc(100% - 24px);
+                left: 12px;
+                top: 68px;
+                transform: none;
+                max-width: none;
+                padding: 8px 12px;
+            }
+            .fixed-home-btn {
+                right: 12px;
+                top: 12px;
+                width: 40px;
+                height: 40px;
+            }
+            .theme-toggle {
+                right: 60px;
+                top: 12px;
+                width: 40px;
+                height: 40px;
+            }
+            .hamburger-btn {
+                left: 12px;
+                top: 12px;
+                width: 40px;
+                height: 40px;
+            }
+            .back-to-top {
+                right: 12px;
+                bottom: 20px;
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* ===== 响应式 - 小屏手机 (<= 480px) ===== */
+        @media (max-width: 480px) {
+            .page-wrap {
+                padding: 140px 8px 20px;
+            }
+            .search-box {
+                width: calc(100% - 16px);
+                left: 8px;
+                top: 68px;
+            }
+            .search-box input {
+                font-size: 14px;
+            }
+            .hamburger-btn {
+                left: 8px;
+                top: 12px;
+            }
+            .fixed-home-btn {
+                right: 8px;
+                top: 12px;
+            }
+            .theme-toggle {
+                right: 56px;
+                top: 12px;
+            }
+            header h1 {
+                font-size: 1.4rem;
+            }
+            .site-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .category {
+                padding: 14px;
+                border-radius: 12px;
+            }
+        }
+
+        /* ===== 响应式 - 横屏小屏手机 ===== */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .page-wrap {
+                padding: 80px 12px 20px;
+            }
+            .search-box {
+                top: 12px;
+                left: 200px;
+                width: calc(100% - 320px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 汉堡菜单按钮 -->
+    <button class="hamburger-btn" id="hamburgerBtn" title="打开菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- 固定主页按钮 -->
+    <a href="index.html" class="fixed-home-btn" title="回到主页">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </a>
+
+    <!-- 暗黑模式切换 -->
+    <button class="theme-toggle" id="themeToggle" title="切换暗黑模式">
+        <svg id="moonIcon" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 1.69 1.24 2.79 3.24 2.79 5.54 0 3.87-3.13 7-7 7-1.06 0-2.06-.24-2.98-.66C.32 16.05 3.39 19 7 19c4.97 0 9-4.03 9-9 0-3.39-2.95-6.46-6.66-6.98C9.16 3.05 9.58 2.54 9 2z"/></svg>
+        <svg id="sunIcon" viewBox="0 0 24 24" style="display:none"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+    </button>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop" title="回到顶部">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
+
+    <!-- 搜索框 -->
+    <div class="search-box">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="searchInput" placeholder="搜索工具名称、分类...">
+        <button class="search-clear" id="searchClear">✕</button>
+        <span class="search-count" id="searchCount"></span>
+    </div>
+
+    <!-- 侧边栏遮罩 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>分类导航</span>
+            <button class="sidebar-close" id="sidebarClose" title="收起">✕</button>
+        </div>
+        <a href="index.html" class="home-link" title="回到主页">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span>回到主页</span>
+        </a>
+        <div class="sidebar-items" id="sidebarItems"></div>
+        <div class="sidebar-tools">
+            <button id="btnTheme">🎨 主题颜色</button>
+            <button id="btnWallpaper">🖼️ 更换壁纸</button>
+        </div>
+    </aside>
+
+    <!-- 主内容 -->
+    <div class="page-wrap" id="pageWrap">
+        <div class="main-content" id="mainContent">
+            <div class="container">
+                <header>
+                    <h1>网站聚合</h1>
+                    <p>共收录多个分类，方便快速访问各类优质网站</p>
+                </header>
+                <div id="app"></div>
+                <div class="empty-state" id="emptyState" style="display:none">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <p>未找到匹配的内容，试试其他关键词</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <h3>编辑网站</h3>
+            <div class="form-group">
+                <label>网站名称</label>
+                <input type="text" id="editName" placeholder="输入网站名称">
+            </div>
+            <div class="form-group">
+                <label>网站地址</label>
+                <input type="url" id="editUrl" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+                <label>图标预览</label>
+                <div class="icon-preview" id="editIconPreview">?</div>
+            </div>
+            <div class="form-group">
+                <label>文字图标（当图片无法加载时显示）</label>
+                <input type="text" id="editIcon" placeholder="输入1-2个字符" maxlength="2">
+            </div>
+            <div class="form-group">
+                <label>自定义图标图片</label>
+                <div class="upload-area" id="iconUploadArea">
+                    <span>📎 点击上传图标图片</span>
+                    <input type="file" id="editIconFile" accept="image/*">
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-secondary" id="editCancel">取消</button>
+                <button class="btn-danger" id="editDelete">删除</button>
+                <button class="btn-primary" id="editSave">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Modal -->
+    <div class="modal-overlay" id="themeModal">
+        <div class="modal">
+            <h3>选择主题颜色</h3>
+            <div class="theme-colors" id="themeColors"></div>
+            <div class="btn-group">
+                <button class="btn-secondary" id="themeCancel">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallpaper Modal -->
+    <div class="modal-overlay" id="wallpaperModal">
+        <div class="modal">
+            <h3>更换壁纸</h3>
+            <div class="wallpaper-presets" id="wallpaperPresets"></div>
+            <div class="form-group">
+                <label>上传自定义壁纸</label>
+                <div class="upload-area" id="wallpaperUploadArea">
+                    <span>📎 点击上传壁纸图片</span>
+                    <input type="file" id="wallpaperFile" accept="image/*">
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-secondary" id="wallpaperCancel">关闭</button>
+                <button class="btn-danger" id="wallpaperReset">恢复默认</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultSites = [
+            {
+                category: "考证资源",
+                items: [
+                    { name: "普通话证书", url: "http://www.cltt.org/#/webHome", domain: "cltt.org", icon: "普" },
+                    { name: "中国人事考试网", url: "http://www.cpta.com.cn/", domain: "cpta.com.cn", icon: "资" },
+                    { name: "中医康复理疗师", url: "http://www.120px.cn/", domain: "120px.cn", icon: "医" },
+                    { name: "税务师/初级会计/审计", url: "http://kzp.mof.gov.cn/", domain: "kzp.mof.gov.cn", icon: "税" },
+                    { name: "教师资格证", url: "https://ntce.neea.edu.cn/html1/folder", domain: "ntce.neea.edu.cn", icon: "教" },
+                    { name: "执业药师/消防/监理/一二级造价师/翻译/社会工作师", url: "http://www.cpta.com.cn/", domain: "cpta.com.cn", icon: "资" },
+                    { name: "护士证", url: "https://www.2lwecan.com/", domain: "2lwecan.com", icon: "护" },
+                    { name: "基金/证券从业资格证", url: "https://www.sac.net.cn/", domain: "sac.net.cn", icon: "证" },
+                    { name: "注册会计师", url: "https://cpaexam.cicpa.org.cn/", domain: "cpaexam.cicpa.org.cn", icon: "会" },
+                    { name: "导游证", url: "https://www.mct.gov.cn/", domain: "mct.gov.cn", icon: "导" },
+                    { name: "PMP项目管理认证", url: "http://exam.chinapmp.cn/", domain: "exam.chinapmp.cn", icon: "P" },
+                    { name: "法律职业资格证书", url: "http://www.moj.gov.cn/pub/sfl/jgszzsdw/zsdwgjsfkszx/", domain: "moj.gov.cn", icon: "法" },
+                    { name: "银行考试", url: "http://cj.ccbp.org.cn/apply/", domain: "cj.ccbp.org.cn", icon: "银" },
+                    { name: "英语四六级", url: "https://cet.neea.edu.cn/", domain: "cet.neea.edu.cn", icon: "英" },
+                    { name: "国考", url: "http://www.scs.gov.cn/", domain: "scs.gov.cn", icon: "国" },
+                    { name: "翻译专业资格证", url: "http://www.cpta.com.cn/", domain: "cpta.com.cn", icon: "翻" },
+                    { name: "拍卖师", url: "http://www.caa123.org.cn/", domain: "caa123.org.cn", icon: "拍" },
+                ]
+            },
+            {
+                category: "视频资源",
+                items: [
+                    { name: "预告片世界", url: "https://www.yugaopian.cn/", domain: "yugaopian.cn", icon: "预" },
+                    { name: "33台词", url: "http://33.agilestudio.cn/", domain: "33.agilestudio.cn", icon: "台" },
+                    { name: "MixKit", url: "http://mixkit.co/free-stock-video/", domain: "mixkit.co", icon: "M" },
+                    { name: "Pexel", url: "https://www.pexels.com/zh-cn/video/", domain: "pexels.com", icon: "P" },
+                    { name: "Videezy", url: "https://www.videezy.com/", domain: "videezy.com", icon: "V" },
+                    { name: "VJShi", url: "https://www.vjshi.com/", domain: "vjshi.com", icon: "视" },
+                ]
+            },
+            {
+                category: "PPT资源",
+                items: [
+                    { name: "51PPT模板", url: "http://www.51pptmoban.com/", domain: "51pptmoban.com", icon: "5" },
+                    { name: "优品PPT", url: "https://www.ypppt.com/", domain: "ypppt.com", icon: "优" },
+                    { name: "第一PPT", url: "http://www.1ppt.com/", domain: "1ppt.com", icon: "1" },
+                    { name: "叮当设计", url: "https://www.dingdangsheji.com/", domain: "dingdangsheji.com", icon: "叮" },
+                    { name: "PPT超级市场", url: "http://ppt.sotary.com/web/wxapp/index.html", domain: "ppt.sotary.com", icon: "超" },
+                ]
+            },
+            {
+                category: "图片资源",
+                items: [
+                    { name: "PXHere", url: "https://pxhere.com/", domain: "pxhere.com", icon: "P" },
+                    { name: "CC0图片网", url: "https://cc0.cn/", domain: "cc0.cn", icon: "C" },
+                    { name: "Foodiesfeed", url: "https://www.foodiesfeed.com/", domain: "foodiesfeed.com", icon: "F" },
+                    { name: "Unsplash", url: "https://unsplash.com/", domain: "unsplash.com", icon: "U" },
+                    { name: "Pixabay", url: "https://pixabay.com/", domain: "pixabay.com", icon: "P" },
+                ]
+            },
+            {
+                category: "动图资源",
+                items: [
+                    { name: "Giphy", url: "https://giphy.com/", domain: "giphy.com", icon: "G" },
+                    { name: "GfyCat", url: "https://gfycat.com/", domain: "gfycat.com", icon: "G" },
+                    { name: "Tenor", url: "https://tenor.com/", domain: "tenor.com", icon: "T" },
+                    { name: "GIF ABYSS", url: "https://gifs.alphacoders.com/", domain: "gifs.alphacoders.com", icon: "动" },
+                    { name: "动图宇宙", url: "https://biaoqingsoso.com/", domain: "biaoqingsoso.com", icon: "动" },
+                    { name: "Soogif", url: "https://www.soogif.com/", domain: "soogif.com", icon: "搜" },
+                    { name: "闪萌", url: "http://www.weshineapp.com/", domain: "weshineapp.com", icon: "闪" },
+                ]
+            },
+            {
+                category: "壁纸资源",
+                items: [
+                    { name: "WallHaven", url: "https://wallhaven.cc/", domain: "wallhaven.cc", icon: "W" },
+                    { name: "10Wallpaper", url: "https://www.10wallpaper.com/", domain: "10wallpaper.com", icon: "1" },
+                    { name: "alphacoders", url: "https://wall.alphacoders.com/?lang=Chinese", domain: "wall.alphacoders.com", icon: "A" },
+                    { name: "极简壁纸", url: "https://bz.zzzmh.cn/index", domain: "bz.zzzmh.cn", icon: "极" },
+                    { name: "3G壁纸", url: "https://www.3gbizhi.com/", domain: "3gbizhi.com", icon: "3" },
+                    { name: "必应壁纸", url: "https://bing.ioliu.cn/", domain: "bing.ioliu.cn", icon: "必" },
+                    { name: "Anime Pictures", url: "https://anime-pictures.net", domain: "anime-pictures.net", icon: "A" },
+                ]
+            },
+            {
+                category: "图标资源",
+                items: [
+                    { name: "阿里巴巴矢量图库", url: "https://www.iconfont.cn/", domain: "iconfont.cn", icon: "I" },
+                    { name: "Ikonate", url: "https://ikonate.com/", domain: "ikonate.com", icon: "I" },
+                    { name: "iconstore", url: "https://iconstore.co/", domain: "iconstore.co", icon: "I" },
+                    { name: "icooon", url: "https://icooon-mono.com/", domain: "icooon-mono.com", icon: "I" },
+                    { name: "iconfinder", url: "https://www.iconfinder.com/", domain: "iconfinder.com", icon: "F" },
+                ]
+            },
+            {
+                category: "PSD资源",
+                items: [
+                    { name: "素材中国", url: "http://www.sccnn.com/", domain: "sccnn.com", icon: "素" },
+                    { name: "站长素材", url: "https://sc.chinaz.com/psd/", domain: "sc.chinaz.com", icon: "站" },
+                    { name: "365PSD", url: "https://cn.365psd.com/free-psd", domain: "365psd.com", icon: "3" },
+                    { name: "freepik", url: "https://www.freepik.com/psd", domain: "freepik.com", icon: "F" },
+                    { name: "freebiesbug", url: "https://freebiesbug.com/", domain: "freebiesbug.com", icon: "B" },
+                ]
+            },
+            {
+                category: "音频资源",
+                items: [
+                    { name: "Mixkit", url: "https://mixkit.co/free-stock-music/", domain: "mixkit.co", icon: "M" },
+                    { name: "爱给网", url: "https://www.aigei.com/", domain: "aigei.com", icon: "爱" },
+                    { name: "淘声网", url: "https://www.tosound.com/", domain: "tosound.com", icon: "淘" },
+                    { name: "耳聆", url: "https://www.ear0.com/", domain: "ear0.com", icon: "耳" },
+                ]
+            },
+            {
+                category: "字体资源",
+                items: [
+                    { name: "素材中国字体", url: "http://www.sccnn.com/ziku/", domain: "sccnn.com", icon: "素" },
+                    { name: "100Font", url: "https://www.100font.com/", domain: "100font.com", icon: "字" },
+                    { name: "DaFont", url: "https://www.dafont.com/", domain: "dafont.com", icon: "D" },
+                    { name: "自由字体", url: "https://ziyouziti.com/", domain: "ziyouziti.com", icon: "自" },
+                ]
+            },
+            {
+                category: "配色资源",
+                items: [
+                    { name: "中国色彩", url: "http://zhongguose.com/", domain: "zhongguose.com", icon: "中" },
+                    { name: "ColorHex", url: "https://www.colorhexa.com/", domain: "colorhexa.com", icon: "H" },
+                    { name: "优色网配色专区", url: "https://color.uisdc.com/", domain: "color.uisdc.com", icon: "优" },
+                    { name: "ColorDrop", url: "https://www.colordrop.io/", domain: "colordrop.io", icon: "D" },
+                    { name: "LOL Colors", url: "https://www.webdesignrankings.com/resources/lolcolors/", domain: "webdesignrankings.com", icon: "L" },
+                    { name: "colorHunt", url: "https://colorhunt.co/", domain: "colorhunt.co", icon: "H" },
+                    { name: "Adobe Color", url: "https://color.adobe.com/zh/create/color-wheel", domain: "color.adobe.com", icon: "A" },
+                    { name: "uigradients", url: "https://uigradients.com/#PiggyPink", domain: "uigradients.com", icon: "U" },
+                    { name: "webgradient", url: "https://webgradients.com/", domain: "webgradients.com", icon: "W" },
+                ]
+            },
+            {
+                category: "编程资源",
+                items: [
+                    { name: "GitHub", url: "https://github.com/", domain: "github.com", icon: "G", desc: "开源及私有软件项目托管平台" },
+                    { name: "Stack Overflow", url: "https://stackoverflow.com/", domain: "stackoverflow.com", icon: "S", desc: "IT技术问答网站" },
+                    { name: "CSDN", url: "https://www.csdn.net/", domain: "csdn.net", icon: "C", desc: "程序员社区" },
+                    { name: "V2EX", url: "https://www.v2ex.com/", domain: "v2ex.com", icon: "V", desc: "编程、设计、硬件社区" },
+                    { name: "掘金", url: "https://juejin.im/", domain: "juejin.im", icon: "掘", desc: "技术干货社区" },
+                    { name: "知乎", url: "https://www.zhihu.com/", domain: "zhihu.com", icon: "知", desc: "问答社区" },
+                    { name: "博客园", url: "https://www.cnblogs.com/", domain: "cnblogs.com", icon: "博", desc: "技术博客平台" },
+                    { name: "开源中国", url: "https://www.oschina.net/", domain: "oschina.net", icon: "开", desc: "开源社区" },
+                    { name: "菜鸟教程", url: "https://www.runoob.com/", domain: "runoob.com", icon: "菜", desc: "编程学习网站" },
+                    { name: "力扣", url: "https://leetcode-cn.com/", domain: "leetcode-cn.com", icon: "力", desc: "刷题平台" },
+                    { name: "清华大学镜像站", url: "https://mirrors.tuna.tsinghua.edu.cn/", domain: "mirrors.tuna.tsinghua.edu.cn", icon: "清", desc: "开源软件镜像" },
+                    { name: "中国大学MOOC", url: "https://www.icourse163.org/", domain: "icourse163.org", icon: "慕", desc: "在线课程平台" },
+                ]
+            },
+            {
+                category: "实用资源",
+                items: [
+                    { name: "Photopea", url: "https://www.photopea.com", domain: "photopea.com", icon: "P", desc: "在线PS图片处理工具" },
+                    { name: "熊崩", url: "https://www.xiongbeng.com", domain: "xiongbeng.com", icon: "熊", desc: "网盘资源搜索引擎" },
+                    { name: "Image Cyborg", url: "https://imagecyborg.com", domain: "imagecyborg.com", icon: "I", desc: "网页图片批量下载" },
+                    { name: "MikuTools", url: "https://tools.miku.ac", domain: "tools.miku.ac", icon: "M", desc: "在线工具合集" },
+                    { name: "Pixivic", url: "https://pixivic.com", domain: "pixivic.com", icon: "P", desc: "P站排行榜浏览" },
+                    { name: "在线之家", url: "https://www.zxzj.me", domain: "zxzj.me", icon: "在", desc: "影视在线观看" },
+                    { name: "斗图终结者", url: "https://www.52doutu.cn", domain: "52doutu.cn", icon: "斗", desc: "表情包制作搜索" },
+                    { name: "草料二维码", url: "https://cli.im", domain: "cli.im", icon: "草", desc: "二维码生成制作" },
+                    { name: "AGE动漫", url: "https://www.agefans.cc", domain: "agefans.cc", icon: "动", desc: "动漫观看平台" },
+                    { name: "DeepL", url: "https://www.deepl.com", domain: "deepl.com", icon: "D", desc: "PDF文档翻译" },
+                ]
+            },
+            {
+                category: "工具资源",
+                items: [
+                    { name: "轻工具", url: "https://qinggongju.com", domain: "qinggongju.com", icon: "轻" },
+                    { name: "Tool.lu", url: "http://tool.lu", domain: "tool.lu", icon: "工" },
+                    { name: "片库", url: "https://m.btnull.org/", domain: "btnull.org", icon: "片" },
+                    { name: "电影狗", url: "http://www.dianyinggou.com/linkNav/", domain: "dianyinggou.com", icon: "电" },
+                    { name: "钟馗之眼", url: "https://www.zoomeye.org/", domain: "zoomeye.org", icon: "钟" },
+                    { name: "罗马盘", url: "https://www.luomapan.com/", domain: "luomapan.com", icon: "罗" },
+                    { name: "Yandex搜索", url: "https://yandex.com/", domain: "yandex.com", icon: "Y" },
+                    { name: "Magi", url: "https://magi.com/", domain: "magi.com", icon: "M", desc: "AI学习引擎" },
+                    { name: "轻工具站", url: "http://tools.miku.ac", domain: "tools.miku.ac", icon: "轻" },
+                    { name: "DeepL翻译", url: "https://www.deepl.com", domain: "deepl.com", icon: "D", desc: "最好的翻译网站" },
+                    { name: "便民网", url: "https://www.51240.com", domain: "51240.com", icon: "便" },
+                ]
+            },
+            {
+                category: "音乐资源",
+                items: [
+                    { name: "51ape", url: "https://www.51ape.com", domain: "51ape.com", icon: "A", desc: "无损音乐下载" },
+                    { name: "52flac", url: "https://www.52flac.com", domain: "52flac.com", icon: "F", desc: "无损音乐下载" },
+                ]
+            },
+            {
+                category: "网盘资源",
+                items: [
+                    { name: "大力盘", url: "https://www.dalipan.com", domain: "dalipan.com", icon: "大", desc: "网盘搜索" },
+                    { name: "99百度云", url: "http://www.99baiduyun.com", domain: "99baiduyun.com", icon: "9", desc: "网盘搜索" },
+                ]
+            },
+            {
+                category: "教育健康",
+                items: [
+                    { name: "知性 KnowSex", url: "https://knowsex.net", domain: "knowsex.net", icon: "知", desc: "性教育平台" },
+                    { name: "香港家庭计划指导会", url: "https://www.famplan.org.hk/sexedu/zh", domain: "famplan.org.hk", icon: "香", desc: "性教育资源" },
+                    { name: "Archive for Sexology", url: "http://www.sexarchive.info/CH/home.htm", domain: "sexarchive.info", icon: "档", desc: "性学档案" },
+                    { name: "香港教育局性教育", url: "https://www.edb.gov.hk/tc/curriculum-development/4-key-tasks/moral-civic/sea/sea.html", domain: "edb.gov.hk", icon: "教", desc: "动画资源" },
+                    { name: "世界避孕日", url: "https://www.china-wcd.com/", domain: "china-wcd.com", icon: "避", desc: "避孕知识" },
+                ]
+            },
+        ];
+
+        let sites = JSON.parse(JSON.stringify(defaultSites));
+        let editingItem = null;
+        let editingCatIdx = null;
+        let editingItemIdx = null;
+        let customIconData = null;
+
+        const themes = [
+            { name: '紫蓝', primary: '#667eea', secondary: '#764ba2' },
+            { name: '青绿', primary: '#11998e', secondary: '#38ef7d' },
+            { name: '橙红', primary: '#f12711', secondary: '#f5af19' },
+            { name: '粉紫', primary: '#ec008c', secondary: '#fc6767' },
+            { name: '深蓝', primary: '#2193b0', secondary: '#6dd5ed' },
+            { name: '暗黑', primary: '#434343', secondary: '#000000' },
+            { name: '日落', primary: '#ff512f', secondary: '#dd2476' },
+            { name: '森林', primary: '#134e5e', secondary: '#71b280' },
+        ];
+
+        const wallpaperPresets = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+            'linear-gradient(135deg, #f12711 0%, #f5af19 100%)',
+            'linear-gradient(135deg, #ec008c 0%, #fc6767 100%)',
+            'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+            'linear-gradient(135deg, #434343 0%, #000000 100%)',
+        ];
+
+        // ===== 暗黑模式 =====
+        function initDarkMode() {
+            const saved = localStorage.getItem('siteAggregatorDarkMode');
+            if (saved === 'true') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon(true);
+            }
+
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('siteAggregatorDarkMode', 'false');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('siteAggregatorDarkMode', 'true');
+                }
+                updateThemeIcon(!isDark);
+            });
+        }
+
+        function updateThemeIcon(isDark) {
+            document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+            document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+        }
+
+        // ===== 回到顶部 =====
+        function initBackToTop() {
+            const btn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ===== 搜索功能 =====
+        function initSearch() {
+            const input = document.getElementById('searchInput');
+            const clear = document.getElementById('searchClear');
+            const count = document.getElementById('searchCount');
+            const empty = document.getElementById('emptyState');
+
+            input.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                clear.classList.toggle('show', query.length > 0);
+                performSearch(query);
+            });
+
+            clear.addEventListener('click', () => {
+                input.value = '';
+                clear.classList.remove('show');
+                count.classList.remove('show');
+                performSearch('');
+                input.focus();
+            });
+        }
+
+        function performSearch(query) {
+            const categories = document.querySelectorAll('.category');
+            const cards = document.querySelectorAll('.site-card');
+            const empty = document.getElementById('emptyState');
+            const count = document.getElementById('searchCount');
+            let totalMatches = 0;
+
+            if (!query) {
+                categories.forEach(cat => cat.classList.remove('hidden'));
+                cards.forEach(card => {
+                    card.classList.remove('hidden');
+                    card.innerHTML = card.innerHTML.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+                });
+                empty.style.display = 'none';
+                count.classList.remove('show');
+                return;
+            }
+
+            categories.forEach(cat => {
+                const catCards = cat.querySelectorAll('.site-card');
+                let catMatches = 0;
+                catCards.forEach(card => {
+                    const title = card.querySelector('.site-title').textContent;
+                    const desc = card.querySelector('.site-desc, .site-url').textContent;
+                    const match = title.toLowerCase().includes(query) || desc.toLowerCase().includes(query);
+                    if (match) {
+                        card.classList.remove('hidden');
+                        catMatches++;
+                        totalMatches++;
+                        // 高亮匹配文本
+                        const titleEl = card.querySelector('.site-title');
+                        titleEl.innerHTML = highlightText(title, query);
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                cat.classList.toggle('hidden', catMatches === 0);
+            });
+
+            if (totalMatches === 0) {
+                empty.style.display = 'block';
+            } else {
+                empty.style.display = 'none';
+            }
+
+            count.textContent = `找到 ${totalMatches} 个结果`;
+            count.classList.add('show');
+        }
+
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+            return text.replace(regex, '<mark class="highlight">$1</mark>');
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        // ===== 侧边栏 =====
+        function initSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerBtn');
+            const close = document.getElementById('sidebarClose');
+
+            function openSidebar() {
+                sidebar.classList.add('show');
+                overlay.classList.add('show');
+                hamburger.classList.add('active');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                hamburger.classList.remove('active');
+            }
+
+            hamburger.addEventListener('click', () => {
+                if (sidebar.classList.contains('show')) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            });
+
+            close.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            // 点击侧边栏项后关闭（移动端）
+            document.getElementById('sidebarItems').addEventListener('click', (e) => {
+                if (e.target.closest('.sidebar-item') && window.innerWidth <= 768) {
+                    closeSidebar();
+                }
+            });
+
+            const observer = new IntersectionObserver(function(entries) {
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        sidebarItems.forEach(el => {
+                            el.classList.toggle('active', el.dataset.target === id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+            document.querySelectorAll('.category').forEach(el => observer.observe(el));
+        }
+
+        // ===== 其他原有功能 =====
+        function loadSettings() {
+            const saved = localStorage.getItem('siteAggregatorSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                if (settings.sites) sites = settings.sites;
+                if (settings.theme) applyTheme(settings.theme);
+                if (settings.wallpaper) applyWallpaper(settings.wallpaper);
+            }
+        }
+
+        function saveSettings() {
+            const settings = {
+                sites: sites,
+                theme: {
+                    primary: getComputedStyle(document.documentElement).getPropertyValue('--primary').trim(),
+                    secondary: getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim(),
+                },
+                wallpaper: document.body.classList.contains('custom-wallpaper') ? document.body.style.backgroundImage : null
+            };
+            localStorage.setItem('siteAggregatorSettings', JSON.stringify(settings));
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.style.setProperty('--primary', theme.primary);
+            document.documentElement.style.setProperty('--secondary', theme.secondary);
+            document.documentElement.style.setProperty('--bg-gradient', `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`);
+        }
+
+        function applyWallpaper(wallpaper) {
+            if (!wallpaper || wallpaper === 'default') {
+                document.body.classList.remove('custom-wallpaper');
+                document.body.style.background = '';
+                document.body.style.backgroundImage = '';
+            } else if (wallpaper.startsWith('linear-gradient')) {
+                document.body.classList.remove('custom-wallpaper');
+                document.body.style.background = wallpaper;
+            } else {
+                document.body.classList.add('custom-wallpaper');
+                document.body.style.backgroundImage = wallpaper;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundAttachment = 'fixed';
+            }
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            let html = '';
+            for (let ci = 0; ci < sites.length; ci++) {
+                const cat = sites[ci];
+                const id = cat.category.replace(/\s+/g, '_');
+                html += `<section class="category" id="cat_${id}"><h2>${cat.category}</h2><div class="site-grid">`;
+                for (let ii = 0; ii < cat.items.length; ii++) {
+                    const item = cat.items[ii];
+                    html += `<a href="${item.url}" class="site-card" target="_blank" rel="noopener" data-ci="${ci}" data-ii="${ii}">`;
+                    html += `<span class="edit-hint" title="右键编辑">✎</span>`;
+                    const iconData = item.customIcon ? `data-custom="1"` : '';
+                    html += `<div class="favicon" data-domain="${item.domain}" data-icon="${item.icon}" data-name="${item.name}" ${iconData}>${item.customIcon ? '' : item.icon}</div>`;
+                    html += `<div class="site-info"><span class="site-title">${item.name}</span>`;
+                    if (item.desc) {
+                        html += `<span class="site-desc">${item.desc}</span>`;
+                    } else {
+                        html += `<span class="site-url">${item.domain}</span>`;
+                    }
+                    html += `</div></a>`;
+                }
+                html += `</div></section>`;
+            }
+            app.innerHTML = html;
+
+            document.querySelectorAll('.favicon[data-domain]').forEach(el => {
+                const domain = el.dataset.domain;
+                const icon = el.dataset.icon;
+                const name = el.dataset.name;
+                if (el.dataset.custom) {
+                    const item = findItemByName(name);
+                    if (item && item.customIcon) {
+                        el.innerHTML = `<img src="${item.customIcon}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;background:white;display:block;">`;
+                    }
+                    return;
+                }
+                let tried = 0;
+
+                function tryLoad() {
+                    if (tried >= 3) {
+                        el.textContent = icon;
+                        el.style.fontSize = '22px';
+                        return;
+                    }
+                    const sources = [
+                        { url: `https://icons.duckduckgo.com/ip3/${domain}.ico`, label: 'ddg' },
+                        { url: `https://www.google.com/s2/favicons?sz=128&domain=${domain}&t=${Date.now()}`, label: 'google' },
+                        { url: `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${domain}&size=128`, label: 'gstatic' },
+                    ];
+                    const src = sources[tried];
+                    tried++;
+
+                    const img = new Image();
+                    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;background:white;display:block;';
+
+                    let timeout = setTimeout(function() {
+                        img.src = '';
+                        tryLoad();
+                    }, 3000);
+
+                    img.onload = function() {
+                        clearTimeout(timeout);
+                        if (img.naturalWidth >= 32 && img.naturalHeight >= 32) {
+                            el.innerHTML = '';
+                            el.appendChild(img);
+                        } else if (tried < 3) {
+                            tryLoad();
+                        } else {
+                            el.textContent = icon;
+                            el.style.fontSize = '22px';
+                        }
+                    };
+                    img.onerror = function() {
+                        clearTimeout(timeout);
+                        tryLoad();
+                    };
+                    img.src = src.url;
+                }
+                tryLoad();
+            });
+
+            document.querySelectorAll('.site-card').forEach(card => {
+                card.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openEditModal(parseInt(this.dataset.ci), parseInt(this.dataset.ii));
+                });
+            });
+        }
+
+        function renderSidebar() {
+            const container = document.getElementById('sidebarItems');
+            let html = '';
+            const icons = {
+                '考证资源': '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>',
+                '视频资源': '<svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>',
+                'PPT资源': '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>',
+                '图片资源': '<svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>',
+                '动图资源': '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>',
+                '壁纸资源': '<svg viewBox="0 0 24 24"><path d="M4 4h7V2H4c-1.1 0-2 .9-2 2v7h2V4zm6 9l-4 5h12l-3-4-2.03 2.71L10 13zm7-4.5c0-.83-.67-1.5-1.5-1.5S14 7.67 14 8.5s.67 1.5 1.5 1.5S17 9.33 17 8.5zM20 2h-7v2h7v7h2V4c0-1.1-.9-2-2-2zm0 18h-7v2h7c1.1 0 2-.9 2-2v-7h-2v7zM4 13H2v7c0 1.1.9 2 2 2h7v-2H4v-7z"/></svg>',
+                '图标资源': '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7v-2z"/></svg>',
+                'PSD资源': '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>',
+                '音频资源': '<svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>',
+                '字体资源': '<svg viewBox="0 0 24 24"><path d="M9.93 13.5h4.14L12 7.98 9.93 13.5zM20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-4.29 15.88l-.9-2.38H9.17l-.89 2.37a.5.5 0 1 1-.93-.36l3.25-8.5c.2-.53.72-.87 1.28-.87.56 0 1.08.34 1.29.88l3.25 8.5a.5.5 0 0 1-.28.65.49.49 0 0 1-.64-.29z"/></svg>',
+                '配色资源': '<svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>',
+                '编程资源': '<svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>',
+                '实用资源': '<svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>',
+                '工具资源': '<svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>',
+                '音乐资源': '<svg viewBox="0 0 24 24"><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>',
+                '网盘资源': '<svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>',
+                '教育健康': '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
+            };
+            for (const cat of sites) {
+                const id = cat.category.replace(/\s+/g, '_');
+                const icon = icons[cat.category] || '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>';
+                html += `<div class="sidebar-item" data-target="cat_${id}"><div class="badge">${icon}</div><span class="item-label">${cat.category}</span></div>`;
+            }
+            container.innerHTML = html;
+
+            container.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    container.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+                    this.classList.add('active');
+                    const targetId = this.dataset.target;
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        function findItemByName(name) {
+            for (const cat of sites) {
+                for (const item of cat.items) {
+                    if (item.name === name) return item;
+                }
+            }
+            return null;
+        }
+
+        function openEditModal(ci, ii) {
+            editingCatIdx = ci;
+            editingItemIdx = ii;
+            editingItem = sites[ci].items[ii];
+            customIconData = editingItem.customIcon || null;
+
+            document.getElementById('editName').value = editingItem.name;
+            document.getElementById('editUrl').value = editingItem.url;
+            document.getElementById('editIcon').value = editingItem.icon;
+            updateIconPreview();
+
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function updateIconPreview() {
+            const preview = document.getElementById('editIconPreview');
+            if (customIconData) {
+                preview.innerHTML = `<img src="${customIconData}">`;
+            } else {
+                preview.textContent = document.getElementById('editIcon').value || '?';
+                preview.innerHTML = '';
+                preview.textContent = document.getElementById('editIcon').value || '?';
+            }
+        }
+
+        function initModals() {
+            document.getElementById('editCancel').addEventListener('click', () => {
+                document.getElementById('editModal').classList.remove('active');
+                customIconData = null;
+            });
+
+            document.getElementById('editSave').addEventListener('click', () => {
+                if (editingItem) {
+                    editingItem.name = document.getElementById('editName').value;
+                    editingItem.url = document.getElementById('editUrl').value;
+                    editingItem.icon = document.getElementById('editIcon').value;
+                    if (customIconData) {
+                        editingItem.customIcon = customIconData;
+                    } else {
+                        delete editingItem.customIcon;
+                    }
+                    saveSettings();
+                    render();
+                }
+                document.getElementById('editModal').classList.remove('active');
+                customIconData = null;
+            });
+
+            document.getElementById('editDelete').addEventListener('click', () => {
+                if (editingCatIdx !== null && editingItemIdx !== null) {
+                    sites[editingCatIdx].items.splice(editingItemIdx, 1);
+                    saveSettings();
+                    render();
+                }
+                document.getElementById('editModal').classList.remove('active');
+            });
+
+            document.getElementById('editIcon').addEventListener('input', updateIconPreview);
+
+            document.getElementById('iconUploadArea').addEventListener('click', () => {
+                document.getElementById('editIconFile').click();
+            });
+
+            document.getElementById('editIconFile').addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        customIconData = e.target.result;
+                        updateIconPreview();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('btnTheme').addEventListener('click', () => {
+                document.getElementById('themeModal').classList.add('active');
+            });
+
+            document.getElementById('themeCancel').addEventListener('click', () => {
+                document.getElementById('themeModal').classList.remove('active');
+            });
+
+            const themeContainer = document.getElementById('themeColors');
+            themes.forEach((theme, idx) => {
+                const div = document.createElement('div');
+                div.className = 'theme-color';
+                div.style.background = `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`;
+                div.title = theme.name;
+                div.addEventListener('click', () => {
+                    applyTheme(theme);
+                    saveSettings();
+                    document.querySelectorAll('.theme-color').forEach((el, i) => {
+                        el.classList.toggle('active', i === idx);
+                    });
+                });
+                themeContainer.appendChild(div);
+            });
+
+            document.getElementById('btnWallpaper').addEventListener('click', () => {
+                document.getElementById('wallpaperModal').classList.add('active');
+            });
+
+            document.getElementById('wallpaperCancel').addEventListener('click', () => {
+                document.getElementById('wallpaperModal').classList.remove('active');
+            });
+
+            document.getElementById('wallpaperReset').addEventListener('click', () => {
+                applyWallpaper('default');
+                saveSettings();
+                document.getElementById('wallpaperModal').classList.remove('active');
+            });
+
+            const wpContainer = document.getElementById('wallpaperPresets');
+            wallpaperPresets.forEach((wp, idx) => {
+                const div = document.createElement('div');
+                div.className = 'wallpaper-preset';
+                div.style.background = wp;
+                div.addEventListener('click', () => {
+                    applyWallpaper(wp);
+                    saveSettings();
+                });
+                wpContainer.appendChild(div);
+            });
+
+            document.getElementById('wallpaperUploadArea').addEventListener('click', () => {
+                document.getElementById('wallpaperFile').click();
+            });
+
+            document.getElementById('wallpaperFile').addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        applyWallpaper(`url(${e.target.result})`);
+                        saveSettings();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // ===== 初始化 =====
+        loadSettings();
+        initDarkMode();
+        initBackToTop();
+        initSearch();
+        render();
+        renderSidebar();
+        initSidebar();
+        initModals();
+    </script>
+</body>
+</html>
