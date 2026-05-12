@@ -5,133 +5,695 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Horizen5 的个人主页 - 全栈开发者，专注于构建实用的工具和应用程序">
     <meta name="keywords" content="Horizen5, 全栈开发, React, Rust, Tauri, Python">
-    <meta name="author" content="Horizen5">
-    <meta property="og:title" content="Horizen5 - 个人主页">
-    <meta property="og:description" content="全栈开发者 / 创作者工具开发者">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://horizen5.github.io">
-    <title>Horizen5 - 个人主页</title>
+    <title>Horizen5 - 高级全栈开发者</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>H</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        dark: '#030305', // 更深邃的黑，参考高级官网
+                        primary: '#00f0ff', // 赛博朋克青/霓虹蓝
+                        secondary: '#7000ff', // 能量紫
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base & Scroll Snap */
+        :root {
+            --bg-color: #030305;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: #f8fafc;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .snap-section {
+            min-height: 100vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px; 
+            padding-bottom: 40px;
+        }
+
+        .snap-section-content {
+            width: 100%;
+        }
+
+        /* Advanced Background Effects */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-nav {
+            background: rgba(3, 3, 5, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .premium-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.2) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .premium-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(180deg, rgba(40, 50, 70, 0.5) 0%, rgba(20, 30, 50, 0.3) 100%);
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Cinematic Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); /* 加长动画时间，增加视觉停顿感 */
+        }
+        .reveal.scale {
+            transform: translateY(40px) scale(0.92);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .skill-bar-fill {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Scroll Mouse Indicator */
+        .mouse {
+            width: 24px;
+            height: 36px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 12px;
+            position: relative;
+        }
+        .mouse::before {
+            content: '';
+            width: 4px;
+            height: 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll-wheel 1.5s infinite;
+        }
+        @keyframes scroll-wheel {
+            0% { top: 6px; opacity: 1; }
+            100% { top: 18px; opacity: 0; }
+        }
+
+        /* AI Chat Widget */
+        #chat-widget {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: bottom right;
+        }
+        #chat-widget.hidden-chat {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            pointer-events: none;
+        }
+
+        /* Light Mode Overrides */
+        html.light-mode body { background-color: #f8fafc; color: #0f172a; }
+        html.light-mode .bg-dark { background-color: #f8fafc; }
+        html.light-mode .text-white { color: #0f172a !important; }
+        html.light-mode .text-slate-400 { color: #475569 !important; }
+        html.light-mode .text-slate-300 { color: #334155 !important; }
+        html.light-mode .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
+        html.light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.08) !important; }
+        html.light-mode .border-white\/5, html.light-mode .border-white\/10, html.light-mode .border-white\/20 { border-color: rgba(0,0,0,0.1) !important; }
+        html.light-mode .glass-nav { background: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(0,0,0,0.1); }
+        html.light-mode .premium-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
+        html.light-mode .premium-card:hover { background: #f8fafc; border-color: rgba(0,240,255,0.5); }
+        html.light-mode .bg-white { background-color: #0f172a !important; color: #ffffff !important; }
+        html.light-mode .text-dark { color: #ffffff !important; }
+        html.light-mode .bg-grid { filter: invert(1); opacity: 0.05; }
+        html.light-mode #mobile-menu { background: rgba(255,255,255,0.95); border-bottom: 1px solid rgba(0,0,0,0.1); }
+        html.light-mode .bg-\[\#020203\] { background-color: #f1f5f9; }
+        html.light-mode .text-transparent { background-image: linear-gradient(to bottom, #0f172a, #334155); }
+        html.light-mode .border-white { border-color: #0f172a; }
+        html.light-mode .mouse { border-color: rgba(0,0,0,0.4); }
+        html.light-mode .mouse::before { background: rgba(0,0,0,0.8); }
+        
+        /* 新增：主页全局悬浮按钮的浅色样式 */
+        html.light-mode .global-theme-toggle { background: rgba(255,255,255,0.85); border-color: rgba(0,0,0,0.1); color: #475569 !important; }
+        html.light-mode .global-theme-toggle:hover { background: rgba(0,0,0,0.05); color: #0f172a !important; }
+    </style>
+    <script>
+        // Check local storage for theme early to prevent FOUC
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
-<body>
-    <!-- Header / Navigation -->
-    <nav role="navigation" aria-label="主导航">
-        <div class="container">
-            <a href="#" class="logo" aria-label="Horizen5 首页">Horizen5</a>
-            <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#projects">项目</a></li>
-                <li><a href="#skills">技能</a></li>
-                <li><a href="website.html">工具</a></li>
-                <li><a href="#contact">联系</a></li>
+<body class="antialiased selection:bg-primary/30 selection:text-white">
+
+    <!-- 新增：提取出来的全局悬浮模式切换按钮 (与工具页绝对统一位置) -->
+    <button id="global-theme-toggle" class="fixed top-[10px] right-[20px] z-[100] w-[44px] h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg global-theme-toggle" aria-label="切换主题">
+        <!-- 完美的几何对称月亮/太阳图标 -->
+        <svg class="w-[20px] h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        <svg class="w-[20px] h-[20px] sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+    </button>
+
+    <!-- Advanced Background -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none bg-dark">
+        <!-- Grid -->
+        <div class="absolute inset-0 bg-grid opacity-30"></div>
+        <!-- Top Ambient Glow -->
+        <div class="absolute top-[-20%] left-1/2 transform -translate-x-1/2 w-[80%] h-[500px] bg-primary/20 rounded-full mix-blend-screen filter blur-[120px] opacity-50"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-black tracking-tighter flex items-center gap-2 group">
+                <span class="text-white">Horizen<span class="text-slate-500">5</span></span>
+            </a>
+            
+            <ul class="hidden md:flex space-x-10 text-sm font-medium text-slate-400 tracking-wide items-center">
+                <li><a href="#home" class="hover:text-white transition-colors duration-300">首页</a></li>
+                <li><a href="#projects" class="hover:text-white transition-colors duration-300">项目</a></li>
+                <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
+                <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
+                <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
+            </ul>
+
+            <div class="md:hidden flex items-center mr-14">
+                <button class="text-slate-300 hover:text-white" id="mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="md:hidden hidden bg-[#030305]/95 backdrop-blur-xl border-b border-white/5 absolute w-full" id="mobile-menu">
+            <ul class="flex flex-col px-6 py-6 space-y-6 text-sm font-medium text-slate-300">
+                <li><a href="#home" class="block hover:text-white transition-colors">首页</a></li>
+                <li><a href="#projects" class="block hover:text-white transition-colors">项目</a></li>
+                <li><a href="#skills" class="block hover:text-white transition-colors">技能</a></li>
+                <li><a href="website.html" class="block hover:text-white transition-colors">工具</a></li>
+                <li><a href="#contact" class="block hover:text-white transition-colors">联系</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home" role="banner">
-        <div class="hero-content">
-            <div class="avatar" aria-hidden="true">H</div>
-            <h1>Horizen5</h1>
-            <p class="subtitle">全栈开发者 / 创作者工具开发者</p>
-            <p class="description">
-                热爱技术，专注于构建实用的工具和应用程序。
-                目前正在开发抖音创作者工具箱，帮助内容创作者提升效率。
-            </p>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">查看项目</a>
-                <a href="https://github.com/Horizen5" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <!-- Snap Section 1: Hero -->
+    <section id="home" class="snap-section">
+        <div class="snap-section-content flex flex-col justify-center">
+            <div class="max-w-5xl mx-auto px-6 text-center">
+                
+                <!-- Badge -->
+                <div class="reveal scale" style="transition-delay: 0.1s;">
+                    <div class="inline-flex items-center mb-8 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm font-mono text-slate-300 shadow-2xl">
+                        <svg class="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M4 6h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
+                        你好，世界。我是
+                    </div>
+                </div>
+                
+                <!-- Massive Cinematic Title -->
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tighter reveal" style="transition-delay: 0.2s;">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-slate-500">
+                        Horizen5
+                    </span>
+                </h1>
+                
+                <h2 class="text-xl md:text-3xl font-medium mb-10 text-slate-400 tracking-wide reveal" style="transition-delay: 0.3s;">
+                    全栈开发者 <span class="text-slate-600 mx-3 font-light">|</span> 创作者工具开发者
+                </h2>
+                
+                <p class="text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-lg reveal" style="transition-delay: 0.4s;">
+                    热爱技术，专注于构建极具质感的工具与应用程序。<br class="hidden md:block">
+                    目前正在开发 <a href="https://github.com/Horizen5/mi-notes-exporter" target="_blank" class="text-white border-b border-primary/50 pb-0.5 hover:text-primary transition-colors">Mi Notes Exporter (小米便签导出工具)</a>，解决用户的痛点。
+                </p>
+                
+                <!-- Premium Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full px-4 sm:px-0 reveal" style="transition-delay: 0.5s;">
+                    <!-- Primary Button (Neon Glow style) -->
+                    <a href="#projects" class="group relative px-8 py-4 w-full sm:w-auto bg-white text-dark font-bold rounded-lg overflow-hidden flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        浏览项目
+                    </a>
+                    
+                    <!-- Secondary Button (Glass Outline style) -->
+                    <a href="https://github.com/Horizen5" target="_blank" rel="noopener noreferrer" class="group px-8 py-4 w-full sm:w-auto rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Elegant Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-60 transition-opacity hover:opacity-100 z-10 pointer-events-none">
+            <span class="text-[10px] uppercase tracking-[0.3em] mb-3 font-mono text-slate-400">向下滚动</span>
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Snap Section 2: Projects -->
+    <section id="projects" class="snap-section">
+        <div class="snap-section-content px-6">
+            <div class="max-w-6xl mx-auto py-12">
+                <div class="mb-16 reveal scale">
+                    <h2 class="text-4xl md:text-6xl font-black mb-4 text-white tracking-tighter">精选<br><span class="text-slate-500">项目.</span></h2>
+                    <div class="w-24 h-1 bg-white rounded-full opacity-20"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <article class="premium-card rounded-2xl p-8 flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 mb-6 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white tracking-tight">Mi Notes Exporter</h3>
+                        <p class="text-slate-400 mb-8 flex-grow leading-relaxed">
+                            小米便签高效导出工具。帮助用户快速、安全地将手机便签数据完整提取并转换为标准格式，解决数据迁移痛点。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">Python</span>
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">Data</span>
+                        </div>
+                        <a href="https://github.com/Horizen5/mi-notes-exporter" target="_blank" class="text-white text-sm font-semibold inline-flex items-center hover:text-primary transition-colors group uppercase tracking-wider">
+                            查看源码 
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="premium-card rounded-2xl p-8 flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 mb-6 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white tracking-tight">高级个人主页</h3>
+                        <p class="text-slate-400 mb-8 flex-grow leading-relaxed">
+                            打破常规的沉浸式 Web 体验。融合环境光影、全屏吸附与毛玻璃质感，呈现极致的数字名片。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">Tailwind</span>
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">CSS Snap</span>
+                        </div>
+                        <span class="text-slate-500 text-sm font-semibold inline-flex items-center uppercase tracking-wider">
+                            <svg class="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            当前页面
+                        </span>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="premium-card rounded-2xl p-8 flex flex-col h-full reveal" style="transition-delay: 0.3s;">
+                        <div class="w-12 h-12 mb-6 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white tracking-tight">AI 智能工具矩阵</h3>
+                        <p class="text-slate-400 mb-8 flex-grow leading-relaxed">
+                            深度探索 LLM 与多模态 AI 技术的落地边界。集成本地 Whisper 语音识别与自然语言生成引擎。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">Python</span>
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">PyTorch</span>
+                        </div>
+                        <span class="text-primary text-sm font-semibold inline-flex items-center uppercase tracking-wider">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            开发中...
+                        </span>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="projects" id="projects" role="main">
-        <div class="container">
-            <h2 class="section-title">我的项目</h2>
-            <div class="project-grid">
-                <article class="project-card">
-                    <div class="project-icon" aria-hidden="true">&#127912;</div>
-                    <h3>抖音创作者工具箱</h3>
-                    <p>基于 Tauri + React + Rust 构建的桌面应用，提供视频下载、音频转录、AI 助手等功能。</p>
-                    <a href="https://github.com/Horizen5" class="project-link" target="_blank" rel="noopener noreferrer">查看详情 →</a>
-                </article>
-                <article class="project-card">
-                    <div class="project-icon" aria-hidden="true">&#128187;</div>
-                    <h3>个人主页</h3>
-                    <p>使用纯 HTML/CSS 构建的响应式个人主页，展示个人项目和技能，部署在 GitHub Pages 上。</p>
-                    <a href="#" class="project-link">当前页面</a>
-                </article>
-                <article class="project-card">
-                    <div class="project-icon" aria-hidden="true">&#129302;</div>
-                    <h3>AI 工具集</h3>
-                    <p>探索 AI 技术在内容创作中的应用，包括语音识别、自然语言处理等功能的集成。</p>
-                    <a href="#" class="project-link">开发中...</a>
-                </article>
-            </div>
-        </div>
-    </section>
+    <!-- Snap Section 3: Skills -->
+    <section id="skills" class="snap-section relative bg-[#020203]">
+        <div class="snap-section-content px-6">
+            <div class="max-w-5xl mx-auto py-12">
+                <div class="mb-16 reveal scale">
+                    <h2 class="text-4xl md:text-6xl font-black mb-4 text-white tracking-tighter">技术<br><span class="text-slate-500">架构.</span></h2>
+                    <div class="w-24 h-1 bg-white rounded-full opacity-20"></div>
+                </div>
 
-    <!-- Skills Section -->
-    <section class="skills" id="skills" role="region" aria-label="技术栈">
-        <div class="container">
-            <h2 class="section-title">技术栈</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <h4>React / TypeScript</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 90%"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                    <!-- Frontend -->
+                    <div class="space-y-8 reveal" style="transition-delay: 0.1s;">
+                        <h3 class="text-xl font-bold mb-6 text-white uppercase tracking-widest border-b border-white/10 pb-4">前端开发</h3>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-300 tracking-wide">React / TypeScript</span>
+                                <span class="text-sm font-mono text-slate-500">90%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-white/10 overflow-hidden">
+                                <div class="h-full bg-white skill-bar-fill relative shadow-[0_0_10px_rgba(255,255,255,0.8)]" data-width="90%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-300 tracking-wide">Tailwind CSS / UI</span>
+                                <span class="text-sm font-mono text-slate-500">85%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-white/10 overflow-hidden">
+                                <div class="h-full bg-white skill-bar-fill relative shadow-[0_0_10px_rgba(255,255,255,0.8)]" data-width="85%"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="skill-item">
-                    <h4>Rust / Tauri</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <h4>Python</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <h4>Node.js</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 80%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <h4>CSS / UI 设计</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <h4>AI / ML</h4>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 70%"></div>
+
+                    <!-- Backend -->
+                    <div class="space-y-8 reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-bold mb-6 text-white uppercase tracking-widest border-b border-white/10 pb-4">后端与系统</h3>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-300 tracking-wide">Rust / Tauri</span>
+                                <span class="text-sm font-mono text-slate-500">80%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-white/10 overflow-hidden">
+                                <div class="h-full bg-slate-400 skill-bar-fill relative" data-width="80%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-300 tracking-wide">Python / AI Integration</span>
+                                <span class="text-sm font-mono text-slate-500">85%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-white/10 overflow-hidden">
+                                <div class="h-full bg-slate-400 skill-bar-fill relative" data-width="85%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact" role="contentinfo">
-        <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/Horizen5" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="访问 GitHub">GH</a>
-                <a href="mailto:horizen5@example.com" title="Email" aria-label="发送邮件">@</a>
-            </div>
-            <p> 2026 Horizen5. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- Snap Section 4: Contact & Footer -->
+    <section id="contact" class="snap-section border-t border-white/5 bg-dark">
+        <div class="snap-section-content px-6 flex flex-col justify-center relative overflow-hidden">
+            <!-- Subtle glow in footer -->
+            <div class="absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-primary/10 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none"></div>
 
-    <script src="assets/js/main.js"></script>
+            <div class="max-w-4xl mx-auto w-full text-center z-10">
+                <div class="reveal scale">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6 text-white tracking-tighter">联系我.</h2>
+                    <p class="text-slate-400 mb-12 max-w-lg mx-auto text-lg leading-relaxed">
+                        渴望突破，探索未知。无论是创作者工具、全栈 Web 应用还是创新项目，我都在此恭候。
+                    </p>
+                    <a href="mailto:horizen5@example.com" class="inline-flex items-center px-10 py-5 bg-white text-dark font-bold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.15)] uppercase tracking-widest">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        建立联系
+                    </a>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-24 reveal" style="transition-delay: 0.2s;">
+                    <div class="text-2xl font-black tracking-tighter text-white">
+                        H5.
+                    </div>
+                    
+                    <div class="flex space-x-8">
+                        <a href="https://github.com/Horizen5" target="_blank" class="text-slate-500 hover:text-white transition-colors" aria-label="GitHub">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        </a>
+                        <a href="mailto:horizen5@example.com" class="text-slate-500 hover:text-white transition-colors" aria-label="Email">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </a>
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors" aria-label="Twitter">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
+                        </a>
+                    </div>
+                    
+                    <p class="text-sm text-slate-600 font-mono">
+                        &copy; 2026 Horizen5. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chat Assistant -->
+    <div class="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+        <!-- Chat Window -->
+        <div id="chat-widget" class="hidden-chat premium-card rounded-2xl w-[340px] sm:w-[380px] h-[500px] mb-6 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <div class="bg-white/5 p-5 border-b border-white/10 flex justify-between items-center backdrop-blur-xl">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded bg-white flex items-center justify-center text-xs font-black text-dark">AI</div>
+                    <div>
+                        <h3 class="font-bold text-sm text-white tracking-wide">H5. 智能终端</h3>
+                        <p class="text-[11px] text-primary flex items-center gap-1.5 font-mono mt-1 tracking-widest uppercase"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_5px_#00f0ff]"></span> 系统已上线</p>
+                    </div>
+                </div>
+                <button id="close-chat" class="text-slate-400 hover:text-white transition-colors w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <!-- Messages Container -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-5 text-sm chat-scroll">
+                <div class="flex items-start gap-3 max-w-[90%]">
+                    <div class="w-8 h-8 mt-1 rounded bg-white/10 flex-shrink-0 flex items-center justify-center text-white border border-white/5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M4 6h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl rounded-tl-sm p-4 text-slate-300 leading-relaxed font-mono text-[13px]">
+                        > INITIALIZING PROTOCOL...<br>
+                        > HELLO. 我是 Horizen5 的专属数字分身。<br><br>你可以通过我了解他的全栈开发经验、技术栈，或是关于“Mi Notes Exporter”的技术细节。
+                    </div>
+                </div>
+            </div>
+            <!-- Input Area -->
+            <div class="p-4 bg-[#030305] border-t border-white/10">
+                <form id="chat-form" class="flex gap-2 relative">
+                    <input type="text" id="chat-input" autocomplete="off" placeholder="输入指令..." class="w-full bg-white/5 border border-white/10 rounded-lg pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-white/30 transition-all placeholder:text-slate-600 font-mono">
+                    <button type="submit" id="chat-submit" class="absolute right-1.5 top-1.5 bottom-1.5 aspect-square bg-white hover:bg-slate-200 text-dark rounded-md flex items-center justify-center transition-all disabled:opacity-50">
+                        <svg class="w-4 h-4 translate-x-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button id="chat-toggle" class="w-16 h-16 rounded-2xl bg-white text-dark shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center justify-center hover:scale-105 transition-transform duration-300 group z-50">
+            <svg class="w-7 h-7 group-hover:hidden transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <svg class="w-7 h-7 hidden group-hover:block transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M4 6h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // Smooth Scrolling for anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Reveal Animation Observer
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        // 滑出视野时重置，下次划入可再次触发
+                        entry.target.classList.remove('active');
+                        if (entry.target.classList.contains('skill-bar-fill')) {
+                            entry.target.style.width = '0';
+                        }
+                    } else {
+                        // 滑入视野时触发动画
+                        entry.target.classList.add('active');
+                        if (entry.target.classList.contains('skill-bar-fill')) {
+                            entry.target.style.width = entry.target.getAttribute('data-width');
+                        }
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal, .skill-bar-fill').forEach(el => revealObserver.observe(el));
+
+            // 全局统一的主题切换逻辑
+            const globalThemeToggle = document.getElementById('global-theme-toggle');
+            const globalMoon = globalThemeToggle.querySelector('.moon-icon');
+            const globalSun = globalThemeToggle.querySelector('.sun-icon');
+
+            function updateThemeIcons() {
+                const isLight = document.documentElement.classList.contains('light-mode');
+                if (isLight) {
+                    globalMoon.classList.add('hidden');
+                    globalSun.classList.remove('hidden');
+                } else {
+                    globalMoon.classList.remove('hidden');
+                    globalSun.classList.add('hidden');
+                }
+            }
+            updateThemeIcons(); // init icons
+            
+            globalThemeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('light-mode');
+                const isLight = document.documentElement.classList.contains('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark'); // 同步数据至全局 key
+                updateThemeIcons();
+            });
+
+            // AI Chat Implementation
+            const chatToggle = document.getElementById('chat-toggle');
+            const chatWidget = document.getElementById('chat-widget');
+            const closeChat = document.getElementById('close-chat');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatSubmitBtn = document.getElementById('chat-submit');
+
+            const systemPrompt = `你现在是全栈开发者 Horizen5 的 AI 数字分身。
+            核心信息：高级全栈开发者，专注工具应用。技术栈：React, TS, Tailwind, Node, Python, Rust, Tauri。开源项目：Mi Notes Exporter (小米便签导出工具)。
+            规则：极客、冰冷但专业的终端风格语气（可使用少量 '>' 开头）。简短回答。`;
+
+            let chatHistory = [];
+            let isThinking = false;
+
+            chatToggle.addEventListener('click', () => {
+                chatWidget.classList.toggle('hidden-chat');
+                if(!chatWidget.classList.contains('hidden-chat')) chatInput.focus();
+            });
+            closeChat.addEventListener('click', () => chatWidget.classList.add('hidden-chat'));
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (isThinking) return;
+
+                const userText = chatInput.value.trim();
+                if (!userText) return;
+
+                appendMessage('user', userText);
+                chatInput.value = '';
+                chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+                const typingId = appendTypingIndicator();
+                isThinking = true;
+                chatSubmitBtn.disabled = true;
+
+                try {
+                    const apiKey = ""; 
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: chatHistory, systemInstruction: { parts: [{ text: systemPrompt }] } })
+                    });
+
+                    removeElement(typingId);
+
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                    const data = await response.json();
+                    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "> SYSTEM ERROR.";
+                    
+                    appendMessage('model', aiText);
+                    chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+
+                } catch (error) {
+                    removeElement(typingId);
+                    appendMessage('model', "> ERR_CONNECTION_REFUSED. 无法连接到主节点。");
+                } finally {
+                    isThinking = false;
+                    chatSubmitBtn.disabled = false;
+                    chatInput.focus();
+                }
+            });
+
+            function appendMessage(role, text) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `flex items-start gap-3 max-w-[90%] chat-message ${role === 'user' ? 'ml-auto flex-row-reverse' : ''}`;
+                
+                const userSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>`;
+                const aiSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M4 6h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>`;
+
+                const avatar = role === 'user' 
+                    ? `<div class="w-8 h-8 mt-1 rounded bg-white text-dark flex-shrink-0 flex items-center justify-center shadow-sm">${userSvg}</div>`
+                    : `<div class="w-8 h-8 mt-1 rounded bg-white/10 flex-shrink-0 flex items-center justify-center text-white border border-white/5">${aiSvg}</div>`;
+                    
+                const bubbleStyles = role === 'user'
+                    ? 'bg-white text-dark rounded-xl rounded-tr-sm p-4 font-mono text-[13px] shadow-sm'
+                    : 'bg-white/5 border border-white/10 rounded-xl rounded-tl-sm p-4 text-slate-300 font-mono text-[13px]';
+
+                let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<span class="text-white font-bold">$1</span>').replace(/\n/g, '<br>');
+
+                msgDiv.innerHTML = `${avatar}<div class="${bubbleStyles} leading-relaxed">${formattedText}</div>`;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function appendTypingIndicator() {
+                const id = 'typing-' + Date.now();
+                const msgDiv = document.createElement('div');
+                msgDiv.id = id;
+                msgDiv.className = `flex items-start gap-3 max-w-[90%] chat-message`;
+                msgDiv.innerHTML = `
+                    <div class="w-8 h-8 mt-1 rounded bg-white/10 flex-shrink-0 flex items-center justify-center text-white border border-white/5">
+                        <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14"></path></svg>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl rounded-tl-sm px-5 py-4 text-slate-500 font-mono text-[13px]">
+                        > 处理中...
+                    </div>
+                `;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                return id;
+            }
+            function removeElement(id) { const el = document.getElementById(id); if (el) el.remove(); }
+        });
+    </script>
 </body>
 </html>

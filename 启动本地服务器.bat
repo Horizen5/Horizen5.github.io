@@ -1,2 +1,4 @@
 @echo off
-python "%~dp0server.py"
+cd /d "%~dp0"
+python server.py
+pause
