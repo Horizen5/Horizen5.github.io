@@ -36,7 +36,17 @@
       { "name": "CuteHttpFileServer", "url": "http://iscute.cn/chfs", "domain": "iscute.cn", "icon": "C" },
       { "name": "Unesty - Rent VPS", "url": "https://server.unesty.net/", "domain": "unesty.net", "icon": "U" },
       { "name": "Chrome-Manager", "url": "https://github.com/devilflasher/Chrome-Manager", "domain": "github.com", "icon": "C" },
-      { "name": "Clash.Meta Wiki", "url": "https://clash-meta.gitbook.io/clash.meta-wiki-older/used", "domain": "gitbook.io", "icon": "C" }
+      { "name": "Clash.Meta Wiki", "url": "https://clash-meta.gitbook.io/clash.meta-wiki-older/used", "domain": "gitbook.io", "icon": "C" },
+      { "name": "GitHub", "url": "https://github.com/", "domain": "github.com", "icon": "G", "desc": "开源及私有软件项目托管平台" },
+      { "name": "Stack Overflow", "url": "https://stackoverflow.com/", "domain": "stackoverflow.com", "icon": "S", "desc": "IT技术问答网站" },
+      { "name": "CSDN", "url": "https://www.csdn.net/", "domain": "csdn.net", "icon": "C", "desc": "程序员社区" },
+      { "name": "V2EX", "url": "https://www.v2ex.com/", "domain": "v2ex.com", "icon": "V", "desc": "编程、设计、硬件社区" },
+      { "name": "掘金", "url": "https://juejin.im/", "domain": "juejin.im", "icon": "掘", "desc": "技术干货社区" },
+      { "name": "知乎", "url": "https://www.zhihu.com/", "domain": "zhihu.com", "icon": "知", "desc": "问答社区" },
+      { "name": "博客园", "url": "https://www.cnblogs.com/", "domain": "cnblogs.com", "icon": "博", "desc": "技术博客平台" },
+      { "name": "开源中国", "url": "https://www.oschina.net/", "domain": "oschina.net", "icon": "开", "desc": "开源社区" },
+      { "name": "力扣", "url": "https://leetcode-cn.com/", "domain": "leetcode-cn.com", "icon": "力", "desc": "刷题平台" },
+      { "name": "清华大学镜像站", "url": "https://mirrors.tuna.tsinghua.edu.cn/", "domain": "mirrors.tuna.tsinghua.edu.cn", "icon": "清", "desc": "开源软件镜像" }
     ]
   },
   {
@@ -73,7 +83,8 @@
       { "name": "Windows安装速度慢", "url": "https://wap.zol.com.cn/ask/x_5966507.html", "domain": "zol.com.cn", "icon": "W" },
       { "name": "隐藏文件恢复", "url": "https://www.zhihu.com/question/511051738", "domain": "zhihu.com", "icon": "隐" },
       { "name": "$folderelf删除", "url": "http://bbs.c3.wuyou.net/forum.php?mod=viewthread&tid=421977", "domain": "wuyou.net", "icon": "$" },
-      { "name": "硬盘病毒求助", "url": "https://www.52pojie.cn/thread-1266953-1-1.html", "domain": "52pojie.cn", "icon": "硬" }
+      { "name": "硬盘病毒求助", "url": "https://www.52pojie.cn/thread-1266953-1-1.html", "domain": "52pojie.cn", "icon": "硬" },
+      { "name": "中国大学MOOC", "url": "https://www.icourse163.org/", "domain": "icourse163.org", "icon": "慕", "desc": "在线课程平台" }
     ]
   },
   {
@@ -116,7 +127,46 @@
       { "name": "wallhaven", "url": "https://wallhaven.cc/", "domain": "wallhaven.cc", "icon": "w" },
       { "name": "紳士漫畫", "url": "https://wnacg01.org/", "domain": "wnacg01.org", "icon": "紳" },
       { "name": "Pixabay", "url": "https://pixabay.com/", "domain": "pixabay.com", "icon": "P" },
-      { "name": "字体天下", "url": "https://www.fonts.net.cn/", "domain": "fonts.net.cn", "icon": "字" }
+      { "name": "字体天下", "url": "https://www.fonts.net.cn/", "domain": "fonts.net.cn", "icon": "字" },
+      { "name": "PXHere", "url": "https://pxhere.com/", "domain": "pxhere.com", "icon": "P" },
+      { "name": "CC0图片网", "url": "https://cc0.cn/", "domain": "cc0.cn", "icon": "C" },
+      { "name": "Foodiesfeed", "url": "https://www.foodiesfeed.com/", "domain": "foodiesfeed.com", "icon": "F" },
+      { "name": "10Wallpaper", "url": "https://www.10wallpaper.com/", "domain": "10wallpaper.com", "icon": "1" },
+      { "name": "alphacoders", "url": "https://wall.alphacoders.com/?lang=Chinese", "domain": "wall.alphacoders.com", "icon": "A" },
+      { "name": "极简壁纸", "url": "https://bz.zzzmh.cn/index", "domain": "bz.zzzmh.cn", "icon": "极" },
+      { "name": "3G壁纸", "url": "https://www.3gbizhi.com/", "domain": "3gbizhi.com", "icon": "3" },
+      { "name": "必应壁纸", "url": "https://bing.ioliu.cn/", "domain": "bing.ioliu.cn", "icon": "必" },
+      { "name": "Anime Pictures", "url": "https://anime-pictures.net", "domain": "anime-pictures.net", "icon": "A" },
+      { "name": "阿里巴巴矢量图库", "url": "https://www.iconfont.cn/", "domain": "iconfont.cn", "icon": "I" },
+      { "name": "Ikonate", "url": "https://ikonate.com/", "domain": "ikonate.com", "icon": "I" },
+      { "name": "iconstore", "url": "https://iconstore.co/", "domain": "iconstore.co", "icon": "I" },
+      { "name": "icooon", "url": "https://icooon-mono.com/", "domain": "icooon-mono.com", "icon": "I" },
+      { "name": "iconfinder", "url": "https://www.iconfinder.com/", "domain": "iconfinder.com", "icon": "F" },
+      { "name": "素材中国", "url": "http://www.sccnn.com/", "domain": "sccnn.com", "icon": "素" },
+      { "name": "站长素材", "url": "https://sc.chinaz.com/psd/", "domain": "sc.chinaz.com", "icon": "站" },
+      { "name": "365PSD", "url": "https://cn.365psd.com/free-psd", "domain": "365psd.com", "icon": "3" },
+      { "name": "freepik", "url": "https://www.freepik.com/psd", "domain": "freepik.com", "icon": "F" },
+      { "name": "freebiesbug", "url": "https://freebiesbug.com/", "domain": "freebiesbug.com", "icon": "B" },
+      { "name": "素材中国字体", "url": "http://www.sccnn.com/ziku/", "domain": "sccnn.com", "icon": "素" },
+      { "name": "100Font", "url": "https://www.100font.com/", "domain": "100font.com", "icon": "字" },
+      { "name": "DaFont", "url": "https://www.dafont.com/", "domain": "dafont.com", "icon": "D" },
+      { "name": "自由字体", "url": "https://ziyouziti.com/", "domain": "ziyouziti.com", "icon": "自" },
+      { "name": "中国色彩", "url": "http://zhongguose.com/", "domain": "zhongguose.com", "icon": "中" },
+      { "name": "ColorHex", "url": "https://www.colorhexa.com/", "domain": "colorhexa.com", "icon": "H" },
+      { "name": "优色网配色专区", "url": "https://color.uisdc.com/", "domain": "color.uisdc.com", "icon": "优" },
+      { "name": "ColorDrop", "url": "https://www.colordrop.io/", "domain": "colordrop.io", "icon": "D" },
+      { "name": "LOL Colors", "url": "https://www.webdesignrankings.com/resources/lolcolors/", "domain": "webdesignrankings.com", "icon": "L" },
+      { "name": "colorHunt", "url": "https://colorhunt.co/", "domain": "colorhunt.co", "icon": "H" },
+      { "name": "Adobe Color", "url": "https://color.adobe.com/zh/create/color-wheel", "domain": "color.adobe.com", "icon": "A" },
+      { "name": "uigradients", "url": "https://uigradients.com/#PiggyPink", "domain": "uigradients.com", "icon": "U" },
+      { "name": "webgradient", "url": "https://webgradients.com/", "domain": "webgradients.com", "icon": "W" },
+      { "name": "Giphy", "url": "https://giphy.com/", "domain": "giphy.com", "icon": "G" },
+      { "name": "GfyCat", "url": "https://gfycat.com/", "domain": "gfycat.com", "icon": "G" },
+      { "name": "Tenor", "url": "https://tenor.com/", "domain": "tenor.com", "icon": "T" },
+      { "name": "GIF ABYSS", "url": "https://gifs.alphacoders.com/", "domain": "gifs.alphacoders.com", "icon": "动" },
+      { "name": "动图宇宙", "url": "https://biaoqingsoso.com/", "domain": "biaoqingsoso.com", "icon": "动" },
+      { "name": "Soogif", "url": "https://www.soogif.com/", "domain": "soogif.com", "icon": "搜" },
+      { "name": "闪萌", "url": "http://www.weshineapp.com/", "domain": "weshineapp.com", "icon": "闪" }
     ]
   },
   {
@@ -127,7 +177,19 @@
       { "name": "555电影", "url": "https://www.o8tv.com/", "domain": "o8tv.com", "icon": "5" },
       { "name": "youtube", "url": "https://youtube.com/", "domain": "youtube.com", "icon": "y" },
       { "name": "无名小站", "url": "https://www.xn--wcv59z.com/", "domain": "wcv59z.com", "icon": "无" },
-      { "name": "零度解说-Warp", "url": "https://www.youtube.com/watch?v=14zXDW23Tlw", "domain": "youtube.com", "icon": "零" }
+      { "name": "零度解说-Warp", "url": "https://www.youtube.com/watch?v=14zXDW23Tlw", "domain": "youtube.com", "icon": "零" },
+      { "name": "预告片世界", "url": "https://www.yugaopian.cn/", "domain": "yugaopian.cn", "icon": "预" },
+      { "name": "33台词", "url": "http://33.agilestudio.cn/", "domain": "33.agilestudio.cn", "icon": "台" },
+      { "name": "MixKit", "url": "http://mixkit.co/free-stock-video/", "domain": "mixkit.co", "icon": "M" },
+      { "name": "Pexel", "url": "https://www.pexels.com/zh-cn/video/", "domain": "pexels.com", "icon": "P" },
+      { "name": "Videezy", "url": "https://www.videezy.com/", "domain": "videezy.com", "icon": "V" },
+      { "name": "VJShi", "url": "https://www.vjshi.com/", "domain": "vjshi.com", "icon": "视" },
+      { "name": "51ape", "url": "https://www.51ape.com", "domain": "51ape.com", "icon": "A", "desc": "无损音乐下载" },
+      { "name": "52flac", "url": "https://www.52flac.com", "domain": "52flac.com", "icon": "F", "desc": "无损音乐下载" },
+      { "name": "Mixkit", "url": "https://mixkit.co/free-stock-music/", "domain": "mixkit.co", "icon": "M" },
+      { "name": "爱给网", "url": "https://www.aigei.com/", "domain": "aigei.com", "icon": "爱" },
+      { "name": "淘声网", "url": "https://www.tosound.com/", "domain": "tosound.com", "icon": "淘" },
+      { "name": "耳聆", "url": "https://www.ear0.com/", "domain": "ear0.com", "icon": "耳" }
     ]
   },
   {
@@ -195,7 +257,9 @@
       { "name": "蓝奏云", "url": "https://www.lanzou.com/", "domain": "lanzou.com", "icon": "蓝" },
       { "name": "跨境Cloud", "url": "https://6cto.kuajing002.com/", "domain": "kuajing002.com", "icon": "跨" },
       { "name": "CloudFisher", "url": "https://cloudfisher.net/", "domain": "cloudfisher.net", "icon": "C" },
-      { "name": "Google Drive", "url": "https://drive.google.com/", "domain": "google.com", "icon": "G" }
+      { "name": "Google Drive", "url": "https://drive.google.com/", "domain": "google.com", "icon": "G" },
+      { "name": "大力盘", "url": "https://www.dalipan.com", "domain": "dalipan.com", "icon": "大", "desc": "网盘搜索" },
+      { "name": "99百度云", "url": "http://www.99baiduyun.com", "domain": "99baiduyun.com", "icon": "9", "desc": "网盘搜索" }
     ]
   },
   {
@@ -265,7 +329,48 @@
       { "name": "多抓鱼", "url": "https://www.duozhuayu.com/", "domain": "duozhuayu.com", "icon": "多" },
       { "name": "Chilly Bot", "url": "https://chillybot.xyz/", "domain": "chillybot.xyz", "icon": "C" },
       { "name": "微星显示器", "url": "https://www.cnblogs.com/zspace/p/17069763.html", "domain": "cnblogs.com", "icon": "微" },
-      { "name": "显示器设置", "url": "https://blog.csdn.net/qq_39055391/article/details/134288762", "domain": "csdn.net", "icon": "显" }
+      { "name": "显示器设置", "url": "https://blog.csdn.net/qq_39055391/article/details/134288762", "domain": "csdn.net", "icon": "显" },
+      { "name": "轻工具", "url": "https://qinggongju.com", "domain": "qinggongju.com", "icon": "轻" },
+      { "name": "Tool.lu", "url": "http://tool.lu", "domain": "tool.lu", "icon": "工" },
+      { "name": "片库", "url": "https://m.btnull.org/", "domain": "btnull.org", "icon": "片" },
+      { "name": "电影狗", "url": "http://www.dianyinggou.com/linkNav/", "domain": "dianyinggou.com", "icon": "电" },
+      { "name": "钟馗之眼", "url": "https://www.zoomeye.org/", "domain": "zoomeye.org", "icon": "钟" },
+      { "name": "罗马盘", "url": "https://www.luomapan.com/", "domain": "luomapan.com", "icon": "罗" },
+      { "name": "Yandex搜索", "url": "https://yandex.com/", "domain": "yandex.com", "icon": "Y" },
+      { "name": "Magi", "url": "https://magi.com/", "domain": "magi.com", "icon": "M", "desc": "AI学习引擎" },
+      { "name": "轻工具站", "url": "http://tools.miku.ac", "domain": "tools.miku.ac", "icon": "轻" },
+      { "name": "DeepL翻译", "url": "https://www.deepl.com", "domain": "deepl.com", "icon": "D", "desc": "最好的翻译网站" },
+      { "name": "便民网", "url": "https://www.51240.com", "domain": "51240.com", "icon": "便" },
+      { "name": "Photopea", "url": "https://www.photopea.com", "domain": "photopea.com", "icon": "P", "desc": "在线PS图片处理工具" },
+      { "name": "熊崩", "url": "https://www.xiongbeng.com", "domain": "xiongbeng.com", "icon": "熊", "desc": "网盘资源搜索引擎" },
+      { "name": "Image Cyborg", "url": "https://imagecyborg.com", "domain": "imagecyborg.com", "icon": "I", "desc": "网页图片批量下载" },
+      { "name": "Pixivic", "url": "https://pixivic.com", "domain": "pixivic.com", "icon": "P", "desc": "P站排行榜浏览" },
+      { "name": "在线之家", "url": "https://www.zxzj.me", "domain": "zxzj.me", "icon": "在", "desc": "影视在线观看" },
+      { "name": "斗图终结者", "url": "https://www.52doutu.cn", "domain": "52doutu.cn", "icon": "斗", "desc": "表情包制作搜索" },
+      { "name": "草料二维码", "url": "https://cli.im", "domain": "cli.im", "icon": "草", "desc": "二维码生成制作" },
+      { "name": "AGE动漫", "url": "https://www.agefans.cc", "domain": "agefans.cc", "icon": "动", "desc": "动漫观看平台" }
+    ]
+  },
+  {
+    "category": "考证资源",
+    "items": [
+      { "name": "普通话证书", "url": "http://www.cltt.org/#/webHome", "domain": "cltt.org", "icon": "普" },
+      { "name": "中国人事考试网", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "资" },
+      { "name": "中医康复理疗师", "url": "http://www.120px.cn/", "domain": "120px.cn", "icon": "医" },
+      { "name": "税务师/初级会计/审计", "url": "http://kzp.mof.gov.cn/", "domain": "kzp.mof.gov.cn", "icon": "税" },
+      { "name": "教师资格证", "url": "https://ntce.neea.edu.cn/html1/folder", "domain": "ntce.neea.edu.cn", "icon": "教" },
+      { "name": "执业药师/消防/监理/一二级造价师/翻译/社会工作师", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "资" },
+      { "name": "护士证", "url": "https://www.2lwecan.com/", "domain": "2lwecan.com", "icon": "护" },
+      { "name": "基金/证券从业资格证", "url": "https://www.sac.net.cn/", "domain": "sac.net.cn", "icon": "证" },
+      { "name": "注册会计师", "url": "https://cpaexam.cicpa.org.cn/", "domain": "cpaexam.cicpa.org.cn", "icon": "会" },
+      { "name": "导游证", "url": "https://www.mct.gov.cn/", "domain": "mct.gov.cn", "icon": "导" },
+      { "name": "PMP项目管理认证", "url": "http://exam.chinapmp.cn/", "domain": "exam.chinapmp.cn", "icon": "P" },
+      { "name": "法律职业资格证书", "url": "http://www.moj.gov.cn/pub/sfl/jgszzsdw/zsdwgjsfkszx/", "domain": "moj.gov.cn", "icon": "法" },
+      { "name": "银行考试", "url": "http://cj.ccbp.org.cn/apply/", "domain": "cj.ccbp.org.cn", "icon": "银" },
+      { "name": "英语四六级", "url": "https://cet.neea.edu.cn/", "domain": "cet.neea.edu.cn", "icon": "英" },
+      { "name": "国考", "url": "http://www.scs.gov.cn/", "domain": "scs.gov.cn", "icon": "国" },
+      { "name": "翻译专业资格证", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "翻" },
+      { "name": "拍卖师", "url": "http://www.caa123.org.cn/", "domain": "caa123.org.cn", "icon": "拍" }
     ]
   },
   {
@@ -273,7 +378,12 @@
     "items": [
       { "name": "中国药典", "url": "http://db.ouryao.com/yd2015/", "domain": "ouryao.com", "icon": "中" },
       { "name": "性爱姿势", "url": "https://sex-positions.online/zh-cn/", "domain": "sex-positions.online", "icon": "性" },
-      { "name": "内容列表", "url": "https://theporndude.com/zh", "domain": "theporndude.com", "icon": "内" }
+      { "name": "内容列表", "url": "https://theporndude.com/zh", "domain": "theporndude.com", "icon": "内" },
+      { "name": "知性 KnowSex", "url": "https://knowsex.net", "domain": "knowsex.net", "icon": "知", "desc": "性教育平台" },
+      { "name": "香港家庭计划指导会", "url": "https://www.famplan.org.hk/sexedu/zh", "domain": "famplan.org.hk", "icon": "香", "desc": "性教育资源" },
+      { "name": "Archive for Sexology", "url": "http://www.sexarchive.info/CH/home.htm", "domain": "sexarchive.info", "icon": "档", "desc": "性学档案" },
+      { "name": "香港教育局性教育", "url": "https://www.edb.gov.hk/tc/curriculum-development/4-key-tasks/moral-civic/sea/sea.html", "domain": "edb.gov.hk", "icon": "教", "desc": "动画资源" },
+      { "name": "世界避孕日", "url": "https://www.china-wcd.com/", "domain": "china-wcd.com", "icon": "避", "desc": "避孕知识" }
     ]
   },
   {
@@ -289,6 +399,16 @@
       { "name": "首码项目网", "url": "https://www.huiyixian.com/", "domain": "huiyixian.com", "icon": "首" },
       { "name": "生财有术", "url": "http://www.scysb.com/", "domain": "scysb.com", "icon": "生" },
       { "name": "视频号挂机", "url": "https://www.woyaozhuanqian888.com/", "domain": "woyaozhuanqian888.com", "icon": "视" }
+    ]
+  },
+  {
+    "category": "PPT资源",
+    "items": [
+      { "name": "51PPT模板", "url": "http://www.51pptmoban.com/", "domain": "51pptmoban.com", "icon": "5" },
+      { "name": "优品PPT", "url": "https://www.ypppt.com/", "domain": "ypppt.com", "icon": "优" },
+      { "name": "第一PPT", "url": "http://www.1ppt.com/", "domain": "1ppt.com", "icon": "1" },
+      { "name": "叮当设计", "url": "https://www.dingdangsheji.com/", "domain": "dingdangsheji.com", "icon": "叮" },
+      { "name": "PPT超级市场", "url": "http://ppt.sotary.com/web/wxapp/index.html", "domain": "ppt.sotary.com", "icon": "超" }
     ]
   },
   {
