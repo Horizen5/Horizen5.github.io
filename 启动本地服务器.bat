@@ -1,3 +1,2 @@
 @echo off
-python "%~dp0start_server.py"
-pause
+python "%~dp0server.py"
