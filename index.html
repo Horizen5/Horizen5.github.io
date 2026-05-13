@@ -174,7 +174,7 @@
         html.light-mode .mouse { border-color: rgba(0,0,0,0.4); }
         html.light-mode .mouse::before { background: rgba(0,0,0,0.8); }
         
-        /* 新增：主页全局悬浮按钮的浅色样式 */
+        /* 主页全局悬浮按钮的浅色样式 */
         html.light-mode .global-theme-toggle { background: rgba(255,255,255,0.85); border-color: rgba(0,0,0,0.1); color: #475569 !important; }
         html.light-mode .global-theme-toggle:hover { background: rgba(0,0,0,0.05); color: #0f172a !important; }
     </style>
@@ -187,7 +187,7 @@
 </head>
 <body class="antialiased selection:bg-primary/30 selection:text-white">
 
-    <!-- 新增：提取出来的全局悬浮模式切换按钮 (与工具页绝对统一位置) -->
+    <!-- 全局悬浮模式切换按钮 -->
     <button id="global-theme-toggle" class="fixed top-[10px] right-[20px] z-[100] w-[44px] h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg global-theme-toggle" aria-label="切换主题">
         <!-- 完美的几何对称月亮/太阳图标 -->
         <svg class="w-[20px] h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
@@ -214,22 +214,26 @@
                 <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
                 <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
                 <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
+                <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="hover:text-white transition-colors duration-300">关于</a></li>
             </ul>
 
-            <div class="md:hidden flex items-center mr-14">
-                <button class="text-slate-300 hover:text-white" id="mobile-menu-btn" aria-label="Toggle menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <!-- 增大按钮热区 (padding) 并优化反馈 -->
+            <div class="md:hidden flex items-center pr-10 md:pr-0">
+                <button class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors active:scale-95" id="mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
         
-        <div class="md:hidden hidden bg-[#030305]/95 backdrop-blur-xl border-b border-white/5 absolute w-full" id="mobile-menu">
+        <!-- 使用 max-height 实现丝滑的展开动画 -->
+        <div class="md:hidden bg-[#030305]/95 backdrop-blur-xl border-b border-white/5 absolute w-full overflow-hidden max-h-0 transition-all duration-500 ease-in-out" id="mobile-menu">
             <ul class="flex flex-col px-6 py-6 space-y-6 text-sm font-medium text-slate-300">
                 <li><a href="#home" class="block hover:text-white transition-colors">首页</a></li>
                 <li><a href="#projects" class="block hover:text-white transition-colors">项目</a></li>
                 <li><a href="#skills" class="block hover:text-white transition-colors">技能</a></li>
                 <li><a href="website.html" class="block hover:text-white transition-colors">工具</a></li>
                 <li><a href="#contact" class="block hover:text-white transition-colors">联系</a></li>
+                <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="block hover:text-white transition-colors">关于</a></li>
             </ul>
         </div>
     </nav>
@@ -329,10 +333,10 @@
                             <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">Tailwind</span>
                             <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">CSS Snap</span>
                         </div>
-                        <span class="text-slate-500 text-sm font-semibold inline-flex items-center uppercase tracking-wider">
-                            <svg class="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            当前页面
-                        </span>
+                        <a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="text-white text-sm font-semibold inline-flex items-center hover:text-primary transition-colors group uppercase tracking-wider">
+                            查看源码 
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
                     </article>
 
                     <!-- Project 3 -->
@@ -518,9 +522,22 @@
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             
-            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            mobileBtn.addEventListener('click', () => {
+                // 使用 max-height 配合 class 来实现丝滑动画
+                if (mobileMenu.classList.contains('max-h-0')) {
+                    mobileMenu.classList.remove('max-h-0');
+                    mobileMenu.classList.add('max-h-[400px]');
+                } else {
+                    mobileMenu.classList.add('max-h-0');
+                    mobileMenu.classList.remove('max-h-[400px]');
+                }
+            });
+
             document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('max-h-0');
+                    mobileMenu.classList.remove('max-h-[400px]');
+                });
             });
 
             // Smooth Scrolling for anchors
@@ -668,7 +685,18 @@
                     ? 'bg-white text-dark rounded-xl rounded-tr-sm p-4 font-mono text-[13px] shadow-sm'
                     : 'bg-white/5 border border-white/10 rounded-xl rounded-tl-sm p-4 text-slate-300 font-mono text-[13px]';
 
-                let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<span class="text-white font-bold">$1</span>').replace(/\n/g, '<br>');
+                const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;',
+                }[c]));
+
+                const safeText = escapeHtml(text);
+                let formattedText = safeText
+                    .replace(/\*\*(.*?)\*\*/g, '<span class="text-white font-bold">$1</span>')
+                    .replace(/\n/g, '<br>');
 
                 msgDiv.innerHTML = `${avatar}<div class="${bubbleStyles} leading-relaxed">${formattedText}</div>`;
                 chatMessages.appendChild(msgDiv);

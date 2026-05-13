@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H5 控制中心 - 网站聚合管理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js">
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        dark: '#030305',
+                        primary: '#00f0ff',
+                        secondary: '#7000ff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --wallpaper: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop');
+            --wallpaper-overlay: rgba(3, 3, 5, 0.4);
+        }
+
+        html.light-mode {
+            --wallpaper-overlay: rgba(248, 250, 252, 0.2);
+        }
+
+        .fixed-wallpaper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--wallpaper);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .wallpaper-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--wallpaper-overlay);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: -1;
+            transition: background 0.5s ease-in-out;
+        }
+
+        html.light-mode .wallpaper-overlay {
+            background: rgba(248, 250, 252, 0.2);
+        }
+
+        body {
+            background-color: transparent;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* 毛玻璃卡片 */
+        .premium-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* 隐藏滚动条 */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Light Mode Overrides for Admin */
+        html.light-mode body {
+            background-color: transparent;
+            color: #0f172a;
+        }
+        html.light-mode .premium-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        html.light-mode .text-white {
+            color: #0f172a !important;
+        }
+        html.light-mode .text-slate-400 {
+            color: #475569 !important;
+        }
+        html.light-mode .text-slate-300 {
+            color: #334155 !important;
+        }
+        html.light-mode .bg-white\/5 {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+        html.light-mode .bg-white\/10 {
+            background-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        html.light-mode .border-white\/5,
+        html.light-mode .border-white\/10 {
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        html.light-mode .glass-input {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #0f172a;
+        }
+        html.light-mode .glass-input:focus {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: #00f0ff;
+        }
+        html.light-mode .cat-item:hover:not(.active) {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        html.light-mode .bg-black\/20 {
+            background-color: rgba(0, 0, 0, 0.02) !important;
+        }
+        html.light-mode .global-theme-toggle {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #475569 !important;
+        }
+        html.light-mode .global-theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #0f172a !important;
+        }
+        html.light-mode .drag-handle {
+            color: #94a3b8;
+        }
+        html.light-mode .drag-handle:hover {
+            color: #0f172a;
+        }
+
+        /* 分类列表项 */
+        .cat-item {
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .cat-item.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: inset 4px 0 0 #00f0ff;
+        }
+        .cat-item:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 输入框样式 */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* 拖拽幽灵元素 */
+        .sortable-ghost {
+            opacity: 0.3;
+            background: rgba(0, 240, 255, 0.15) !important;
+            border: 2px dashed #00f0ff !important;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15) !important;
+        }
+        .sortable-fallback {
+            opacity: 0.5;
+            box-shadow: none;
+            filter: grayscale(0.3);
+            pointer-events: none;
+        }
+        .sortable-drag {
+            pointer-events: none;
+        }
+        .drag-handle {
+            cursor: grab;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        /* ===== 回到顶部按钮 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        html.light-mode .back-to-top {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #475569;
+        }
+        .back-to-top:hover {
+            color: #00f0ff;
+            border-color: #00f0ff;
+            transform: translateY(0) scale(1.05);
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .back-to-top svg { width: 20px; height: 20px; }
+
+        /* Toast 动画 */
+        @keyframes slideInDown {
+            from {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+        .toast-show {
+            animation: slideInDown 0.3s ease forwards;
+        }
+    </style>
+    <script>
+        // 页面加载前应用保存的主题和壁纸
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+        const savedWallpaper = localStorage.getItem('siteWallpaper');
+        if (savedWallpaper) {
+            document.documentElement.style.setProperty('--wallpaper', `url('${savedWallpaper}')`);
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+
+    <!-- 壁纸层 -->
+    <div class="fixed-wallpaper"></div>
+    <div class="wallpaper-overlay"></div>
+
+    <!-- Toast 提示框 -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden">
+        <div class="px-6 py-3 rounded-full premium-card border-primary/30 flex items-center gap-3 shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+            <span id="toast-icon" class="text-xl">✅</span>
+            <span id="toast-msg" class="text-white font-medium tracking-wide text-sm">操作成功</span>
+        </div>
+    </div>
+
+    <!-- 右上角操作按钮组 -->
+    <div class="fixed top-[20px] right-[20px] z-[100] flex items-center gap-3">
+        <button onclick="goBack()" class="w-[44px] h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg global-theme-toggle" title="返回上一页" aria-label="返回">
+            <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        </button>
+        <button id="global-theme-toggle" class="w-[44px] h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg global-theme-toggle" aria-label="切换主题">
+            <svg class="w-[20px] h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+            <svg class="w-[20px] h-[20px] sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+        </button>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop" title="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <!-- Header 顶部操作栏 -->
+    <header class="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-white flex items-center gap-3">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                H5 控制中心
+            </h1>
+            <p class="text-slate-400 text-sm mt-1">本地聚合网址可视化管理台</p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            <button id="loadLocalBtn" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 text-sm font-medium transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                恢复缓存
+            </button>
+            <button id="exportBtn" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 text-sm font-medium transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                下载 JSON
+            </button>
+            <button id="saveFileBtn" class="px-5 py-2 rounded-lg bg-primary text-dark hover:bg-white hover:scale-105 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] text-sm font-bold transition-all duration-300 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                直写保存
+            </button>
+            <button id="clearLocalBtn" class="p-2 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-colors" title="清除本地缓存">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主体布局区 -->
+    <div class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 items-start pb-12">
+
+        <!-- 左侧：分类管理 -->
+        <aside class="lg:col-span-3 premium-card rounded-2xl flex flex-col">
+            <div class="p-5 border-b border-white/10 flex justify-between items-center sticky top-0 bg-inherit rounded-t-2xl z-10">
+                <h2 class="font-semibold text-white tracking-wide flex items-center gap-2">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                    分类目录
+                </h2>
+                <button onclick="addCategory()" class="w-8 h-8 rounded bg-white/5 hover:bg-white/20 flex items-center justify-center text-white transition-colors" title="添加新分类">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+            </div>
+
+            <div id="categories" class="p-3 space-y-1">
+                <!-- JS 动态渲染分类 -->
+            </div>
+        </aside>
+
+        <!-- 右侧：网址编辑 -->
+        <main class="lg:col-span-9 premium-card rounded-2xl flex flex-col">
+            <div class="p-5 border-b border-white/10 flex justify-between items-center sticky top-0 bg-inherit rounded-t-2xl z-10">
+                <h2 class="font-semibold text-white tracking-wide flex items-center gap-2" id="current-cat-title">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    收录网址
+                </h2>
+                <button onclick="addLink()" id="addLinkBtn" class="px-4 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    新增网址
+                </button>
+            </div>
+
+            <div class="p-5 bg-black/20 rounded-b-2xl min-h-[50vh]">
+                <div id="linksContainer" class="space-y-3 min-h-[50px]">
+                    <!-- JS 动态渲染网址卡片 -->
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // ==================== 全局状态 ====================
+        let sites = [];
+        let currentCatIndex = 0;
+        let catSortable = null;
+        let linkSortable = null;
+
+        // ==================== 主题初始化 ====================
+        const globalThemeToggle = document.getElementById('global-theme-toggle');
+        const globalMoon = globalThemeToggle.querySelector('.moon-icon');
+        const globalSun = globalThemeToggle.querySelector('.sun-icon');
+
+        function updateThemeIcons() {
+            const isLight = document.documentElement.classList.contains('light-mode');
+            if (isLight) {
+                globalMoon.classList.add('hidden');
+                globalSun.classList.remove('hidden');
+            } else {
+                globalMoon.classList.remove('hidden');
+                globalSun.classList.add('hidden');
+            }
+        }
+
+        updateThemeIcons();
+
+        globalThemeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('light-mode');
+            const isLight = document.documentElement.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateThemeIcons();
+        });
+
+        // ==================== 返回按钮 ====================
+        function goBack() {
+            if (document.referrer && document.referrer !== window.location.href) {
+                history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // ==================== 初始化 & 加载数据 ====================
+        async function loadInitialData() {
+            const cached = localStorage.getItem('adminSitesCache');
+            if (cached) {
+                try {
+                    sites = JSON.parse(cached);
+                    showToast('📂 已从本地缓存恢复未保存的数据', 'info');
+                } catch (e) {
+                    sites = [];
+                    showToast('缓存数据损坏，已重置为空数据', 'error');
+                }
+            } else {
+                try {
+                    const res = await fetch('assets/data/sites.json');
+                    sites = res.ok ? await res.json() : [];
+                    if (!res.ok) showToast('无法读取源文件，初始化为空数据', 'error');
+                } catch (e) {
+                    sites = [];
+                    showToast('无法读取源文件，初始化为空数据（请检查网络或文件路径）', 'error');
+                }
+            }
+            // 确保 sites 是数组
+            if (!Array.isArray(sites)) sites = [];
+            // 确保每个分类有 items 数组
+            sites.forEach(cat => {
+                if (!Array.isArray(cat.items)) cat.items = [];
+            });
+            // 修正索引
+            if (sites.length > 0 && currentCatIndex >= sites.length) {
+                currentCatIndex = Math.max(0, sites.length - 1);
+            }
+            if (sites.length === 0) currentCatIndex = -1;
+            renderAll();
+        }
+
+        // ==================== 核心渲染 ====================
+        function renderAll() {
+            // 修正索引边界
+            if (sites.length > 0 && currentCatIndex >= sites.length) {
+                currentCatIndex = Math.max(0, sites.length - 1);
+            }
+            if (sites.length === 0) currentCatIndex = -1;
+
+            renderCategories();
+            renderLinks();
+            loadLinkFavicons();
+            updateTitle();
+            initSortable();
+        }
+
+        function updateTitle() {
+            const titleEl = document.getElementById('current-cat-title');
+            if (currentCatIndex >= 0 && sites[currentCatIndex]) {
+                const cat = sites[currentCatIndex];
+                titleEl.innerHTML = `<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                ${escapeHTML(cat.category)} <span class="text-slate-500 text-sm ml-2 font-normal">(${cat.items.length})</span>`;
+            } else {
+                titleEl.innerHTML = `<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                未选择分类`;
+            }
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            if (!container) return;
+            container.innerHTML = sites.map((cat, idx) => `
+                <div class="cat-item group flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer relative ${idx === currentCatIndex ? 'active' : ''}"
+                     data-id="${idx}"
+                     data-cat-index="${idx}">
+                    <div class="flex items-center gap-3 flex-1 min-w-0" onclick="selectCategory(${idx})">
+                        <svg class="w-4 h-4 drag-handle text-slate-500 hover:text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
+                        <span class="font-medium text-sm truncate select-none ${idx === currentCatIndex ? 'text-primary' : 'text-slate-300 group-hover:text-white'}">${escapeHTML(cat.category)}</span>
+                        <span class="text-[11px] text-slate-500 ml-auto shrink-0">${cat.items.length}</span>
+                    </div>
+                    <div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 ml-2 shrink-0">
+                        <button onclick="event.stopPropagation(); renameCategory(${idx})" class="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded" title="重命名"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                        <button onclick="event.stopPropagation(); deleteCategory(${idx})" class="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded" title="删除"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            const btn = document.getElementById('addLinkBtn');
+            if (!container) return;
+
+            if (currentCatIndex < 0 || !sites[currentCatIndex]) {
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-20"><svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg><p>请在左侧选择或添加一个分类</p></div>`;
+                if (btn) btn.classList.add('opacity-50', 'pointer-events-none');
+                return;
+            }
+            if (btn) btn.classList.remove('opacity-50', 'pointer-events-none');
+
+            const items = sites[currentCatIndex].items || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 py-10">分类为空，点击右上角「新增网址」添加</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map((item, ii) => {
+                const hasCustomIcon = item.customIcon && item.customIcon.trim() !== '';
+                return `
+                <div class="group flex flex-col xl:flex-row items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all" data-id="${ii}">
+                    <!-- 拖拽手柄 & 图标 -->
+                    <div class="flex items-center gap-3 w-full xl:w-auto self-start xl:self-center">
+                        <svg class="w-5 h-5 drag-handle text-slate-500 hover:text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
+                        <div class="link-icon-preview w-12 h-12 rounded-lg bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-lg font-bold text-white shrink-0 shadow-inner border border-white/10 overflow-hidden relative"
+                             data-domain="${escapeHTML(item.domain || '')}"
+                             data-icon="${escapeHTML(item.icon || '?')}"
+                             data-custom="${hasCustomIcon ? '1' : '0'}"
+                             data-link-index="${ii}">
+                             ${hasCustomIcon ? `<img src="${escapeHTML(item.customIcon)}" class="w-full h-full object-cover" alt="icon">` : escapeHTML(item.icon || '?')}
+                        </div>
+                    </div>
+
+                    <!-- 输入域表单 -->
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-12 gap-3 w-full">
+                        <div class="md:col-span-3">
+                            <label class="text-[10px] text-slate-500 uppercase font-semibold mb-1 block pl-1">名称</label>
+                            <input value="${escapeHTML(item.name || '')}" placeholder="如: 百度"
+                                   onchange="updateLinkField(${ii}, 'name', this.value)"
+                                   class="glass-input w-full px-3 py-2 rounded-lg text-sm">
+                        </div>
+                        <div class="md:col-span-4">
+                            <label class="text-[10px] text-slate-500 uppercase font-semibold mb-1 block pl-1">链接 URL</label>
+                            <input value="${escapeHTML(item.url || '')}" placeholder="https://"
+                                   onchange="updateLinkField(${ii}, 'url', this.value)"
+                                   class="glass-input w-full px-3 py-2 rounded-lg text-sm font-mono text-primary/80">
+                        </div>
+                        <div class="md:col-span-4">
+                            <label class="text-[10px] text-slate-500 uppercase font-semibold mb-1 block pl-1">描述</label>
+                            <input value="${escapeHTML(item.desc || '')}" placeholder="一句话简介..."
+                                   onchange="updateLinkField(${ii}, 'desc', this.value)"
+                                   class="glass-input w-full px-3 py-2 rounded-lg text-sm text-slate-300">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="text-[10px] text-slate-500 uppercase font-semibold mb-1 block pl-1">图标</label>
+                            <input value="${escapeHTML(item.icon || '')}" placeholder="字" maxlength="2"
+                                   onchange="updateLinkField(${ii}, 'icon', this.value)"
+                                   class="glass-input w-full px-3 py-2 rounded-lg text-sm text-center">
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="flex xl:flex-col gap-2 w-full xl:w-auto justify-end mt-2 xl:mt-0">
+                        ${sites.length > 1 ? `
+                        <select onchange="handleMoveLinkSelect(this, ${ii})"
+                                class="text-[11px] bg-white/10 border border-white/10 rounded-lg px-2 py-1.5 text-slate-300 cursor-pointer focus:outline-none focus:border-primary outline-none"
+                                title="移动至分类">
+                            <option value="" class="bg-slate-800">移动</option>
+                            ${sites.map((cat, ci) => ci !== currentCatIndex ? `<option value="${ci}" class="bg-slate-800">→ ${escapeHTML(cat.category)}</option>` : '').join('')}
+                        </select>
+                        ` : ''}
+                        <button class="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors"
+                                onclick="deleteLink(${ii})" title="删除网址">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== Favicon 加载 ====================
+        function loadLinkFavicons() {
+            const iconPreviews = document.querySelectorAll('#linksContainer .link-icon-preview[data-domain]');
+            iconPreviews.forEach(el => {
+                if (el.dataset.custom === '1') return; // 自定义图标，跳过
+                const domain = el.dataset.domain;
+                const icon = el.dataset.icon;
+                if (!domain || el.querySelector('img')) return; // 已加载或无效
+
+                loadSingleFavicon(el, domain, icon);
+            });
+        }
+
+        function loadSingleFavicon(el, domain, icon) {
+            let tried = 0;
+            const sources = [
+                `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+                `https://www.google.com/s2/favicons?sz=64&domain=${domain}`,
+                `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${domain}&size=64`
+            ];
+
+            function tryLoad() {
+                if (tried >= sources.length) {
+                    // 所有源都失败，显示文字图标
+                    el.innerHTML = `<span style="font-size:22px;font-weight:bold;opacity:0.7;">${icon || '?'}</span>`;
+                    return;
+                }
+                const img = new Image();
+                img.style.cssText =
+                    'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:transparent;display:block;opacity:0;transition:opacity 0.3s ease;';
+                let timedOut = false;
+                const timeout = setTimeout(() => {
+                    timedOut = true;
+                    tried++;
+                    tryLoad();
+                }, 1500);
+                img.onload = function() {
+                    clearTimeout(timeout);
+                    if (timedOut) return;
+                    if (img.naturalWidth >= 16 && img.naturalHeight >= 16) {
+                        el.innerHTML = '';
+                        el.style.background = 'transparent';
+                        el.appendChild(img);
+                        requestAnimationFrame(() => {
+                            img.style.opacity = '1';
+                        });
+                    } else {
+                        tried++;
+                        tryLoad();
+                    }
+                };
+                img.onerror = function() {
+                    clearTimeout(timeout);
+                    if (!timedOut) {
+                        tried++;
+                        tryLoad();
+                    }
+                };
+                img.src = sources[tried];
+                tried++;
+            }
+            tryLoad();
+        }
+
+        /** 刷新单个链接卡片的favicon（用于URL修改后） */
+        function refreshSingleLinkFavicon(linkIndex) {
+            const el = document.querySelector(`#linksContainer .link-icon-preview[data-link-index="${linkIndex}"]`);
+            if (!el) return;
+            const item = sites[currentCatIndex]?.items?.[linkIndex];
+            if (!item) return;
+            // 更新 data-domain
+            el.dataset.domain = item.domain || '';
+            el.dataset.icon = item.icon || '?';
+            el.dataset.custom = (item.customIcon && item.customIcon.trim() !== '') ? '1' : '0';
+            if (el.dataset.custom === '1') {
+                el.innerHTML = `<img src="${escapeHTML(item.customIcon)}" class="w-full h-full object-cover" alt="icon">`;
+            } else if (item.domain) {
+                el.innerHTML = '';
+                loadSingleFavicon(el, item.domain, item.icon || '?');
+            } else {
+                el.innerHTML = `<span style="font-size:22px;font-weight:bold;opacity:0.7;">${escapeHTML(item.icon || '?')}</span>`;
+            }
+        }
+
+        /** 刷新单个链接卡片的文字图标（用于icon字段修改后） */
+        function refreshSingleLinkIconText(linkIndex) {
+            const el = document.querySelector(`#linksContainer .link-icon-preview[data-link-index="${linkIndex}"]`);
+            if (!el) return;
+            const item = sites[currentCatIndex]?.items?.[linkIndex];
+            if (!item) return;
+            el.dataset.icon = item.icon || '?';
+            el.dataset.custom = (item.customIcon && item.customIcon.trim() !== '') ? '1' : '0';
+            if (el.dataset.custom === '1') {
+                el.innerHTML = `<img src="${escapeHTML(item.customIcon)}" class="w-full h-full object-cover" alt="icon">`;
+            } else if (!el.querySelector('img') && !item.domain) {
+                // 没有favicon图片且没有域名，更新文字
+                el.innerHTML = `<span style="font-size:22px;font-weight:bold;opacity:0.7;">${escapeHTML(item.icon || '?')}</span>`;
+            } else if (!el.querySelector('img') && item.domain) {
+                // 有域名但favicon加载失败的情况，也更新文字
+                el.innerHTML = `<span style="font-size:22px;font-weight:bold;opacity:0.7;">${escapeHTML(item.icon || '?')}</span>`;
+            }
+        }
+
+        // ==================== SortableJS 拖拽逻辑 ====================
+        function initSortable() {
+            const catContainer = document.getElementById('categories');
+            const linkContainer = document.getElementById('linksContainer');
+
+            // 销毁旧实例
+            if (catSortable) catSortable.destroy();
+            if (linkSortable) linkSortable.destroy();
+            catSortable = null;
+            linkSortable = null;
+
+            // 1. 分类排序
+            if (catContainer && catContainer.children.length > 0) {
+                catSortable = new Sortable(catContainer, {
+                    handle: '.drag-handle',
+                    animation: 200,
+                    ghostClass: 'sortable-ghost',
+                    fallbackClass: 'sortable-fallback',
+                    forceFallback: true,
+                    group: 'categories',
+                    onEnd: function(evt) {
+                        if (evt.oldIndex === evt.newIndex) return;
+                        const item = sites.splice(evt.oldIndex, 1)[0];
+                        sites.splice(evt.newIndex, 0, item);
+                        // 更新 currentCatIndex
+                        if (currentCatIndex === evt.oldIndex) {
+                            currentCatIndex = evt.newIndex;
+                        } else if (evt.oldIndex < currentCatIndex && evt.newIndex >= currentCatIndex) {
+                            currentCatIndex--;
+                        } else if (evt.oldIndex > currentCatIndex && evt.newIndex <= currentCatIndex) {
+                            currentCatIndex++;
+                        }
+                        autoSaveLocal();
+                        renderAll();
+                    },
+                });
+            }
+
+            // 2. 网址排序（仅在有效分类下初始化）
+            if (currentCatIndex >= 0 && sites[currentCatIndex] && linkContainer && linkContainer.children.length > 0) {
+                if (linkSortable) { linkSortable.destroy(); linkSortable = null; }
+                let dragData = null;
+
+                linkSortable = new Sortable(linkContainer, {
+                    handle: '.drag-handle',
+                    animation: 200,
+                    ghostClass: 'sortable-ghost',
+                    fallbackClass: 'sortable-fallback',
+                    forceFallback: true,
+                    fallbackTolerance: 3,
+                    group: 'links',
+                    onStart: function(evt) {
+                        dragData = { index: evt.oldIndex, lastX: 0, lastY: 0 };
+
+                        const handleMove = (e) => {
+                            const cx = e.clientX ?? e.touches?.[0]?.clientX;
+                            const cy = e.clientY ?? e.touches?.[0]?.clientY;
+                            if (cx == null) return;
+                            dragData.lastX = cx;
+                            dragData.lastY = cy;
+
+                            const el = document.elementFromPoint(cx, cy);
+                            const catItem = el?.closest('.cat-item');
+
+                            document.querySelectorAll('.cat-item').forEach(item => {
+                                item.classList.remove('outline', 'outline-2', 'outline-primary/50', 'outline-offset-2', 'bg-primary/10');
+                            });
+
+                            if (catItem) {
+                                const targetIdx = parseInt(catItem.dataset.catIndex);
+                                if (targetIdx !== currentCatIndex) {
+                                    catItem.classList.add('outline', 'outline-2', 'outline-primary/50', 'outline-offset-2');
+                                }
+                            }
+                        };
+
+                        document.addEventListener('mousemove', handleMove);
+                        document.addEventListener('touchmove', handleMove, { passive: true });
+                        dragData.cleanup = () => {
+                            document.removeEventListener('mousemove', handleMove);
+                            document.removeEventListener('touchmove', handleMove);
+                        };
+                    },
+                    onEnd: function(evt) {
+                        if (dragData?.cleanup) dragData.cleanup();
+
+                        // 强制清理 SortableJS fallback 残留元素
+                        setTimeout(() => {
+                            document.querySelectorAll('.sortable-fallback, .sortable-drag, .sortable-ghost').forEach(el => {
+                                el.style.opacity = '0';
+                                el.style.transition = 'opacity 0.15s';
+                                requestAnimationFrame(() => {
+                                    el.style.opacity = '0';
+                                    setTimeout(() => el.remove(), 150);
+                                });
+                            });
+                        }, 0);
+                        setTimeout(() => {
+                            document.querySelectorAll('.sortable-fallback, .sortable-drag, .sortable-ghost').forEach(el => el.remove());
+                        }, 250);
+
+                        document.querySelectorAll('.cat-item').forEach(item => {
+                            item.classList.remove('outline', 'outline-2', 'outline-primary/50', 'outline-offset-2', 'bg-primary/10');
+                        });
+
+                        const x = dragData?.lastX ?? evt.originalEvent?.clientX;
+                        const y = dragData?.lastY ?? evt.originalEvent?.clientY;
+
+                        if (x != null && y != null) {
+                            const el = document.elementFromPoint(x, y);
+                            const catItem = el?.closest('.cat-item');
+                            if (catItem) {
+                                const targetIdx = parseInt(catItem.dataset.catIndex);
+                                if (targetIdx !== currentCatIndex && dragData) {
+                                    const items = sites[currentCatIndex]?.items;
+                                    if (items && dragData.index < items.length) {
+                                        const itemToMove = items.splice(dragData.index, 1)[0];
+                                        sites[targetIdx].items.unshift(itemToMove);
+                                        autoSaveLocal();
+                                        showToast(`已移入分类 "${sites[targetIdx].category}"`);
+                                        renderAll();
+                                        dragData = null;
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (evt.to === linkContainer && evt.oldIndex !== evt.newIndex) {
+                            const items = sites[currentCatIndex]?.items;
+                            if (items && evt.oldIndex < items.length && evt.newIndex < items.length) {
+                                const moved = items.splice(evt.oldIndex, 1)[0];
+                                items.splice(evt.newIndex, 0, moved);
+                                autoSaveLocal();
+                                renderLinks();
+                                loadLinkFavicons();
+                                if (linkSortable) linkSortable.destroy();
+                                linkSortable = null;
+                                initSortable();
+                            }
+                        }
+
+                        dragData = null;
+                    }
+                });
+            }
+        }
+
+        // ==================== 业务交互 ====================
+        function selectCategory(idx) {
+            if (idx === currentCatIndex) return;
+            currentCatIndex = idx;
+            renderAll();
+        }
+
+        function addCategory() {
+            const name = prompt('输入新分类名称：');
+            if (!name || name.trim() === '') return;
+            sites.push({ category: name.trim(), items: [] });
+            currentCatIndex = sites.length - 1;
+            renderAll();
+            autoSaveLocal();
+            showToast(`已添加分类「${name.trim()}」`);
+        }
+
+        function renameCategory(idx) {
+            const newName = prompt('重命名分类：', sites[idx]?.category || '');
+            if (newName && newName.trim() !== '') {
+                sites[idx].category = newName.trim();
+                renderAll();
+                autoSaveLocal();
+                showToast(`已重命名为「${newName.trim()}」`);
+            }
+        }
+
+        function deleteCategory(idx) {
+            if (!confirm(`⚠️ 确定删除分类「${sites[idx]?.category || '未命名'}」及其内部所有网址吗？此操作不可恢复。`)) return;
+            sites.splice(idx, 1);
+            // 修正索引
+            if (sites.length === 0) {
+                currentCatIndex = -1;
+            } else if (currentCatIndex >= sites.length) {
+                currentCatIndex = Math.max(0, sites.length - 1);
+            } else if (currentCatIndex > idx) {
+                currentCatIndex--;
+            }
+            renderAll();
+            autoSaveLocal();
+            showToast('分类已删除');
+        }
+
+        function addLink() {
+            if (currentCatIndex < 0 || !sites[currentCatIndex]) return;
+            sites[currentCatIndex].items.unshift({
+                name: '',
+                url: 'https://',
+                icon: '?',
+                desc: '',
+                domain: ''
+            });
+            renderAll();
+            autoSaveLocal();
+            showToast('已添加新网址，请编辑信息');
+            // 滚动到顶部以显示新添加的项
+            const container = document.getElementById('linksContainer');
+            if (container) container.scrollTop = 0;
+        }
+
+        /**
+         * 更新链接字段 - 【关键修复】
+         * 只更新数据模型和必要的DOM元素，不重新渲染整个列表，
+         * 避免输入框失焦和列表闪烁。
+         */
+        function updateLinkField(index, field, value) {
+            if (currentCatIndex < 0 || !sites[currentCatIndex]) return;
+            const items = sites[currentCatIndex].items;
+            if (!items || index >= items.length) return;
+
+            items[index][field] = value;
+
+            // 如果修改了URL，自动解析域名
+            if (field === 'url') {
+                try {
+                    items[index].domain = new URL(value).hostname;
+                } catch (e) {
+                    // URL格式无效时清空域名
+                    items[index].domain = '';
+                }
+                // 刷新单个favicon
+                refreshSingleLinkFavicon(index);
+            }
+
+            // 如果修改了图标文字，更新预览
+            if (field === 'icon') {
+                refreshSingleLinkIconText(index);
+            }
+
+            autoSaveLocal();
+        }
+
+        /** 处理移动链接select的change事件 */
+        function handleMoveLinkSelect(selectEl, linkIndex) {
+            const value = selectEl.value;
+            if (value === '' || value === null) return;
+            const targetCatIdx = parseInt(value);
+            // 立即重置select
+            selectEl.value = '';
+            if (isNaN(targetCatIdx) || targetCatIdx < 0 || targetCatIdx >= sites.length || targetCatIdx ===
+                currentCatIndex) return;
+            moveLink(linkIndex, targetCatIdx);
+        }
+
+        function moveLink(index, targetCatIdx) {
+            if (isNaN(targetCatIdx) || targetCatIdx < 0 || targetCatIdx >= sites.length || targetCatIdx ===
+                currentCatIndex) return;
+            if (!sites[currentCatIndex]?.items) return;
+            const itemToMove = sites[currentCatIndex].items.splice(index, 1)[0];
+            if (!itemToMove) return;
+            if (!sites[targetCatIdx].items) sites[targetCatIdx].items = [];
+            sites[targetCatIdx].items.unshift(itemToMove);
+            autoSaveLocal();
+            showToast(`已移入分类「${sites[targetCatIdx].category}」`);
+            renderAll();
+        }
+
+        function deleteLink(index) {
+            if (!confirm('确定删除该网址？')) return;
+            if (!sites[currentCatIndex]?.items) return;
+            sites[currentCatIndex].items.splice(index, 1);
+            renderAll();
+            autoSaveLocal();
+            showToast('网址已删除');
+        }
+
+        // ==================== I/O & 保存系统 ====================
+        async function saveToFile() {
+            try {
+                const res = await fetch('/save-sites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(sites, null, 2)
+                });
+                if (res.ok) {
+                    // 保存成功后清除缓存（因为数据已同步到服务器）
+                    localStorage.removeItem('adminSitesCache');
+                    showToast('✨ 保存成功，已同步至服务器');
+                } else {
+                    fallbackFileSave();
+                }
+            } catch (e) {
+                fallbackFileSave();
+            }
+        }
+
+        /** 使用 File System Access API 直接保存文件（需浏览器授权） */
+        async function fallbackFileSave() {
+            if ('showSaveFilePicker' in window) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: 'sites.json',
+                        types: [{ description: 'JSON File', accept: { 'application/json': ['.json'] } }]
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(JSON.stringify(sites, null, 2));
+                    await writable.close();
+                    localStorage.removeItem('adminSitesCache');
+                    showToast('✨ 已直写覆盖本地 sites.json 文件');
+                } catch (e) {
+                    if (e.name !== 'AbortError') {
+                        exportJSON();
+                    }
+                }
+            } else {
+                exportJSON();
+            }
+        }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(sites, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'sites.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            showToast('📥 已生成下载，请替换 data/ 目录下的同名文件');
+        }
+
+        function autoSaveLocal() {
+            try {
+                localStorage.setItem('adminSitesCache', JSON.stringify(sites));
+            } catch (e) {
+                showToast('⚠️ 本地存储空间不足，请清理缓存或导出数据', 'error');
+            }
+        }
+
+        function loadFromLocal() {
+            const cached = localStorage.getItem('adminSitesCache');
+            if (cached) {
+                try {
+                    sites = JSON.parse(cached);
+                    if (!Array.isArray(sites)) sites = [];
+                    sites.forEach(cat => { if (!Array.isArray(cat.items)) cat.items = []; });
+                    if (sites.length > 0 && currentCatIndex >= sites.length) {
+                        currentCatIndex = Math.max(0, sites.length - 1);
+                    }
+                    if (sites.length === 0) currentCatIndex = -1;
+                    renderAll();
+                    showToast('📂 已从浏览器缓存中读取数据');
+                } catch (e) {
+                    showToast('缓存数据损坏，无法读取', 'error');
+                }
+            } else {
+                showToast('暂无本地修改记录', 'info');
+            }
+        }
+
+        function clearLocalCache() {
+            if (confirm('清除缓存后将丢失未导出的更改，是否继续？')) {
+                localStorage.removeItem('adminSitesCache');
+                // 重新加载线上数据
+                loadInitialData();
+                showToast('缓存已清空，数据已重置');
+            }
+        }
+
+        // ==================== UI 工具 ====================
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const txt = document.getElementById('toast-msg');
+            if (!t || !icon || !txt) return;
+
+            icon.textContent = type === 'success' ? '✨' : type === 'error' ? '❌' : type === 'info' ? '🔔' : '📢';
+            txt.textContent = msg;
+
+            t.classList.remove('hidden');
+            t.classList.add('toast-show');
+            // 清除之前的定时器
+            if (t._timeout) clearTimeout(t._timeout);
+            t._timeout = setTimeout(() => {
+                t.classList.remove('toast-show');
+                t.classList.add('hidden');
+            }, 3000);
+        }
+
+        // ==================== 事件绑定 ====================
+        document.getElementById('saveFileBtn')?.addEventListener('click', saveToFile);
+        document.getElementById('exportBtn')?.addEventListener('click', exportJSON);
+        document.getElementById('loadLocalBtn')?.addEventListener('click', loadFromLocal);
+        document.getElementById('clearLocalBtn')?.addEventListener('click', clearLocalCache);
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveToFile();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+                // 简单的撤销提示（实际撤销需要更复杂的历史记录）
+                showToast('💡 可从左侧「恢复缓存」按钮找回之前的自动保存', 'info');
+            }
+        });
+
+        // ==================== 启动 ====================
+        loadInitialData();
+
+        // 回到顶部功能
+        (function initBackToTop() {
+            const btn = document.getElementById('backToTop');
+            if (!btn) return;
+
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+        })();
+
+        // 全局清理残留拖拽元素的安全网
+        (function cleanupDragObserver() {
+            const observer = new MutationObserver((mutations) => {
+                for (const m of mutations) {
+                    for (const node of m.addedNodes) {
+                        if (node.nodeType === 1 && (
+                            node.classList?.contains('sortable-fallback') ||
+                            node.classList?.contains('sortable-drag')
+                        )) {
+                            // 如果超过 3 秒还在，强制删除
+                            setTimeout(() => {
+                                if (node.parentNode) {
+                                    node.style.opacity = '0';
+                                    node.style.transition = 'opacity 0.2s';
+                                    requestAnimationFrame(() => setTimeout(() => node.remove(), 200));
+                                }
+                            }, 3000);
+                        }
+                    }
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        })();
+    </script>
+</body>
+</html>
