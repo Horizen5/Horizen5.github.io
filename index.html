@@ -21,9 +21,9 @@
                         mono: ['Fira Code', 'monospace'],
                     },
                     colors: {
-                        dark: '#030305', // 更深邃的黑，参考高级官网
-                        primary: '#00f0ff', // 赛博朋克青/霓虹蓝
-                        secondary: '#7000ff', // 能量紫
+                        dark: '#030305',
+                        primary: '#00f0ff',
+                        secondary: '#7000ff',
                     },
                     backgroundImage: {
                         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -101,7 +101,7 @@
         .reveal {
             opacity: 0;
             transform: translateY(60px);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); /* 加长动画时间，增加视觉停顿感 */
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .reveal.scale {
             transform: translateY(40px) scale(0.92);
@@ -174,7 +174,7 @@
         html.light-mode .mouse { border-color: rgba(0,0,0,0.4); }
         html.light-mode .mouse::before { background: rgba(0,0,0,0.8); }
         
-        /* 主页全局悬浮按钮的浅色样式 */
+        /* 导航栏主题切换按钮的浅色样式 */
         html.light-mode .global-theme-toggle { background: rgba(255,255,255,0.85); border-color: rgba(0,0,0,0.1); color: #475569 !important; }
         html.light-mode .global-theme-toggle:hover { background: rgba(0,0,0,0.05); color: #0f172a !important; }
     </style>
@@ -187,13 +187,6 @@
 </head>
 <body class="antialiased selection:bg-primary/30 selection:text-white">
 
-    <!-- 全局悬浮模式切换按钮 -->
-    <button id="global-theme-toggle" class="fixed top-[10px] right-[20px] z-[100] w-[44px] h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-lg global-theme-toggle" aria-label="切换主题">
-        <!-- 完美的几何对称月亮/太阳图标 -->
-        <svg class="w-[20px] h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
-        <svg class="w-[20px] h-[20px] sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
-    </button>
-
     <!-- Advanced Background -->
     <div class="fixed inset-0 z-[-1] pointer-events-none bg-dark">
         <!-- Grid -->
@@ -202,38 +195,49 @@
         <div class="absolute top-[-20%] left-1/2 transform -translate-x-1/2 w-[80%] h-[500px] bg-primary/20 rounded-full mix-blend-screen filter blur-[120px] opacity-50"></div>
     </div>
 
+    <!-- 导航栏：将主题切换按钮移入其中，完美对齐 -->
     <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-5 md:px-6 py-3 md:py-4 flex justify-between items-center">
             <a href="#home" class="text-2xl font-black tracking-tighter flex items-center gap-2 group">
                 <span class="text-white">Horizen<span class="text-slate-500">5</span></span>
             </a>
             
-            <ul class="hidden md:flex space-x-10 text-sm font-medium text-slate-400 tracking-wide items-center">
-                <li><a href="#home" class="hover:text-white transition-colors duration-300">首页</a></li>
-                <li><a href="#projects" class="hover:text-white transition-colors duration-300">项目</a></li>
-                <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
-                <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
-                <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
-                <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="hover:text-white transition-colors duration-300">关于</a></li>
-            </ul>
+            <div class="flex items-center gap-3 md:gap-6">
+                <!-- PC端菜单 -->
+                <ul class="hidden md:flex space-x-8 text-sm font-medium text-slate-400 tracking-wide items-center">
+                    <li><a href="#home" class="hover:text-white transition-colors duration-300">首页</a></li>
+                    <li><a href="#projects" class="hover:text-white transition-colors duration-300">项目</a></li>
+                    <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
+                    <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
+                    <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
+                    <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="hover:text-white transition-colors duration-300">关于</a></li>
+                </ul>
 
-            <!-- 增大按钮热区 (padding) 并优化反馈 -->
-            <div class="md:hidden flex items-center pr-10 md:pr-0">
-                <button class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors active:scale-95" id="mobile-menu-btn" aria-label="Toggle menu">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
+                <!-- 右侧操作区：主题切换 + 移动端菜单键 -->
+                <div class="flex items-center gap-2 md:gap-3">
+                    <!-- 全局主题切换按钮 -->
+                    <button id="global-theme-toggle" class="w-[38px] h-[38px] md:w-[44px] md:h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 global-theme-toggle" aria-label="切换主题">
+                        <svg class="w-[18px] h-[18px] md:w-[20px] md:h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+                        <svg class="w-[18px] h-[18px] md:w-[20px] md:h-[20px] sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+                    </button>
+
+                    <!-- 移动端菜单键 -->
+                    <button class="md:hidden text-slate-300 hover:text-white w-[38px] h-[38px] rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors active:scale-95" id="mobile-menu-btn" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
         
-        <!-- 使用 max-height 实现丝滑的展开动画 -->
+        <!-- 移动端菜单：增大文字上下内边距，铺满可点击区域 -->
         <div class="md:hidden bg-[#030305]/95 backdrop-blur-xl border-b border-white/5 absolute w-full overflow-hidden max-h-0 transition-all duration-500 ease-in-out" id="mobile-menu">
-            <ul class="flex flex-col px-6 py-6 space-y-6 text-sm font-medium text-slate-300">
-                <li><a href="#home" class="block hover:text-white transition-colors">首页</a></li>
-                <li><a href="#projects" class="block hover:text-white transition-colors">项目</a></li>
-                <li><a href="#skills" class="block hover:text-white transition-colors">技能</a></li>
-                <li><a href="website.html" class="block hover:text-white transition-colors">工具</a></li>
-                <li><a href="#contact" class="block hover:text-white transition-colors">联系</a></li>
-                <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="block hover:text-white transition-colors">关于</a></li>
+            <ul class="flex flex-col px-4 py-4 space-y-1 text-[15px] font-medium text-slate-300">
+                <li><a href="#home" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">首页</a></li>
+                <li><a href="#projects" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">项目</a></li>
+                <li><a href="#skills" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">技能</a></li>
+                <li><a href="website.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">工具</a></li>
+                <li><a href="#contact" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">联系</a></li>
+                <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">关于</a></li>
             </ul>
         </div>
     </nav>
