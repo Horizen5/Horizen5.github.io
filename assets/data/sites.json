@@ -1,422 +1,2064 @@
 [
   {
-    "category": "AI 工具",
+    "category": "游戏相关",
     "items": [
-      { "name": "Futurepedia", "url": "https://www.futurepedia.io/", "domain": "futurepedia.io", "icon": "F" },
-      { "name": "AIchatOS", "url": "https://chat5.aichatos.com/", "domain": "aichatos.com", "icon": "A" },
-      { "name": "New chat", "url": "https://chat.openai.com/chat", "domain": "openai.com", "icon": "N" },
-      { "name": "Perplexity", "url": "https://www.perplexity.ai/", "domain": "perplexity.ai", "icon": "P" },
-      { "name": "抠图", "url": "https://pixian.ai/", "domain": "pixian.ai", "icon": "抠" },
-      { "name": "AI 应用导航", "url": "https://c.runoob.com/ai/", "domain": "runoob.com", "icon": "A" },
-      { "name": "角色.ai", "url": "https://beta.character.ai/", "domain": "character.ai", "icon": "角" },
-      { "name": "Xtella.AI", "url": "https://xtella.ai/bid-earn", "domain": "xtella.ai", "icon": "X" },
-      { "name": "LiblibAI", "url": "https://www.liblib.art/", "domain": "liblib.art", "icon": "L" },
-      { "name": "Leonardo.Ai", "url": "https://app.leonardo.ai/", "domain": "leonardo.ai", "icon": "L" },
-      { "name": "you", "url": "https://you.com/", "domain": "you.com", "icon": "Y" },
-      { "name": "Chatbox", "url": "https://github.com/Bin-Huang/chatbox", "domain": "github.com", "icon": "C" }
+      {
+        "name": "经典小游戏站",
+        "url": "https://classicgames.wzypbh.cn/",
+        "domain": "classicgames.wzypbh.cn",
+        "icon": "经"
+      },
+      {
+        "name": "宝玩 Poki",
+        "url": "https://poki.com/",
+        "domain": "poki.com",
+        "icon": "宝"
+      },
+      {
+        "name": "Y8 小游戏",
+        "url": "https://y8.com/",
+        "domain": "y8.com",
+        "icon": "Y"
+      },
+      {
+        "name": "KBH 游戏",
+        "url": "https://kbhgames.com/",
+        "domain": "kbhgames.com",
+        "icon": "K"
+      },
+      {
+        "name": "疯狂游戏",
+        "url": "https://crazygames.com/",
+        "domain": "crazygames.com",
+        "icon": "疯"
+      },
+      {
+        "name": "Switch520",
+        "url": "https://www.gamer520.com/",
+        "domain": "gamer520.com",
+        "icon": "S"
+      },
+      {
+        "name": "XDGAME",
+        "url": "https://www.xdgame.com/",
+        "domain": "xdgame.com",
+        "icon": "X"
+      },
+      {
+        "name": "原神启动器",
+        "url": "https://blog.tomys.top/2022-07/GenshinLauncher/",
+        "domain": "tomys.top",
+        "icon": "原"
+      },
+      {
+        "name": "BetterGI",
+        "url": "https://bgi.huiyadan.com/",
+        "domain": "huiyadan.com",
+        "icon": "B"
+      },
+      {
+        "name": "520switch",
+        "url": "https://www.520switch.com/",
+        "domain": "520switch.com",
+        "icon": "5"
+      }
     ]
   },
   {
-    "category": "开发技术",
+    "category": "AI 工具",
     "items": [
-      { "name": "MSDN, 我告诉你", "url": "https://msdn.itellyou.cn/", "domain": "itellyou.cn", "icon": "M" },
-      { "name": "npm install 卡住", "url": "https://blog.csdn.net/wenxuankeji/article/details/135658361", "domain": "csdn.net", "icon": "n" },
-      { "name": "Cloudflare", "url": "https://dash.cloudflare.com/", "domain": "cloudflare.com", "icon": "C" },
-      { "name": "VPS购买与设置教程", "url": "https://mirror.xyz/0x6e5f54B4c182baFDA14426235F24B80e638E109a/hFykOLsdNwNCve1uI6RRWoqvcZKjwrHg6riGKZPfogk", "domain": "mirror.xyz", "icon": "V" },
-      { "name": "服务器浏览器映射脚本", "url": "https://mirror.xyz/0x6e5f54B4c182baFDA14426235F24B80e638E109a/R9AR0CCSz3NB3SVljSDgCC38942Iq3PJWakeN7MHTwU", "domain": "mirror.xyz", "icon": "服" },
-      { "name": "Dallas VPS Hosting", "url": "https://xentain.com/dallas-vps", "domain": "xentain.com", "icon": "D" },
-      { "name": "Domain Name, Hosting", "url": "https://clck.showmelinks.com/rM4tT5", "domain": "showmelinks.com", "icon": "D" },
-      { "name": "搭建Epusdt接入独角数卡", "url": "https://www.j000e.com/websites/Epusdt_payment.html", "domain": "j000e.com", "icon": "搭" },
-      { "name": "RackNerd LLC", "url": "https://my.racknerd.com/register.php", "domain": "racknerd.com", "icon": "R" },
-      { "name": "Contabo", "url": "https://contabo.com/en/vps/cloud-vps-1/", "domain": "contabo.com", "icon": "C" },
-      { "name": "樱花内网穿透", "url": "https://www.natfrp.com/", "domain": "natfrp.com", "icon": "樱" },
-      { "name": "HTTP | MDN", "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP", "domain": "mozilla.org", "icon": "H" },
-      { "name": "Zion无代码开发平台", "url": "https://www.functorz.com/", "domain": "functorz.com", "icon": "Z" },
-      { "name": "Infura", "url": "https://app.infura.io/login", "domain": "infura.io", "icon": "I" },
-      { "name": "CuteHttpFileServer", "url": "http://iscute.cn/chfs", "domain": "iscute.cn", "icon": "C" },
-      { "name": "Unesty - Rent VPS", "url": "https://server.unesty.net/", "domain": "unesty.net", "icon": "U" },
-      { "name": "Chrome-Manager", "url": "https://github.com/devilflasher/Chrome-Manager", "domain": "github.com", "icon": "C" },
-      { "name": "Clash.Meta Wiki", "url": "https://clash-meta.gitbook.io/clash.meta-wiki-older/used", "domain": "gitbook.io", "icon": "C" },
-      { "name": "GitHub", "url": "https://github.com/", "domain": "github.com", "icon": "G", "desc": "开源及私有软件项目托管平台" },
-      { "name": "Stack Overflow", "url": "https://stackoverflow.com/", "domain": "stackoverflow.com", "icon": "S", "desc": "IT技术问答网站" },
-      { "name": "CSDN", "url": "https://www.csdn.net/", "domain": "csdn.net", "icon": "C", "desc": "程序员社区" },
-      { "name": "V2EX", "url": "https://www.v2ex.com/", "domain": "v2ex.com", "icon": "V", "desc": "编程、设计、硬件社区" },
-      { "name": "掘金", "url": "https://juejin.im/", "domain": "juejin.im", "icon": "掘", "desc": "技术干货社区" },
-      { "name": "知乎", "url": "https://www.zhihu.com/", "domain": "zhihu.com", "icon": "知", "desc": "问答社区" },
-      { "name": "博客园", "url": "https://www.cnblogs.com/", "domain": "cnblogs.com", "icon": "博", "desc": "技术博客平台" },
-      { "name": "开源中国", "url": "https://www.oschina.net/", "domain": "oschina.net", "icon": "开", "desc": "开源社区" },
-      { "name": "力扣", "url": "https://leetcode-cn.com/", "domain": "leetcode-cn.com", "icon": "力", "desc": "刷题平台" },
-      { "name": "清华大学镜像站", "url": "https://mirrors.tuna.tsinghua.edu.cn/", "domain": "mirrors.tuna.tsinghua.edu.cn", "icon": "清", "desc": "开源软件镜像" }
+      {
+        "name": "New chat",
+        "url": "https://chat.openai.com/chat",
+        "domain": "openai.com",
+        "icon": "N"
+      },
+      {
+        "name": "Futurepedia",
+        "url": "https://www.futurepedia.io/",
+        "domain": "futurepedia.io",
+        "icon": "F"
+      },
+      {
+        "name": "MSDN, 我告诉你",
+        "url": "https://msdn.itellyou.cn/",
+        "domain": "itellyou.cn",
+        "icon": "M"
+      },
+      {
+        "name": "Perplexity",
+        "url": "https://www.perplexity.ai/",
+        "domain": "perplexity.ai",
+        "icon": "P"
+      },
+      {
+        "name": "AI 应用导航",
+        "url": "https://c.runoob.com/ai/",
+        "domain": "runoob.com",
+        "icon": "A"
+      },
+      {
+        "name": "角色.ai",
+        "url": "https://beta.character.ai/",
+        "domain": "character.ai",
+        "icon": "角"
+      },
+      {
+        "name": "Leonardo.Ai",
+        "url": "https://app.leonardo.ai/",
+        "domain": "leonardo.ai",
+        "icon": "L"
+      },
+      {
+        "name": "you",
+        "url": "https://you.com/",
+        "domain": "you.com",
+        "icon": "Y"
+      },
+      {
+        "name": "Chatbox",
+        "url": "https://github.com/Bin-Huang/chatbox",
+        "domain": "github.com",
+        "icon": "C"
+      },
+      {
+        "name": "LiblibAI",
+        "url": "https://www.liblib.art/",
+        "domain": "liblib.art",
+        "icon": "L"
+      }
     ]
   },
   {
     "category": "学习资源",
     "items": [
-      { "name": "ChatGPT学习手册", "url": "https://nujuo8y1qx.feishu.cn/docx/AdqEdlT52oBiawx6Vv2cc89DnLb", "domain": "feishu.cn", "icon": "C" },
-      { "name": "CS自学指南", "url": "https://csdiy.wiki/", "domain": "csdiy.wiki", "icon": "C" },
-      { "name": "菜鸟教程", "url": "https://www.runoob.com/", "domain": "runoob.com", "icon": "菜" },
-      { "name": "Python 入门指南", "url": "https://www.runoob.com/manual/pythontutorial3/docs/html/", "domain": "runoob.com", "icon": "P" },
-      { "name": "图欧学习资源导航", "url": "https://tuostudy.upnb.top/", "domain": "upnb.top", "icon": "图" },
-      { "name": "学习资源船舱", "url": "https://tuostudy.top/", "domain": "tuostudy.top", "icon": "学" },
-      { "name": "APatch安装教程", "url": "https://apatch.app/", "domain": "apatch.app", "icon": "A" },
-      { "name": "学习盲打", "url": "https://www.typingclub.com/", "domain": "typingclub.com", "icon": "学" },
-      { "name": "Clash-Verge 教程", "url": "https://duangks.com/archives/140/", "domain": "duangks.com", "icon": "C" },
-      { "name": "余笙的技术栈", "url": "https://www.jinrulan.com/", "domain": "jinrulan.com", "icon": "余" },
-      { "name": "提取boot.img教程", "url": "https://miuiver.com/extracting-boot-img/", "domain": "miuiver.com", "icon": "提" },
-      { "name": "AList文档", "url": "https://alist.nn.ci/zh/", "domain": "nn.ci", "icon": "A" },
-      { "name": "Learning Prompt", "url": "https://learningprompt.wiki/", "domain": "learningprompt.wiki", "icon": "L" },
-      { "name": "VPS折腾记录", "url": "https://blog.laoda.de/", "domain": "laoda.de", "icon": "V" },
-      { "name": "大学生和他的教程们", "url": "https://fish-vase-fdc.notion.site/107619c405bb4c79b1a5c41059da17b1", "domain": "notion.site", "icon": "大" },
-      { "name": "VPS用作VPN", "url": "https://medium.com/@qklxsqf/%E5%A6%82%E4%BD%95%E5%B0%86-vps-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%A8%E4%BD%9C-vpn-f677d9b94dda", "domain": "medium.com", "icon": "V" },
-      { "name": "子清 – Medium", "url": "https://medium.com/@qklxsqf", "domain": "medium.com", "icon": "子" },
-      { "name": "NoActive教程", "url": "https://bzmshang.top/NoActive_Tombstone.html", "domain": "bzmshang.top", "icon": "N" },
-      { "name": "Telegram新手指南", "url": "https://www.tingtalk.me/telegram/", "domain": "tingtalk.me", "icon": "T" },
-      { "name": "AMD超频教程", "url": "https://post.smzdm.com/p/av7oxzqp/", "domain": "smzdm.com", "icon": "A" },
-      { "name": "Online Courses", "url": "https://clck.showmelinks.com/e28mp", "domain": "showmelinks.com", "icon": "O" },
-      { "name": "Coursera", "url": "https://clck.showmelinks.com/wF62urpI", "domain": "showmelinks.com", "icon": "C" },
-      { "name": "TradingView教學", "url": "https://rich01.com/tradingview-review-0/", "domain": "rich01.com", "icon": "T" },
-      { "name": "投资导航", "url": "https://btcdayu.gitbook.io/dayu", "domain": "gitbook.io", "icon": "投" },
-      { "name": "ChatGPT公式到Word", "url": "https://blog.csdn.net/qq_58860480/article/details/140679173", "domain": "csdn.net", "icon": "C" },
-      { "name": "AI隐藏文字教程", "url": "https://blog.csdn.net/A13531922962/article/details/139287697", "domain": "csdn.net", "icon": "A" },
-      { "name": "Win10快捷键", "url": "https://baijiahao.baidu.com/s?id=1664457093075278079", "domain": "baidu.com", "icon": "W" },
-      { "name": "Win10更新错误", "url": "https://zhidao.baidu.com/question/1822481233307025308.html", "domain": "baidu.com", "icon": "W" },
-      { "name": "Windows安装速度慢", "url": "https://wap.zol.com.cn/ask/x_5966507.html", "domain": "zol.com.cn", "icon": "W" },
-      { "name": "隐藏文件恢复", "url": "https://www.zhihu.com/question/511051738", "domain": "zhihu.com", "icon": "隐" },
-      { "name": "$folderelf删除", "url": "http://bbs.c3.wuyou.net/forum.php?mod=viewthread&tid=421977", "domain": "wuyou.net", "icon": "$" },
-      { "name": "硬盘病毒求助", "url": "https://www.52pojie.cn/thread-1266953-1-1.html", "domain": "52pojie.cn", "icon": "硬" },
-      { "name": "中国大学MOOC", "url": "https://www.icourse163.org/", "domain": "icourse163.org", "icon": "慕", "desc": "在线课程平台" }
+      {
+        "name": "ChatGPT学习手册",
+        "url": "https://nujuo8y1qx.feishu.cn/docx/AdqEdlT52oBiawx6Vv2cc89DnLb",
+        "domain": "feishu.cn",
+        "icon": "C"
+      },
+      {
+        "name": "CS自学指南",
+        "url": "https://csdiy.wiki/",
+        "domain": "csdiy.wiki",
+        "icon": "C"
+      },
+      {
+        "name": "菜鸟教程",
+        "url": "https://www.runoob.com/",
+        "domain": "runoob.com",
+        "icon": "菜"
+      },
+      {
+        "name": "Python 入门指南",
+        "url": "https://www.runoob.com/manual/pythontutorial3/docs/html/",
+        "domain": "runoob.com",
+        "icon": "P"
+      },
+      {
+        "name": "图欧学习资源导航",
+        "url": "https://tuostudy.upnb.top/",
+        "domain": "upnb.top",
+        "icon": "图"
+      },
+      {
+        "name": "学习资源船舱",
+        "url": "https://tuostudy.top/",
+        "domain": "tuostudy.top",
+        "icon": "学"
+      },
+      {
+        "name": "APatch安装教程",
+        "url": "https://apatch.app/",
+        "domain": "apatch.app",
+        "icon": "A"
+      },
+      {
+        "name": "学习盲打",
+        "url": "https://www.typingclub.com/",
+        "domain": "typingclub.com",
+        "icon": "学"
+      },
+      {
+        "name": "提取boot.img教程",
+        "url": "https://miuiver.com/extracting-boot-img/",
+        "domain": "miuiver.com",
+        "icon": "提"
+      },
+      {
+        "name": "AList文档",
+        "url": "https://alist.nn.ci/zh/",
+        "domain": "nn.ci",
+        "icon": "A"
+      },
+      {
+        "name": "Learning Prompt",
+        "url": "https://learningprompt.wiki/",
+        "domain": "learningprompt.wiki",
+        "icon": "L"
+      },
+      {
+        "name": "VPS折腾记录",
+        "url": "https://blog.laoda.de/",
+        "domain": "laoda.de",
+        "icon": "V"
+      },
+      {
+        "name": "大学生和他的教程们",
+        "url": "https://fish-vase-fdc.notion.site/107619c405bb4c79b1a5c41059da17b1",
+        "domain": "notion.site",
+        "icon": "大"
+      },
+      {
+        "name": "VPS用作VPN",
+        "url": "https://medium.com/@qklxsqf/%E5%A6%82%E4%BD%95%E5%B0%86-vps-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%A8%E4%BD%9C-vpn-f677d9b94dda",
+        "domain": "medium.com",
+        "icon": "V"
+      },
+      {
+        "name": "NoActive教程",
+        "url": "https://bzmshang.top/NoActive_Tombstone.html",
+        "domain": "bzmshang.top",
+        "icon": "N"
+      },
+      {
+        "name": "Telegram新手指南",
+        "url": "https://www.tingtalk.me/telegram/",
+        "domain": "tingtalk.me",
+        "icon": "T"
+      },
+      {
+        "name": "AMD超频教程",
+        "url": "https://post.smzdm.com/p/av7oxzqp/",
+        "domain": "smzdm.com",
+        "icon": "A"
+      },
+      {
+        "name": "Online Courses",
+        "url": "https://clck.showmelinks.com/e28mp",
+        "domain": "showmelinks.com",
+        "icon": "O"
+      },
+      {
+        "name": "Coursera",
+        "url": "https://clck.showmelinks.com/wF62urpI",
+        "domain": "showmelinks.com",
+        "icon": "C"
+      },
+      {
+        "name": "TradingView教學",
+        "url": "https://rich01.com/tradingview-review-0/",
+        "domain": "rich01.com",
+        "icon": "T"
+      },
+      {
+        "name": "投资导航",
+        "url": "https://btcdayu.gitbook.io/dayu",
+        "domain": "gitbook.io",
+        "icon": "投"
+      },
+      {
+        "name": "ChatGPT公式到Word",
+        "url": "https://blog.csdn.net/qq_58860480/article/details/140679173",
+        "domain": "csdn.net",
+        "icon": "C"
+      },
+      {
+        "name": "AI隐藏文字教程",
+        "url": "https://blog.csdn.net/A13531922962/article/details/139287697",
+        "domain": "csdn.net",
+        "icon": "A"
+      },
+      {
+        "name": "Win10快捷键",
+        "url": "https://baijiahao.baidu.com/s?id=1664457093075278079",
+        "domain": "baidu.com",
+        "icon": "W"
+      },
+      {
+        "name": "Win10更新错误",
+        "url": "https://zhidao.baidu.com/question/1822481233307025308.html",
+        "domain": "baidu.com",
+        "icon": "W"
+      },
+      {
+        "name": "Windows安装速度慢",
+        "url": "https://wap.zol.com.cn/ask/x_5966507.html",
+        "domain": "zol.com.cn",
+        "icon": "W"
+      },
+      {
+        "name": "隐藏文件恢复",
+        "url": "https://www.zhihu.com/question/511051738",
+        "domain": "zhihu.com",
+        "icon": "隐"
+      },
+      {
+        "name": "$folderelf删除",
+        "url": "http://bbs.c3.wuyou.net/forum.php?mod=viewthread&tid=421977",
+        "domain": "wuyou.net",
+        "icon": "$"
+      },
+      {
+        "name": "硬盘病毒求助",
+        "url": "https://www.52pojie.cn/thread-1266953-1-1.html",
+        "domain": "52pojie.cn",
+        "icon": "硬"
+      }
+    ]
+  },
+  {
+    "category": "开发技术",
+    "items": [
+      {
+        "name": "npm install 卡住",
+        "url": "https://blog.csdn.net/wenxuankeji/article/details/135658361",
+        "domain": "csdn.net",
+        "icon": "n"
+      },
+      {
+        "name": "Cloudflare",
+        "url": "https://dash.cloudflare.com/",
+        "domain": "cloudflare.com",
+        "icon": "C"
+      },
+      {
+        "name": "VPS购买与设置教程",
+        "url": "https://mirror.xyz/0x6e5f54B4c182baFDA14426235F24B80e638E109a/hFykOLsdNwNCve1uI6RRWoqvcZKjwrHg6riGKZPfogk",
+        "domain": "mirror.xyz",
+        "icon": "V"
+      },
+      {
+        "name": "服务器浏览器映射脚本",
+        "url": "https://mirror.xyz/0x6e5f54B4c182baFDA14426235F24B80e638E109a/R9AR0CCSz3NB3SVljSDgCC38942Iq3PJWakeN7MHTwU",
+        "domain": "mirror.xyz",
+        "icon": "服"
+      },
+      {
+        "name": "Dallas VPS Hosting",
+        "url": "https://xentain.com/dallas-vps",
+        "domain": "xentain.com",
+        "icon": "D"
+      },
+      {
+        "name": "Domain Name, Hosting",
+        "url": "https://clck.showmelinks.com/rM4tT5",
+        "domain": "showmelinks.com",
+        "icon": "D"
+      },
+      {
+        "name": "搭建Epusdt接入独角数卡",
+        "url": "https://www.j000e.com/websites/Epusdt_payment.html",
+        "domain": "j000e.com",
+        "icon": "搭"
+      },
+      {
+        "name": "RackNerd LLC",
+        "url": "https://my.racknerd.com/register.php",
+        "domain": "racknerd.com",
+        "icon": "R"
+      },
+      {
+        "name": "Contabo",
+        "url": "https://contabo.com/en/vps/cloud-vps-1/",
+        "domain": "contabo.com",
+        "icon": "C"
+      },
+      {
+        "name": "樱花内网穿透",
+        "url": "https://www.natfrp.com/",
+        "domain": "natfrp.com",
+        "icon": "樱"
+      },
+      {
+        "name": "HTTP | MDN",
+        "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP",
+        "domain": "mozilla.org",
+        "icon": "H"
+      },
+      {
+        "name": "Zion无代码开发平台",
+        "url": "https://www.functorz.com/",
+        "domain": "functorz.com",
+        "icon": "Z"
+      },
+      {
+        "name": "Infura",
+        "url": "https://app.infura.io/login",
+        "domain": "infura.io",
+        "icon": "I"
+      },
+      {
+        "name": "CuteHttpFileServer",
+        "url": "http://iscute.cn/chfs",
+        "domain": "iscute.cn",
+        "icon": "C"
+      },
+      {
+        "name": "Unesty - Rent VPS",
+        "url": "https://server.unesty.net/",
+        "domain": "unesty.net",
+        "icon": "U"
+      },
+      {
+        "name": "Chrome-Manager",
+        "url": "https://github.com/devilflasher/Chrome-Manager",
+        "domain": "github.com",
+        "icon": "C"
+      },
+      {
+        "name": "Clash.Meta Wiki",
+        "url": "https://clash-meta.gitbook.io/clash.meta-wiki-older/used",
+        "domain": "gitbook.io",
+        "icon": "C"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/",
+        "domain": "github.com",
+        "icon": "G",
+        "desc": "开源及私有软件项目托管平台"
+      },
+      {
+        "name": "Stack Overflow",
+        "url": "https://stackoverflow.com/",
+        "domain": "stackoverflow.com",
+        "icon": "S",
+        "desc": "IT技术问答网站"
+      },
+      {
+        "name": "CSDN",
+        "url": "https://www.csdn.net/",
+        "domain": "csdn.net",
+        "icon": "C",
+        "desc": "程序员社区"
+      },
+      {
+        "name": "V2EX",
+        "url": "https://www.v2ex.com/",
+        "domain": "v2ex.com",
+        "icon": "V",
+        "desc": "编程、设计、硬件社区"
+      },
+      {
+        "name": "掘金",
+        "url": "https://juejin.im/",
+        "domain": "juejin.im",
+        "icon": "掘",
+        "desc": "技术干货社区"
+      },
+      {
+        "name": "知乎",
+        "url": "https://www.zhihu.com/",
+        "domain": "zhihu.com",
+        "icon": "知",
+        "desc": "问答社区"
+      },
+      {
+        "name": "博客园",
+        "url": "https://www.cnblogs.com/",
+        "domain": "cnblogs.com",
+        "icon": "博",
+        "desc": "技术博客平台"
+      },
+      {
+        "name": "开源中国",
+        "url": "https://www.oschina.net/",
+        "domain": "oschina.net",
+        "icon": "开",
+        "desc": "开源社区"
+      },
+      {
+        "name": "力扣",
+        "url": "https://leetcode-cn.com/",
+        "domain": "leetcode-cn.com",
+        "icon": "力",
+        "desc": "刷题平台"
+      },
+      {
+        "name": "清华大学镜像站",
+        "url": "https://mirrors.tuna.tsinghua.edu.cn/",
+        "domain": "mirrors.tuna.tsinghua.edu.cn",
+        "icon": "清",
+        "desc": "开源软件镜像"
+      }
     ]
   },
   {
     "category": "资源下载",
     "items": [
-      { "name": "系统之家", "url": "http://www.xitongzhijia.net/", "domain": "xitongzhijia.net", "icon": "系" },
-      { "name": "小刀娱乐网", "url": "https://www.xiaodao.biz/", "domain": "xiaodao.biz", "icon": "小" },
-      { "name": "萤火虫资源站", "url": "https://www.yhcres.top/", "domain": "yhcres.top", "icon": "萤" },
-      { "name": "小妖怪分享网", "url": "https://www.zzzz688.top/", "domain": "zzzz688.top", "icon": "小" },
-      { "name": "云盘资源导航", "url": "https://aliyun.panpanr.com/", "domain": "panpanr.com", "icon": "云" },
-      { "name": "云盘资源分享网", "url": "https://www.yunpanziyuan.com/", "domain": "yunpanziyuan.com", "icon": "云" },
-      { "name": "红森林精品资源", "url": "http://www.hoslin.cn/", "domain": "hoslin.cn", "icon": "红" },
-      { "name": "Apps Cyborg", "url": "https://appscyborg.com/", "domain": "appscyborg.com", "icon": "A" },
-      { "name": "漫猫动漫BT", "url": "http://www.comicat.org/", "domain": "comicat.org", "icon": "漫" },
-      { "name": "FitGirl Repacks", "url": "https://fitgirl-repacks.site/", "domain": "fitgirl-repacks.site", "icon": "F" },
-      { "name": "ROM基地", "url": "http://www.romjd.com/", "domain": "romjd.com", "icon": "R" },
-      { "name": "APKPure", "url": "https://apkpure.com/cn", "domain": "apkpure.com", "icon": "A" },
-      { "name": "ROM下载之家", "url": "https://www.romzhijia.net/", "domain": "romzhijia.net", "icon": "R" },
-      { "name": "海盗湾", "url": "https://thepiratebay.org/", "domain": "thepiratebay.org", "icon": "海" },
-      { "name": "阿虚的储物间", "url": "https://axutongxue.com/", "domain": "axutongxue.com", "icon": "阿" },
-      { "name": "辅助吧", "url": "https://www.fuzhu86.com/", "domain": "fuzhu86.com", "icon": "辅" },
-      { "name": "吾爱破解", "url": "https://www.52pojie.cn/", "domain": "52pojie.cn", "icon": "吾" },
-      { "name": "安娜的档案", "url": "https://zh.annas-archive.org/", "domain": "annas-archive.org", "icon": "安" },
-      { "name": "Z-Library", "url": "https://zlib.cydiar.com/", "domain": "cydiar.com", "icon": "Z" },
-      { "name": "Sci-Hub", "url": "https://www.scihub.net.cn/", "domain": "scihub.net.cn", "icon": "S" },
-      { "name": "盐神阁", "url": "https://ysg0.com/", "domain": "ysg0.com", "icon": "盐" },
-      { "name": "Kiong Blog", "url": "http://www.pc936.com/", "domain": "pc936.com", "icon": "K" },
-      { "name": "知乎盐选免费阅读", "url": "https://pangniao.net/zhihuyanxuan.html", "domain": "pangniao.net", "icon": "知" }
+      {
+        "name": "系统之家",
+        "url": "http://www.xitongzhijia.net/",
+        "domain": "xitongzhijia.net",
+        "icon": "系"
+      },
+      {
+        "name": "小刀娱乐网",
+        "url": "https://www.xiaodao.biz/",
+        "domain": "xiaodao.biz",
+        "icon": "小"
+      },
+      {
+        "name": "萤火虫资源站",
+        "url": "https://www.yhcres.top/",
+        "domain": "yhcres.top",
+        "icon": "萤"
+      },
+      {
+        "name": "小妖怪分享网",
+        "url": "https://www.zzzz688.top/",
+        "domain": "zzzz688.top",
+        "icon": "小"
+      },
+      {
+        "name": "云盘资源导航",
+        "url": "https://aliyun.panpanr.com/",
+        "domain": "panpanr.com",
+        "icon": "云"
+      },
+      {
+        "name": "云盘资源分享网",
+        "url": "https://www.yunpanziyuan.com/",
+        "domain": "yunpanziyuan.com",
+        "icon": "云"
+      },
+      {
+        "name": "红森林精品资源",
+        "url": "http://www.hoslin.cn/",
+        "domain": "hoslin.cn",
+        "icon": "红"
+      },
+      {
+        "name": "Apps Cyborg",
+        "url": "https://appscyborg.com/",
+        "domain": "appscyborg.com",
+        "icon": "A"
+      },
+      {
+        "name": "漫猫动漫BT",
+        "url": "http://www.comicat.org/",
+        "domain": "comicat.org",
+        "icon": "漫"
+      },
+      {
+        "name": "FitGirl Repacks",
+        "url": "https://fitgirl-repacks.site/",
+        "domain": "fitgirl-repacks.site",
+        "icon": "F"
+      },
+      {
+        "name": "ROM基地",
+        "url": "http://www.romjd.com/",
+        "domain": "romjd.com",
+        "icon": "R"
+      },
+      {
+        "name": "APKPure",
+        "url": "https://apkpure.com/cn",
+        "domain": "apkpure.com",
+        "icon": "A"
+      },
+      {
+        "name": "ROM下载之家",
+        "url": "https://www.romzhijia.net/",
+        "domain": "romzhijia.net",
+        "icon": "R"
+      },
+      {
+        "name": "海盗湾",
+        "url": "https://thepiratebay.org/",
+        "domain": "thepiratebay.org",
+        "icon": "海"
+      },
+      {
+        "name": "阿虚的储物间",
+        "url": "https://axutongxue.com/",
+        "domain": "axutongxue.com",
+        "icon": "阿"
+      },
+      {
+        "name": "辅助吧",
+        "url": "https://www.fuzhu86.com/",
+        "domain": "fuzhu86.com",
+        "icon": "辅"
+      },
+      {
+        "name": "吾爱破解",
+        "url": "https://www.52pojie.cn/",
+        "domain": "52pojie.cn",
+        "icon": "吾"
+      },
+      {
+        "name": "安娜的档案",
+        "url": "https://zh.annas-archive.org/",
+        "domain": "annas-archive.org",
+        "icon": "安"
+      },
+      {
+        "name": "Z-Library",
+        "url": "https://zlib.cydiar.com/",
+        "domain": "cydiar.com",
+        "icon": "Z"
+      },
+      {
+        "name": "Sci-Hub",
+        "url": "https://www.scihub.net.cn/",
+        "domain": "scihub.net.cn",
+        "icon": "S"
+      },
+      {
+        "name": "盐神阁",
+        "url": "https://ysg0.com/",
+        "domain": "ysg0.com",
+        "icon": "盐"
+      },
+      {
+        "name": "Kiong Blog",
+        "url": "http://www.pc936.com/",
+        "domain": "pc936.com",
+        "icon": "K"
+      },
+      {
+        "name": "知乎盐选免费阅读",
+        "url": "https://pangniao.net/zhihuyanxuan.html",
+        "domain": "pangniao.net",
+        "icon": "知"
+      }
     ]
   },
   {
     "category": "设计素材",
     "items": [
-      { "name": "觅知网", "url": "https://www.51miz.com/", "domain": "51miz.com", "icon": "觅" },
-      { "name": "pixiv", "url": "https://www.pixiv.net/", "domain": "pixiv.net", "icon": "p" },
-      { "name": "wallpaperscraft", "url": "https://wallpaperscraft.com/", "domain": "wallpaperscraft.com", "icon": "w" },
-      { "name": "konachan", "url": "https://konachan.net/", "domain": "konachan.net", "icon": "k" },
-      { "name": "Unsplash", "url": "https://unsplash.com/", "domain": "unsplash.com", "icon": "U" },
-      { "name": "Pixivel", "url": "https://pixivel.moe/", "domain": "pixivel.moe", "icon": "P" },
-      { "name": "wallhaven", "url": "https://wallhaven.cc/", "domain": "wallhaven.cc", "icon": "w" },
-      { "name": "紳士漫畫", "url": "https://wnacg01.org/", "domain": "wnacg01.org", "icon": "紳" },
-      { "name": "Pixabay", "url": "https://pixabay.com/", "domain": "pixabay.com", "icon": "P" },
-      { "name": "字体天下", "url": "https://www.fonts.net.cn/", "domain": "fonts.net.cn", "icon": "字" },
-      { "name": "PXHere", "url": "https://pxhere.com/", "domain": "pxhere.com", "icon": "P" },
-      { "name": "CC0图片网", "url": "https://cc0.cn/", "domain": "cc0.cn", "icon": "C" },
-      { "name": "Foodiesfeed", "url": "https://www.foodiesfeed.com/", "domain": "foodiesfeed.com", "icon": "F" },
-      { "name": "10Wallpaper", "url": "https://www.10wallpaper.com/", "domain": "10wallpaper.com", "icon": "1" },
-      { "name": "alphacoders", "url": "https://wall.alphacoders.com/?lang=Chinese", "domain": "wall.alphacoders.com", "icon": "A" },
-      { "name": "极简壁纸", "url": "https://bz.zzzmh.cn/index", "domain": "bz.zzzmh.cn", "icon": "极" },
-      { "name": "3G壁纸", "url": "https://www.3gbizhi.com/", "domain": "3gbizhi.com", "icon": "3" },
-      { "name": "必应壁纸", "url": "https://bing.ioliu.cn/", "domain": "bing.ioliu.cn", "icon": "必" },
-      { "name": "Anime Pictures", "url": "https://anime-pictures.net", "domain": "anime-pictures.net", "icon": "A" },
-      { "name": "阿里巴巴矢量图库", "url": "https://www.iconfont.cn/", "domain": "iconfont.cn", "icon": "I" },
-      { "name": "Ikonate", "url": "https://ikonate.com/", "domain": "ikonate.com", "icon": "I" },
-      { "name": "iconstore", "url": "https://iconstore.co/", "domain": "iconstore.co", "icon": "I" },
-      { "name": "icooon", "url": "https://icooon-mono.com/", "domain": "icooon-mono.com", "icon": "I" },
-      { "name": "iconfinder", "url": "https://www.iconfinder.com/", "domain": "iconfinder.com", "icon": "F" },
-      { "name": "素材中国", "url": "http://www.sccnn.com/", "domain": "sccnn.com", "icon": "素" },
-      { "name": "站长素材", "url": "https://sc.chinaz.com/psd/", "domain": "sc.chinaz.com", "icon": "站" },
-      { "name": "365PSD", "url": "https://cn.365psd.com/free-psd", "domain": "365psd.com", "icon": "3" },
-      { "name": "freepik", "url": "https://www.freepik.com/psd", "domain": "freepik.com", "icon": "F" },
-      { "name": "freebiesbug", "url": "https://freebiesbug.com/", "domain": "freebiesbug.com", "icon": "B" },
-      { "name": "素材中国字体", "url": "http://www.sccnn.com/ziku/", "domain": "sccnn.com", "icon": "素" },
-      { "name": "100Font", "url": "https://www.100font.com/", "domain": "100font.com", "icon": "字" },
-      { "name": "DaFont", "url": "https://www.dafont.com/", "domain": "dafont.com", "icon": "D" },
-      { "name": "自由字体", "url": "https://ziyouziti.com/", "domain": "ziyouziti.com", "icon": "自" },
-      { "name": "中国色彩", "url": "http://zhongguose.com/", "domain": "zhongguose.com", "icon": "中" },
-      { "name": "ColorHex", "url": "https://www.colorhexa.com/", "domain": "colorhexa.com", "icon": "H" },
-      { "name": "优色网配色专区", "url": "https://color.uisdc.com/", "domain": "color.uisdc.com", "icon": "优" },
-      { "name": "ColorDrop", "url": "https://www.colordrop.io/", "domain": "colordrop.io", "icon": "D" },
-      { "name": "LOL Colors", "url": "https://www.webdesignrankings.com/resources/lolcolors/", "domain": "webdesignrankings.com", "icon": "L" },
-      { "name": "colorHunt", "url": "https://colorhunt.co/", "domain": "colorhunt.co", "icon": "H" },
-      { "name": "Adobe Color", "url": "https://color.adobe.com/zh/create/color-wheel", "domain": "color.adobe.com", "icon": "A" },
-      { "name": "uigradients", "url": "https://uigradients.com/#PiggyPink", "domain": "uigradients.com", "icon": "U" },
-      { "name": "webgradient", "url": "https://webgradients.com/", "domain": "webgradients.com", "icon": "W" },
-      { "name": "Giphy", "url": "https://giphy.com/", "domain": "giphy.com", "icon": "G" },
-      { "name": "GfyCat", "url": "https://gfycat.com/", "domain": "gfycat.com", "icon": "G" },
-      { "name": "Tenor", "url": "https://tenor.com/", "domain": "tenor.com", "icon": "T" },
-      { "name": "GIF ABYSS", "url": "https://gifs.alphacoders.com/", "domain": "gifs.alphacoders.com", "icon": "动" },
-      { "name": "动图宇宙", "url": "https://biaoqingsoso.com/", "domain": "biaoqingsoso.com", "icon": "动" },
-      { "name": "Soogif", "url": "https://www.soogif.com/", "domain": "soogif.com", "icon": "搜" },
-      { "name": "闪萌", "url": "http://www.weshineapp.com/", "domain": "weshineapp.com", "icon": "闪" }
+      {
+        "name": "觅知网",
+        "url": "https://www.51miz.com/",
+        "domain": "51miz.com",
+        "icon": "觅"
+      },
+      {
+        "name": "pixiv",
+        "url": "https://www.pixiv.net/",
+        "domain": "pixiv.net",
+        "icon": "p"
+      },
+      {
+        "name": "wallpaperscraft",
+        "url": "https://wallpaperscraft.com/",
+        "domain": "wallpaperscraft.com",
+        "icon": "w"
+      },
+      {
+        "name": "konachan",
+        "url": "https://konachan.net/",
+        "domain": "konachan.net",
+        "icon": "k"
+      },
+      {
+        "name": "Unsplash",
+        "url": "https://unsplash.com/",
+        "domain": "unsplash.com",
+        "icon": "U"
+      },
+      {
+        "name": "Pixivel",
+        "url": "https://pixivel.moe/",
+        "domain": "pixivel.moe",
+        "icon": "P"
+      },
+      {
+        "name": "wallhaven",
+        "url": "https://wallhaven.cc/",
+        "domain": "wallhaven.cc",
+        "icon": "w"
+      },
+      {
+        "name": "紳士漫畫",
+        "url": "https://wnacg01.org/",
+        "domain": "wnacg01.org",
+        "icon": "紳"
+      },
+      {
+        "name": "Pixabay",
+        "url": "https://pixabay.com/",
+        "domain": "pixabay.com",
+        "icon": "P"
+      },
+      {
+        "name": "字体天下",
+        "url": "https://www.fonts.net.cn/",
+        "domain": "fonts.net.cn",
+        "icon": "字"
+      },
+      {
+        "name": "PXHere",
+        "url": "https://pxhere.com/",
+        "domain": "pxhere.com",
+        "icon": "P"
+      },
+      {
+        "name": "CC0图片网",
+        "url": "https://cc0.cn/",
+        "domain": "cc0.cn",
+        "icon": "C"
+      },
+      {
+        "name": "Foodiesfeed",
+        "url": "https://www.foodiesfeed.com/",
+        "domain": "foodiesfeed.com",
+        "icon": "F"
+      },
+      {
+        "name": "10Wallpaper",
+        "url": "https://www.10wallpaper.com/",
+        "domain": "10wallpaper.com",
+        "icon": "1"
+      },
+      {
+        "name": "alphacoders",
+        "url": "https://wall.alphacoders.com/?lang=Chinese",
+        "domain": "wall.alphacoders.com",
+        "icon": "A"
+      },
+      {
+        "name": "极简壁纸",
+        "url": "https://bz.zzzmh.cn/index",
+        "domain": "bz.zzzmh.cn",
+        "icon": "极"
+      },
+      {
+        "name": "3G壁纸",
+        "url": "https://www.3gbizhi.com/",
+        "domain": "3gbizhi.com",
+        "icon": "3"
+      },
+      {
+        "name": "必应壁纸",
+        "url": "https://bing.ioliu.cn/",
+        "domain": "bing.ioliu.cn",
+        "icon": "必"
+      },
+      {
+        "name": "Anime Pictures",
+        "url": "https://anime-pictures.net",
+        "domain": "anime-pictures.net",
+        "icon": "A"
+      },
+      {
+        "name": "阿里巴巴矢量图库",
+        "url": "https://www.iconfont.cn/",
+        "domain": "iconfont.cn",
+        "icon": "I"
+      },
+      {
+        "name": "Ikonate",
+        "url": "https://ikonate.com/",
+        "domain": "ikonate.com",
+        "icon": "I"
+      },
+      {
+        "name": "iconstore",
+        "url": "https://iconstore.co/",
+        "domain": "iconstore.co",
+        "icon": "I"
+      },
+      {
+        "name": "icooon",
+        "url": "https://icooon-mono.com/",
+        "domain": "icooon-mono.com",
+        "icon": "I"
+      },
+      {
+        "name": "iconfinder",
+        "url": "https://www.iconfinder.com/",
+        "domain": "iconfinder.com",
+        "icon": "F"
+      },
+      {
+        "name": "素材中国",
+        "url": "http://www.sccnn.com/",
+        "domain": "sccnn.com",
+        "icon": "素"
+      },
+      {
+        "name": "站长素材",
+        "url": "https://sc.chinaz.com/psd/",
+        "domain": "sc.chinaz.com",
+        "icon": "站"
+      },
+      {
+        "name": "365PSD",
+        "url": "https://cn.365psd.com/free-psd",
+        "domain": "365psd.com",
+        "icon": "3"
+      },
+      {
+        "name": "freepik",
+        "url": "https://www.freepik.com/psd",
+        "domain": "freepik.com",
+        "icon": "F"
+      },
+      {
+        "name": "freebiesbug",
+        "url": "https://freebiesbug.com/",
+        "domain": "freebiesbug.com",
+        "icon": "B"
+      },
+      {
+        "name": "素材中国字体",
+        "url": "http://www.sccnn.com/ziku/",
+        "domain": "sccnn.com",
+        "icon": "素"
+      },
+      {
+        "name": "100Font",
+        "url": "https://www.100font.com/",
+        "domain": "100font.com",
+        "icon": "字"
+      },
+      {
+        "name": "DaFont",
+        "url": "https://www.dafont.com/",
+        "domain": "dafont.com",
+        "icon": "D"
+      },
+      {
+        "name": "自由字体",
+        "url": "https://ziyouziti.com/",
+        "domain": "ziyouziti.com",
+        "icon": "自"
+      },
+      {
+        "name": "中国色彩",
+        "url": "http://zhongguose.com/",
+        "domain": "zhongguose.com",
+        "icon": "中"
+      },
+      {
+        "name": "ColorHex",
+        "url": "https://www.colorhexa.com/",
+        "domain": "colorhexa.com",
+        "icon": "H"
+      },
+      {
+        "name": "优色网配色专区",
+        "url": "https://color.uisdc.com/",
+        "domain": "color.uisdc.com",
+        "icon": "优"
+      },
+      {
+        "name": "ColorDrop",
+        "url": "https://www.colordrop.io/",
+        "domain": "colordrop.io",
+        "icon": "D"
+      },
+      {
+        "name": "LOL Colors",
+        "url": "https://www.webdesignrankings.com/resources/lolcolors/",
+        "domain": "webdesignrankings.com",
+        "icon": "L"
+      },
+      {
+        "name": "colorHunt",
+        "url": "https://colorhunt.co/",
+        "domain": "colorhunt.co",
+        "icon": "H"
+      },
+      {
+        "name": "Adobe Color",
+        "url": "https://color.adobe.com/zh/create/color-wheel",
+        "domain": "color.adobe.com",
+        "icon": "A"
+      },
+      {
+        "name": "uigradients",
+        "url": "https://uigradients.com/#PiggyPink",
+        "domain": "uigradients.com",
+        "icon": "U"
+      },
+      {
+        "name": "webgradient",
+        "url": "https://webgradients.com/",
+        "domain": "webgradients.com",
+        "icon": "W"
+      },
+      {
+        "name": "Giphy",
+        "url": "https://giphy.com/",
+        "domain": "giphy.com",
+        "icon": "G"
+      },
+      {
+        "name": "GfyCat",
+        "url": "https://gfycat.com/",
+        "domain": "gfycat.com",
+        "icon": "G"
+      },
+      {
+        "name": "Tenor",
+        "url": "https://tenor.com/",
+        "domain": "tenor.com",
+        "icon": "T"
+      },
+      {
+        "name": "GIF ABYSS",
+        "url": "https://gifs.alphacoders.com/",
+        "domain": "gifs.alphacoders.com",
+        "icon": "动"
+      },
+      {
+        "name": "动图宇宙",
+        "url": "https://biaoqingsoso.com/",
+        "domain": "biaoqingsoso.com",
+        "icon": "动"
+      },
+      {
+        "name": "Soogif",
+        "url": "https://www.soogif.com/",
+        "domain": "soogif.com",
+        "icon": "搜"
+      },
+      {
+        "name": "闪萌",
+        "url": "http://www.weshineapp.com/",
+        "domain": "weshineapp.com",
+        "icon": "闪"
+      }
     ]
   },
   {
     "category": "影音娱乐",
     "items": [
-      { "name": "bilibili", "url": "https://www.bilibili.com/", "domain": "bilibili.com", "icon": "b" },
-      { "name": "观影 GYING", "url": "https://www.gying.org/", "domain": "gying.org", "icon": "观" },
-      { "name": "555电影", "url": "https://www.o8tv.com/", "domain": "o8tv.com", "icon": "5" },
-      { "name": "youtube", "url": "https://youtube.com/", "domain": "youtube.com", "icon": "y" },
-      { "name": "无名小站", "url": "https://www.xn--wcv59z.com/", "domain": "wcv59z.com", "icon": "无" },
-      { "name": "零度解说-Warp", "url": "https://www.youtube.com/watch?v=14zXDW23Tlw", "domain": "youtube.com", "icon": "零" },
-      { "name": "预告片世界", "url": "https://www.yugaopian.cn/", "domain": "yugaopian.cn", "icon": "预" },
-      { "name": "33台词", "url": "http://33.agilestudio.cn/", "domain": "33.agilestudio.cn", "icon": "台" },
-      { "name": "MixKit", "url": "http://mixkit.co/free-stock-video/", "domain": "mixkit.co", "icon": "M" },
-      { "name": "Pexel", "url": "https://www.pexels.com/zh-cn/video/", "domain": "pexels.com", "icon": "P" },
-      { "name": "Videezy", "url": "https://www.videezy.com/", "domain": "videezy.com", "icon": "V" },
-      { "name": "VJShi", "url": "https://www.vjshi.com/", "domain": "vjshi.com", "icon": "视" },
-      { "name": "51ape", "url": "https://www.51ape.com", "domain": "51ape.com", "icon": "A", "desc": "无损音乐下载" },
-      { "name": "52flac", "url": "https://www.52flac.com", "domain": "52flac.com", "icon": "F", "desc": "无损音乐下载" },
-      { "name": "Mixkit", "url": "https://mixkit.co/free-stock-music/", "domain": "mixkit.co", "icon": "M" },
-      { "name": "爱给网", "url": "https://www.aigei.com/", "domain": "aigei.com", "icon": "爱" },
-      { "name": "淘声网", "url": "https://www.tosound.com/", "domain": "tosound.com", "icon": "淘" },
-      { "name": "耳聆", "url": "https://www.ear0.com/", "domain": "ear0.com", "icon": "耳" }
+      {
+        "name": "bilibili",
+        "url": "https://www.bilibili.com/",
+        "domain": "bilibili.com",
+        "icon": "b"
+      },
+      {
+        "name": "观影 GYING",
+        "url": "https://www.gying.org/",
+        "domain": "gying.org",
+        "icon": "观"
+      },
+      {
+        "name": "555电影",
+        "url": "https://www.o8tv.com/",
+        "domain": "o8tv.com",
+        "icon": "5"
+      },
+      {
+        "name": "youtube",
+        "url": "https://youtube.com/",
+        "domain": "youtube.com",
+        "icon": "y"
+      },
+      {
+        "name": "无名小站",
+        "url": "https://www.xn--wcv59z.com/",
+        "domain": "wcv59z.com",
+        "icon": "无"
+      },
+      {
+        "name": "零度解说-Warp",
+        "url": "https://www.youtube.com/watch?v=14zXDW23Tlw",
+        "domain": "youtube.com",
+        "icon": "零"
+      },
+      {
+        "name": "预告片世界",
+        "url": "https://www.yugaopian.cn/",
+        "domain": "yugaopian.cn",
+        "icon": "预"
+      },
+      {
+        "name": "33台词",
+        "url": "http://33.agilestudio.cn/",
+        "domain": "33.agilestudio.cn",
+        "icon": "台"
+      },
+      {
+        "name": "MixKit",
+        "url": "http://mixkit.co/free-stock-video/",
+        "domain": "mixkit.co",
+        "icon": "M"
+      },
+      {
+        "name": "Pexel",
+        "url": "https://www.pexels.com/zh-cn/video/",
+        "domain": "pexels.com",
+        "icon": "P"
+      },
+      {
+        "name": "Videezy",
+        "url": "https://www.videezy.com/",
+        "domain": "videezy.com",
+        "icon": "V"
+      },
+      {
+        "name": "VJShi",
+        "url": "https://www.vjshi.com/",
+        "domain": "vjshi.com",
+        "icon": "视"
+      },
+      {
+        "name": "51ape",
+        "url": "https://www.51ape.com",
+        "domain": "51ape.com",
+        "icon": "A",
+        "desc": "无损音乐下载"
+      },
+      {
+        "name": "52flac",
+        "url": "https://www.52flac.com",
+        "domain": "52flac.com",
+        "icon": "F",
+        "desc": "无损音乐下载"
+      },
+      {
+        "name": "Mixkit",
+        "url": "https://mixkit.co/free-stock-music/",
+        "domain": "mixkit.co",
+        "icon": "M"
+      },
+      {
+        "name": "爱给网",
+        "url": "https://www.aigei.com/",
+        "domain": "aigei.com",
+        "icon": "爱"
+      },
+      {
+        "name": "淘声网",
+        "url": "https://www.tosound.com/",
+        "domain": "tosound.com",
+        "icon": "淘"
+      },
+      {
+        "name": "耳聆",
+        "url": "https://www.ear0.com/",
+        "domain": "ear0.com",
+        "icon": "耳"
+      }
     ]
   },
   {
     "category": "社交媒体",
     "items": [
-      { "name": "Telegram Web", "url": "https://web.telegram.org/k/", "domain": "telegram.org", "icon": "T" },
-      { "name": "TikTok运营干货", "url": "https://www.tpsea.com/1754.html", "domain": "tpsea.com", "icon": "T" },
-      { "name": "Tiktok带货新尝试", "url": "https://www.scways.com/5359.html", "domain": "scways.com", "icon": "T" },
-      { "name": "TKTOC运营导航", "url": "https://www.tktoc.com/", "domain": "tktoc.com", "icon": "T" },
-      { "name": "TKKOL导航", "url": "https://tik456.com/", "domain": "tik456.com", "icon": "T" },
-      { "name": "TikTok运营指南", "url": "https://www.tecktoc.com/", "domain": "tecktoc.com", "icon": "T" },
-      { "name": "海外全货源", "url": "https://tk.tiktok55.top/", "domain": "tiktok55.top", "icon": "海" },
-      { "name": "AdsPower", "url": "https://app.adspower.net/", "domain": "adspower.net", "icon": "A" },
-      { "name": "TikTok for Business", "url": "https://www.tiktok.com/business/", "domain": "tiktok.com", "icon": "T" },
-      { "name": "FastMoss数据", "url": "https://www.fastmoss.com/zh/dashboard", "domain": "fastmoss.com", "icon": "F" },
-      { "name": "TikTok专线", "url": "https://www.titchina.com/", "domain": "titchina.com", "icon": "T" },
-      { "name": "PingPong收款", "url": "https://us.pingpongx.com/", "domain": "pingpongx.com", "icon": "P" },
-      { "name": "誉先生知识库", "url": "https://www.yuque.com/u21387079/yuxiansheng", "domain": "yuque.com", "icon": "誉" },
-      { "name": "Twitter博主Top20", "url": "https://qiang88.cc/...", "domain": "qiang88.cc", "icon": "T" },
-      { "name": "TGNAV导航", "url": "https://tgnav.github.io/", "domain": "github.io", "icon": "T" }
+      {
+        "name": "Telegram Web",
+        "url": "https://web.telegram.org/k/",
+        "domain": "telegram.org",
+        "icon": "T"
+      },
+      {
+        "name": "TikTok运营干货",
+        "url": "https://www.tpsea.com/1754.html",
+        "domain": "tpsea.com",
+        "icon": "T"
+      },
+      {
+        "name": "Tiktok带货新尝试",
+        "url": "https://www.scways.com/5359.html",
+        "domain": "scways.com",
+        "icon": "T"
+      },
+      {
+        "name": "TKTOC运营导航",
+        "url": "https://www.tktoc.com/",
+        "domain": "tktoc.com",
+        "icon": "T"
+      },
+      {
+        "name": "TKKOL导航",
+        "url": "https://tik456.com/",
+        "domain": "tik456.com",
+        "icon": "T"
+      },
+      {
+        "name": "TikTok运营指南",
+        "url": "https://www.tecktoc.com/",
+        "domain": "tecktoc.com",
+        "icon": "T"
+      },
+      {
+        "name": "海外全货源",
+        "url": "https://tk.tiktok55.top/",
+        "domain": "tiktok55.top",
+        "icon": "海"
+      },
+      {
+        "name": "AdsPower",
+        "url": "https://app.adspower.net/",
+        "domain": "adspower.net",
+        "icon": "A"
+      },
+      {
+        "name": "TikTok for Business",
+        "url": "https://www.tiktok.com/business/",
+        "domain": "tiktok.com",
+        "icon": "T"
+      },
+      {
+        "name": "FastMoss数据",
+        "url": "https://www.fastmoss.com/zh/dashboard",
+        "domain": "fastmoss.com",
+        "icon": "F"
+      },
+      {
+        "name": "TikTok专线",
+        "url": "https://www.titchina.com/",
+        "domain": "titchina.com",
+        "icon": "T"
+      },
+      {
+        "name": "PingPong收款",
+        "url": "https://us.pingpongx.com/",
+        "domain": "pingpongx.com",
+        "icon": "P"
+      },
+      {
+        "name": "誉先生知识库",
+        "url": "https://www.yuque.com/u21387079/yuxiansheng",
+        "domain": "yuque.com",
+        "icon": "誉"
+      },
+      {
+        "name": "Twitter博主Top20",
+        "url": "https://qiang88.cc/...",
+        "domain": "qiang88.cc",
+        "icon": "T"
+      },
+      {
+        "name": "TGNAV导航",
+        "url": "https://tgnav.github.io/",
+        "domain": "github.io",
+        "icon": "T"
+      }
     ]
   },
   {
     "category": "账号服务",
     "items": [
-      { "name": "hStock NFT", "url": "https://hstock.org/zh/product/nft-profil-no-ban-no-shadows-sharing-account-servisy-twitter", "domain": "hstock.org", "icon": "h" },
-      { "name": "嗨小号", "url": "https://www.haixiaohao.com/", "domain": "haixiaohao.com", "icon": "嗨" },
-      { "name": "Gmail购买", "url": "https://gmailbuy.com/", "domain": "gmailbuy.com", "icon": "G" },
-      { "name": "账号鸭", "url": "https://www.zhanghaoya.com/", "domain": "zhanghaoya.com", "icon": "账" },
-      { "name": "邮箱购买", "url": "http://nineemail.com/", "domain": "nineemail.com", "icon": "邮" },
-      { "name": "Twitter Auth", "url": "https://hstock.org/en/product/twitter-auth-token-pochta-365c1c91", "domain": "hstock.org", "icon": "T" },
-      { "name": "手机号接码", "url": "https://tiger-sms.com/cn", "domain": "tiger-sms.com", "icon": "手" },
-      { "name": "SPH账号", "url": "https://www.sphguaji.com/", "domain": "sphguaji.com", "icon": "S" },
-      { "name": "SMS-Activate", "url": "https://sms-activate.org/", "domain": "sms-activate.org", "icon": "S" },
-      { "name": "Discord账号", "url": "https://hstock.org/en/services/discord/accounts", "domain": "hstock.org", "icon": "D" },
-      { "name": "DarkStore", "url": "https://dark.shopping/", "domain": "dark.shopping", "icon": "D" },
-      { "name": "Web3服务商", "url": "https://web3serve.com/", "domain": "web3serve.com", "icon": "W" },
-      { "name": "撸大毛Web3服务商", "url": "https://ludamao.com/", "domain": "ludamao.com", "icon": "撸" }
+      {
+        "name": "hStock NFT",
+        "url": "https://hstock.org/zh/product/nft-profil-no-ban-no-shadows-sharing-account-servisy-twitter",
+        "domain": "hstock.org",
+        "icon": "h"
+      },
+      {
+        "name": "嗨小号",
+        "url": "https://www.haixiaohao.com/",
+        "domain": "haixiaohao.com",
+        "icon": "嗨"
+      },
+      {
+        "name": "Gmail购买",
+        "url": "https://gmailbuy.com/",
+        "domain": "gmailbuy.com",
+        "icon": "G"
+      },
+      {
+        "name": "账号鸭",
+        "url": "https://www.zhanghaoya.com/",
+        "domain": "zhanghaoya.com",
+        "icon": "账"
+      },
+      {
+        "name": "邮箱购买",
+        "url": "http://nineemail.com/",
+        "domain": "nineemail.com",
+        "icon": "邮"
+      },
+      {
+        "name": "Twitter Auth",
+        "url": "https://hstock.org/en/product/twitter-auth-token-pochta-365c1c91",
+        "domain": "hstock.org",
+        "icon": "T"
+      },
+      {
+        "name": "手机号接码",
+        "url": "https://tiger-sms.com/cn",
+        "domain": "tiger-sms.com",
+        "icon": "手"
+      },
+      {
+        "name": "SPH账号",
+        "url": "https://www.sphguaji.com/",
+        "domain": "sphguaji.com",
+        "icon": "S"
+      },
+      {
+        "name": "SMS-Activate",
+        "url": "https://sms-activate.org/",
+        "domain": "sms-activate.org",
+        "icon": "S"
+      },
+      {
+        "name": "Discord账号",
+        "url": "https://hstock.org/en/services/discord/accounts",
+        "domain": "hstock.org",
+        "icon": "D"
+      },
+      {
+        "name": "DarkStore",
+        "url": "https://dark.shopping/",
+        "domain": "dark.shopping",
+        "icon": "D"
+      },
+      {
+        "name": "Web3服务商",
+        "url": "https://web3serve.com/",
+        "domain": "web3serve.com",
+        "icon": "W"
+      },
+      {
+        "name": "撸大毛Web3服务商",
+        "url": "https://ludamao.com/",
+        "domain": "ludamao.com",
+        "icon": "撸"
+      }
     ]
   },
   {
     "category": "网络加速",
     "items": [
-      { "name": "大机场", "url": "https://xn--mesr8b36x.agency/", "domain": "mesr8b36x.agency", "icon": "大" },
-      { "name": "一分机场", "url": "https://xn--4gqx1hgtfdmt.com/", "domain": "4gqx1hgtfdmt.com", "icon": "一" },
-      { "name": "一元机场", "url": "https://xn--4gq62f52gdss.com/", "domain": "4gq62f52gdss.com", "icon": "一" },
-      { "name": "三毛机场", "url": "https://www.xn--ehqx7tcnnope.com/", "domain": "ehqx7tcnnope.com", "icon": "三" },
-      { "name": "Biteb", "url": "https://biteb.baby/", "domain": "biteb.baby", "icon": "B" },
-      { "name": "山水云", "url": "https://bbb.ssy72.xyz/", "domain": "ssy72.xyz", "icon": "山" },
-      { "name": "Super Speed", "url": "https://x-superspeed.com/", "domain": "x-superspeed.com", "icon": "S" },
-      { "name": "iKuuu", "url": "https://ikuuu.one/", "domain": "ikuuu.one", "icon": "i" },
-      { "name": "红杏加速器", "url": "https://hongxingdl.com/", "domain": "hongxingdl.com", "icon": "红" },
-      { "name": "免费机场", "url": "https://mfjc.cc/", "domain": "mfjc.cc", "icon": "免" },
-      { "name": "赔钱机场", "url": "https://xn--mes358aby2apfg.com/", "domain": "mes358aby2apfg.com", "icon": "赔" },
-      { "name": "WARP优选IP", "url": "https://blog.misaka.rest/2023/03/12/cf-warp-yxip/", "domain": "misaka.rest", "icon": "W" },
-      { "name": "Belurk代理", "url": "https://belurk.com/zh#tariffs", "domain": "belurk.com", "icon": "B" },
-      { "name": "Mitce", "url": "https://mitce.com/", "domain": "mitce.com", "icon": "M" },
-      { "name": "良心云", "url": "https://xn--9kqz23b19z.com/", "domain": "9kqz23b19z.com", "icon": "良" },
-      { "name": "TNTV2", "url": "https://tntv2.lol/", "domain": "tntv2.lol", "icon": "T" }
+      {
+        "name": "大机场",
+        "url": "https://xn--mesr8b36x.agency/",
+        "domain": "mesr8b36x.agency",
+        "icon": "大"
+      },
+      {
+        "name": "一分机场",
+        "url": "https://xn--4gqx1hgtfdmt.com/",
+        "domain": "4gqx1hgtfdmt.com",
+        "icon": "一"
+      },
+      {
+        "name": "一元机场",
+        "url": "https://xn--4gq62f52gdss.com/",
+        "domain": "4gq62f52gdss.com",
+        "icon": "一"
+      },
+      {
+        "name": "三毛机场",
+        "url": "https://www.xn--ehqx7tcnnope.com/",
+        "domain": "ehqx7tcnnope.com",
+        "icon": "三"
+      },
+      {
+        "name": "Biteb",
+        "url": "https://biteb.baby/",
+        "domain": "biteb.baby",
+        "icon": "B"
+      },
+      {
+        "name": "山水云",
+        "url": "https://bbb.ssy72.xyz/",
+        "domain": "ssy72.xyz",
+        "icon": "山"
+      },
+      {
+        "name": "Super Speed",
+        "url": "https://x-superspeed.com/",
+        "domain": "x-superspeed.com",
+        "icon": "S"
+      },
+      {
+        "name": "iKuuu",
+        "url": "https://ikuuu.one/",
+        "domain": "ikuuu.one",
+        "icon": "i"
+      },
+      {
+        "name": "红杏加速器",
+        "url": "https://hongxingdl.com/",
+        "domain": "hongxingdl.com",
+        "icon": "红"
+      },
+      {
+        "name": "免费机场",
+        "url": "https://mfjc.cc/",
+        "domain": "mfjc.cc",
+        "icon": "免"
+      },
+      {
+        "name": "赔钱机场",
+        "url": "https://xn--mes358aby2apfg.com/",
+        "domain": "mes358aby2apfg.com",
+        "icon": "赔"
+      },
+      {
+        "name": "WARP优选IP",
+        "url": "https://blog.misaka.rest/2023/03/12/cf-warp-yxip/",
+        "domain": "misaka.rest",
+        "icon": "W"
+      },
+      {
+        "name": "Belurk代理",
+        "url": "https://belurk.com/zh#tariffs",
+        "domain": "belurk.com",
+        "icon": "B"
+      },
+      {
+        "name": "Mitce",
+        "url": "https://mitce.com/",
+        "domain": "mitce.com",
+        "icon": "M"
+      },
+      {
+        "name": "良心云",
+        "url": "https://xn--9kqz23b19z.com/",
+        "domain": "9kqz23b19z.com",
+        "icon": "良"
+      },
+      {
+        "name": "TNTV2",
+        "url": "https://tntv2.lol/",
+        "domain": "tntv2.lol",
+        "icon": "T"
+      }
     ]
   },
   {
     "category": "网盘存储",
     "items": [
-      { "name": "蓝奏云", "url": "https://www.lanzou.com/", "domain": "lanzou.com", "icon": "蓝" },
-      { "name": "跨境Cloud", "url": "https://6cto.kuajing002.com/", "domain": "kuajing002.com", "icon": "跨" },
-      { "name": "CloudFisher", "url": "https://cloudfisher.net/", "domain": "cloudfisher.net", "icon": "C" },
-      { "name": "Google Drive", "url": "https://drive.google.com/", "domain": "google.com", "icon": "G" },
-      { "name": "大力盘", "url": "https://www.dalipan.com", "domain": "dalipan.com", "icon": "大", "desc": "网盘搜索" },
-      { "name": "99百度云", "url": "http://www.99baiduyun.com", "domain": "99baiduyun.com", "icon": "9", "desc": "网盘搜索" }
+      {
+        "name": "蓝奏云",
+        "url": "https://www.lanzou.com/",
+        "domain": "lanzou.com",
+        "icon": "蓝"
+      },
+      {
+        "name": "跨境Cloud",
+        "url": "https://6cto.kuajing002.com/",
+        "domain": "kuajing002.com",
+        "icon": "跨"
+      },
+      {
+        "name": "CloudFisher",
+        "url": "https://cloudfisher.net/",
+        "domain": "cloudfisher.net",
+        "icon": "C"
+      },
+      {
+        "name": "Google Drive",
+        "url": "https://drive.google.com/",
+        "domain": "google.com",
+        "icon": "G"
+      },
+      {
+        "name": "大力盘",
+        "url": "https://www.dalipan.com",
+        "domain": "dalipan.com",
+        "icon": "大",
+        "desc": "网盘搜索"
+      },
+      {
+        "name": "99百度云",
+        "url": "http://www.99baiduyun.com",
+        "domain": "99baiduyun.com",
+        "icon": "9",
+        "desc": "网盘搜索"
+      }
     ]
   },
   {
     "category": "加密货币",
     "items": [
-      { "name": "DefiLlama空投", "url": "https://defillama.com/airdrops", "domain": "defillama.com", "icon": "D" },
-      { "name": "Crypto Airdrops", "url": "https://airdrops.io/", "domain": "airdrops.io", "icon": "C" },
-      { "name": "Web3投融资", "url": "https://www.rootdata.com/", "domain": "rootdata.com", "icon": "W" },
-      { "name": "Arbitrum桥", "url": "https://bridge.arbitrum.io/", "domain": "arbitrum.io", "icon": "A" },
-      { "name": "CryptoRank空投", "url": "https://cryptorank.io/drophunting", "domain": "cryptorank.io", "icon": "C" },
-      { "name": "GMGN.AI", "url": "https://gmgn.ai/", "domain": "gmgn.ai", "icon": "G" },
-      { "name": "熊链教程", "url": "https://mirror.xyz/nazarick.eth/p7o5-4N5w-FgDTRTSA9BZrMGszV4kldyfk62UBYSZaw", "domain": "mirror.xyz", "icon": "熊" },
-      { "name": "ORA节点教程", "url": "https://medium.com/@smeb_y/ai%E9%A1%B9%E7%9B%AE-ora-%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B-e4975546dbaa", "domain": "medium.com", "icon": "O" },
-      { "name": "肯特那交易", "url": "https://www.binance.com/zh-CN/square/post/11786027314753", "domain": "binance.com", "icon": "肯" },
-      { "name": "Superbridge", "url": "https://superbridge.app/", "domain": "superbridge.app", "icon": "S" },
-      { "name": "Grass", "url": "https://app.getgrass.io/", "domain": "getgrass.io", "icon": "G" },
-      { "name": "AlphaOrBeta", "url": "https://app.alphaorbeta.com/", "domain": "alphaorbeta.com", "icon": "A" },
-      { "name": "Bluwhale", "url": "https://farm.bluwhale.com/", "domain": "bluwhale.com", "icon": "B" },
-      { "name": "PoP矿工", "url": "https://pop-miner.hemi.xyz/", "domain": "hemi.xyz", "icon": "P" },
-      { "name": "Galxe", "url": "https://www.galxe.com/", "domain": "galxe.com", "icon": "G" },
-      { "name": "测试网水龙头", "url": "https://mirror.xyz/0x1CB0166F761B7FeD170Fb00e7270Eb401dE34ee8/s6Spy14KcsssCZA-Vl4SMVjXQkWthODDJhSWBqbkFrM", "domain": "mirror.xyz", "icon": "测" },
-      { "name": "CoinGlass", "url": "https://www.coinglass.com/", "domain": "coinglass.com", "icon": "C" },
-      { "name": "WhatToMine", "url": "https://whattomine.com/", "domain": "whattomine.com", "icon": "W" },
-      { "name": "肥猫", "url": "https://www.1coin.vip/", "domain": "1coin.vip", "icon": "肥" },
-      { "name": "Web3门户", "url": "https://www.web3sj.com/", "domain": "web3sj.com", "icon": "W" },
-      { "name": "WOW3", "url": "https://bitbitking.notion.site/WOW3-563fc1050fcc4de19dc9926399dcbc45", "domain": "notion.site", "icon": "W" }
-    ]
-  },
-  {
-    "category": "游戏相关",
-    "items": [
-      { "name": "Switch520", "url": "https://www.gamer520.com/", "domain": "gamer520.com", "icon": "S" },
-      { "name": "XDGAME", "url": "https://www.xdgame.com/", "domain": "xdgame.com", "icon": "X" },
-      { "name": "原神启动器", "url": "https://blog.tomys.top/2022-07/GenshinLauncher/", "domain": "tomys.top", "icon": "原" },
-      { "name": "提瓦特大地图", "url": "https://webstatic.mihoyo.com/ys/app/interactive-map/index.html", "domain": "mihoyo.com", "icon": "提" },
-      { "name": "BetterGI", "url": "https://bgi.huiyadan.com/", "domain": "huiyadan.com", "icon": "B" },
-      { "name": "520switch", "url": "https://www.520switch.com/", "domain": "520switch.com", "icon": "5" }
+      {
+        "name": "DefiLlama空投",
+        "url": "https://defillama.com/airdrops",
+        "domain": "defillama.com",
+        "icon": "D"
+      },
+      {
+        "name": "Crypto Airdrops",
+        "url": "https://airdrops.io/",
+        "domain": "airdrops.io",
+        "icon": "C"
+      },
+      {
+        "name": "Web3投融资",
+        "url": "https://www.rootdata.com/",
+        "domain": "rootdata.com",
+        "icon": "W"
+      },
+      {
+        "name": "Arbitrum桥",
+        "url": "https://bridge.arbitrum.io/",
+        "domain": "arbitrum.io",
+        "icon": "A"
+      },
+      {
+        "name": "CryptoRank空投",
+        "url": "https://cryptorank.io/drophunting",
+        "domain": "cryptorank.io",
+        "icon": "C"
+      },
+      {
+        "name": "GMGN.AI",
+        "url": "https://gmgn.ai/",
+        "domain": "gmgn.ai",
+        "icon": "G"
+      },
+      {
+        "name": "熊链教程",
+        "url": "https://mirror.xyz/nazarick.eth/p7o5-4N5w-FgDTRTSA9BZrMGszV4kldyfk62UBYSZaw",
+        "domain": "mirror.xyz",
+        "icon": "熊"
+      },
+      {
+        "name": "ORA节点教程",
+        "url": "https://medium.com/@smeb_y/ai%E9%A1%B9%E7%9B%AE-ora-%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B-e4975546dbaa",
+        "domain": "medium.com",
+        "icon": "O"
+      },
+      {
+        "name": "肯特那交易",
+        "url": "https://www.binance.com/zh-CN/square/post/11786027314753",
+        "domain": "binance.com",
+        "icon": "肯"
+      },
+      {
+        "name": "Superbridge",
+        "url": "https://superbridge.app/",
+        "domain": "superbridge.app",
+        "icon": "S"
+      },
+      {
+        "name": "Grass",
+        "url": "https://app.getgrass.io/",
+        "domain": "getgrass.io",
+        "icon": "G"
+      },
+      {
+        "name": "AlphaOrBeta",
+        "url": "https://app.alphaorbeta.com/",
+        "domain": "alphaorbeta.com",
+        "icon": "A"
+      },
+      {
+        "name": "Bluwhale",
+        "url": "https://farm.bluwhale.com/",
+        "domain": "bluwhale.com",
+        "icon": "B"
+      },
+      {
+        "name": "PoP矿工",
+        "url": "https://pop-miner.hemi.xyz/",
+        "domain": "hemi.xyz",
+        "icon": "P"
+      },
+      {
+        "name": "Galxe",
+        "url": "https://www.galxe.com/",
+        "domain": "galxe.com",
+        "icon": "G"
+      },
+      {
+        "name": "测试网水龙头",
+        "url": "https://mirror.xyz/0x1CB0166F761B7FeD170Fb00e7270Eb401dE34ee8/s6Spy14KcsssCZA-Vl4SMVjXQkWthODDJhSWBqbkFrM",
+        "domain": "mirror.xyz",
+        "icon": "测"
+      },
+      {
+        "name": "CoinGlass",
+        "url": "https://www.coinglass.com/",
+        "domain": "coinglass.com",
+        "icon": "C"
+      },
+      {
+        "name": "WhatToMine",
+        "url": "https://whattomine.com/",
+        "domain": "whattomine.com",
+        "icon": "W"
+      },
+      {
+        "name": "肥猫",
+        "url": "https://www.1coin.vip/",
+        "domain": "1coin.vip",
+        "icon": "肥"
+      },
+      {
+        "name": "Web3门户",
+        "url": "https://www.web3sj.com/",
+        "domain": "web3sj.com",
+        "icon": "W"
+      },
+      {
+        "name": "WOW3",
+        "url": "https://bitbitking.notion.site/WOW3-563fc1050fcc4de19dc9926399dcbc45",
+        "domain": "notion.site",
+        "icon": "W"
+      }
     ]
   },
   {
     "category": "实用工具",
     "items": [
-      { "name": "超星学习通助手", "url": "https://greasyfork.org/zh-CN/scripts/436994", "domain": "greasyfork.org", "icon": "超" },
-      { "name": "繁体字转换", "url": "https://www.aies.cn/", "domain": "aies.cn", "icon": "繁" },
-      { "name": "Gmail临时信箱", "url": "https://www.koc.com.tw/archives/102941", "domain": "koc.com.tw", "icon": "G" },
-      { "name": "便民查询网", "url": "https://www.bmcx.com/", "domain": "bmcx.com", "icon": "便" },
-      { "name": "DXY刷机工具", "url": "https://mi.fiime.cn/PCTool/74.html", "domain": "fiime.cn", "icon": "D" },
-      { "name": "应用伪装", "url": "https://modules.lsposed.org/module/com.variable.apkhook/", "domain": "lsposed.org", "icon": "应" },
-      { "name": "PDF24", "url": "https://tools.pdf24.org/", "domain": "pdf24.org", "icon": "P" },
-      { "name": "油小猴", "url": "https://www.youxiaohou.com/", "domain": "youxiaohou.com", "icon": "油" },
-      { "name": "Boolv抠图", "url": "https://toolkit.boolv.tech/", "domain": "boolv.tech", "icon": "B" },
-      { "name": "Crx搜搜", "url": "https://www.crxsoso.com/", "domain": "crxsoso.com", "icon": "C" },
-      { "name": "Notion", "url": "https://www.notion.so/", "domain": "notion.so", "icon": "N" },
-      { "name": "柠檬题库", "url": "https://www.lemtk.xyz/", "domain": "lemtk.xyz", "icon": "柠" },
-      { "name": "Sordum工具", "url": "https://www.sordum.org/", "domain": "sordum.org", "icon": "S" },
-      { "name": "文字转语音", "url": "http://www.shuoyiduan.com/", "domain": "shuoyiduan.com", "icon": "文" },
-      { "name": "Similarsites", "url": "https://www.similarsites.com/", "domain": "similarsites.com", "icon": "S" },
-      { "name": "IP查询", "url": "https://whoer.net/", "domain": "whoer.net", "icon": "I" },
-      { "name": "remove.bg", "url": "https://www.remove.bg/", "domain": "remove.bg", "icon": "r" },
-      { "name": "哔哩哔哩解析", "url": "https://bilibili.iiilab.com/", "domain": "iiilab.com", "icon": "哔" },
-      { "name": "图片处理工具", "url": "https://imagestool.com/", "domain": "imagestool.com", "icon": "图" },
-      { "name": "微信文件助手", "url": "https://szfilehelper.weixin.qq.com/", "domain": "weixin.qq.com", "icon": "微" },
-      { "name": "Quicker", "url": "https://getquicker.net/", "domain": "getquicker.net", "icon": "Q" },
-      { "name": "分区助手", "url": "https://www.disktool.cn/", "domain": "disktool.cn", "icon": "分" },
-      { "name": "iLovePDF", "url": "https://www.ilovepdf.com/", "domain": "ilovepdf.com", "icon": "i" },
-      { "name": "Clipchamp", "url": "https://app.clipchamp.com/", "domain": "clipchamp.com", "icon": "C" },
-      { "name": "多抓鱼", "url": "https://www.duozhuayu.com/", "domain": "duozhuayu.com", "icon": "多" },
-      { "name": "Chilly Bot", "url": "https://chillybot.xyz/", "domain": "chillybot.xyz", "icon": "C" },
-      { "name": "微星显示器", "url": "https://www.cnblogs.com/zspace/p/17069763.html", "domain": "cnblogs.com", "icon": "微" },
-      { "name": "显示器设置", "url": "https://blog.csdn.net/qq_39055391/article/details/134288762", "domain": "csdn.net", "icon": "显" },
-      { "name": "轻工具", "url": "https://qinggongju.com", "domain": "qinggongju.com", "icon": "轻" },
-      { "name": "Tool.lu", "url": "http://tool.lu", "domain": "tool.lu", "icon": "工" },
-      { "name": "片库", "url": "https://m.btnull.org/", "domain": "btnull.org", "icon": "片" },
-      { "name": "电影狗", "url": "http://www.dianyinggou.com/linkNav/", "domain": "dianyinggou.com", "icon": "电" },
-      { "name": "钟馗之眼", "url": "https://www.zoomeye.org/", "domain": "zoomeye.org", "icon": "钟" },
-      { "name": "罗马盘", "url": "https://www.luomapan.com/", "domain": "luomapan.com", "icon": "罗" },
-      { "name": "Yandex搜索", "url": "https://yandex.com/", "domain": "yandex.com", "icon": "Y" },
-      { "name": "Magi", "url": "https://magi.com/", "domain": "magi.com", "icon": "M", "desc": "AI学习引擎" },
-      { "name": "轻工具站", "url": "http://tools.miku.ac", "domain": "tools.miku.ac", "icon": "轻" },
-      { "name": "DeepL翻译", "url": "https://www.deepl.com", "domain": "deepl.com", "icon": "D", "desc": "最好的翻译网站" },
-      { "name": "便民网", "url": "https://www.51240.com", "domain": "51240.com", "icon": "便" },
-      { "name": "Photopea", "url": "https://www.photopea.com", "domain": "photopea.com", "icon": "P", "desc": "在线PS图片处理工具" },
-      { "name": "熊崩", "url": "https://www.xiongbeng.com", "domain": "xiongbeng.com", "icon": "熊", "desc": "网盘资源搜索引擎" },
-      { "name": "Image Cyborg", "url": "https://imagecyborg.com", "domain": "imagecyborg.com", "icon": "I", "desc": "网页图片批量下载" },
-      { "name": "Pixivic", "url": "https://pixivic.com", "domain": "pixivic.com", "icon": "P", "desc": "P站排行榜浏览" },
-      { "name": "在线之家", "url": "https://www.zxzj.me", "domain": "zxzj.me", "icon": "在", "desc": "影视在线观看" },
-      { "name": "斗图终结者", "url": "https://www.52doutu.cn", "domain": "52doutu.cn", "icon": "斗", "desc": "表情包制作搜索" },
-      { "name": "草料二维码", "url": "https://cli.im", "domain": "cli.im", "icon": "草", "desc": "二维码生成制作" },
-      { "name": "AGE动漫", "url": "https://www.agefans.cc", "domain": "agefans.cc", "icon": "动", "desc": "动漫观看平台" }
+      {
+        "name": "抠图",
+        "url": "https://pixian.ai/",
+        "domain": "pixian.ai",
+        "icon": "抠"
+      },
+      {
+        "name": "超星学习通助手",
+        "url": "https://greasyfork.org/zh-CN/scripts/436994",
+        "domain": "greasyfork.org",
+        "icon": "超"
+      },
+      {
+        "name": "繁体字转换",
+        "url": "https://www.aies.cn/",
+        "domain": "aies.cn",
+        "icon": "繁"
+      },
+      {
+        "name": "Gmail临时信箱",
+        "url": "https://www.koc.com.tw/archives/102941",
+        "domain": "koc.com.tw",
+        "icon": "G"
+      },
+      {
+        "name": "便民查询网",
+        "url": "https://www.bmcx.com/",
+        "domain": "bmcx.com",
+        "icon": "便"
+      },
+      {
+        "name": "DXY刷机工具",
+        "url": "https://mi.fiime.cn/PCTool/74.html",
+        "domain": "fiime.cn",
+        "icon": "D"
+      },
+      {
+        "name": "应用伪装",
+        "url": "https://modules.lsposed.org/module/com.variable.apkhook/",
+        "domain": "lsposed.org",
+        "icon": "应"
+      },
+      {
+        "name": "PDF24",
+        "url": "https://tools.pdf24.org/",
+        "domain": "pdf24.org",
+        "icon": "P"
+      },
+      {
+        "name": "油小猴",
+        "url": "https://www.youxiaohou.com/",
+        "domain": "youxiaohou.com",
+        "icon": "油"
+      },
+      {
+        "name": "Boolv抠图",
+        "url": "https://toolkit.boolv.tech/",
+        "domain": "boolv.tech",
+        "icon": "B"
+      },
+      {
+        "name": "Crx搜搜",
+        "url": "https://www.crxsoso.com/",
+        "domain": "crxsoso.com",
+        "icon": "C"
+      },
+      {
+        "name": "Notion",
+        "url": "https://www.notion.so/",
+        "domain": "notion.so",
+        "icon": "N"
+      },
+      {
+        "name": "柠檬题库",
+        "url": "https://www.lemtk.xyz/",
+        "domain": "lemtk.xyz",
+        "icon": "柠"
+      },
+      {
+        "name": "Sordum工具",
+        "url": "https://www.sordum.org/",
+        "domain": "sordum.org",
+        "icon": "S"
+      },
+      {
+        "name": "文字转语音",
+        "url": "http://www.shuoyiduan.com/",
+        "domain": "shuoyiduan.com",
+        "icon": "文"
+      },
+      {
+        "name": "Similarsites",
+        "url": "https://www.similarsites.com/",
+        "domain": "similarsites.com",
+        "icon": "S"
+      },
+      {
+        "name": "IP查询",
+        "url": "https://whoer.net/",
+        "domain": "whoer.net",
+        "icon": "I"
+      },
+      {
+        "name": "remove.bg",
+        "url": "https://www.remove.bg/",
+        "domain": "remove.bg",
+        "icon": "r"
+      },
+      {
+        "name": "哔哩哔哩解析",
+        "url": "https://bilibili.iiilab.com/",
+        "domain": "iiilab.com",
+        "icon": "哔"
+      },
+      {
+        "name": "图片处理工具",
+        "url": "https://imagestool.com/",
+        "domain": "imagestool.com",
+        "icon": "图"
+      },
+      {
+        "name": "微信文件助手",
+        "url": "https://szfilehelper.weixin.qq.com/",
+        "domain": "weixin.qq.com",
+        "icon": "微"
+      },
+      {
+        "name": "Quicker",
+        "url": "https://getquicker.net/",
+        "domain": "getquicker.net",
+        "icon": "Q"
+      },
+      {
+        "name": "分区助手",
+        "url": "https://www.disktool.cn/",
+        "domain": "disktool.cn",
+        "icon": "分"
+      },
+      {
+        "name": "iLovePDF",
+        "url": "https://www.ilovepdf.com/",
+        "domain": "ilovepdf.com",
+        "icon": "i"
+      },
+      {
+        "name": "Clipchamp",
+        "url": "https://app.clipchamp.com/",
+        "domain": "clipchamp.com",
+        "icon": "C"
+      },
+      {
+        "name": "多抓鱼",
+        "url": "https://www.duozhuayu.com/",
+        "domain": "duozhuayu.com",
+        "icon": "多"
+      },
+      {
+        "name": "Chilly Bot",
+        "url": "https://chillybot.xyz/",
+        "domain": "chillybot.xyz",
+        "icon": "C"
+      },
+      {
+        "name": "微星显示器",
+        "url": "https://www.cnblogs.com/zspace/p/17069763.html",
+        "domain": "cnblogs.com",
+        "icon": "微"
+      },
+      {
+        "name": "显示器设置",
+        "url": "https://blog.csdn.net/qq_39055391/article/details/134288762",
+        "domain": "csdn.net",
+        "icon": "显"
+      },
+      {
+        "name": "轻工具",
+        "url": "https://qinggongju.com",
+        "domain": "qinggongju.com",
+        "icon": "轻"
+      },
+      {
+        "name": "Tool.lu",
+        "url": "http://tool.lu",
+        "domain": "tool.lu",
+        "icon": "工"
+      },
+      {
+        "name": "片库",
+        "url": "https://m.btnull.org/",
+        "domain": "btnull.org",
+        "icon": "片"
+      },
+      {
+        "name": "电影狗",
+        "url": "http://www.dianyinggou.com/linkNav/",
+        "domain": "dianyinggou.com",
+        "icon": "电"
+      },
+      {
+        "name": "钟馗之眼",
+        "url": "https://www.zoomeye.org/",
+        "domain": "zoomeye.org",
+        "icon": "钟"
+      },
+      {
+        "name": "罗马盘",
+        "url": "https://www.luomapan.com/",
+        "domain": "luomapan.com",
+        "icon": "罗"
+      },
+      {
+        "name": "Yandex搜索",
+        "url": "https://yandex.com/",
+        "domain": "yandex.com",
+        "icon": "Y"
+      },
+      {
+        "name": "Magi",
+        "url": "https://magi.com/",
+        "domain": "magi.com",
+        "icon": "M",
+        "desc": "AI学习引擎"
+      },
+      {
+        "name": "轻工具站",
+        "url": "http://tools.miku.ac",
+        "domain": "tools.miku.ac",
+        "icon": "轻"
+      },
+      {
+        "name": "DeepL翻译",
+        "url": "https://www.deepl.com",
+        "domain": "deepl.com",
+        "icon": "D",
+        "desc": "最好的翻译网站"
+      },
+      {
+        "name": "便民网",
+        "url": "https://www.51240.com",
+        "domain": "51240.com",
+        "icon": "便"
+      },
+      {
+        "name": "Photopea",
+        "url": "https://www.photopea.com",
+        "domain": "photopea.com",
+        "icon": "P",
+        "desc": "在线PS图片处理工具"
+      },
+      {
+        "name": "熊崩",
+        "url": "https://www.xiongbeng.com",
+        "domain": "xiongbeng.com",
+        "icon": "熊",
+        "desc": "网盘资源搜索引擎"
+      },
+      {
+        "name": "Image Cyborg",
+        "url": "https://imagecyborg.com",
+        "domain": "imagecyborg.com",
+        "icon": "I",
+        "desc": "网页图片批量下载"
+      },
+      {
+        "name": "Pixivic",
+        "url": "https://pixivic.com",
+        "domain": "pixivic.com",
+        "icon": "P",
+        "desc": "P站排行榜浏览"
+      },
+      {
+        "name": "在线之家",
+        "url": "https://www.zxzj.me",
+        "domain": "zxzj.me",
+        "icon": "在",
+        "desc": "影视在线观看"
+      },
+      {
+        "name": "斗图终结者",
+        "url": "https://www.52doutu.cn",
+        "domain": "52doutu.cn",
+        "icon": "斗",
+        "desc": "表情包制作搜索"
+      },
+      {
+        "name": "草料二维码",
+        "url": "https://cli.im",
+        "domain": "cli.im",
+        "icon": "草",
+        "desc": "二维码生成制作"
+      },
+      {
+        "name": "AGE动漫",
+        "url": "https://www.agefans.cc",
+        "domain": "agefans.cc",
+        "icon": "动",
+        "desc": "动漫观看平台"
+      }
     ]
   },
   {
     "category": "考证资源",
     "items": [
-      { "name": "普通话证书", "url": "http://www.cltt.org/#/webHome", "domain": "cltt.org", "icon": "普" },
-      { "name": "中国人事考试网", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "资" },
-      { "name": "中医康复理疗师", "url": "http://www.120px.cn/", "domain": "120px.cn", "icon": "医" },
-      { "name": "税务师/初级会计/审计", "url": "http://kzp.mof.gov.cn/", "domain": "kzp.mof.gov.cn", "icon": "税" },
-      { "name": "教师资格证", "url": "https://ntce.neea.edu.cn/html1/folder", "domain": "ntce.neea.edu.cn", "icon": "教" },
-      { "name": "执业药师/消防/监理/一二级造价师/翻译/社会工作师", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "资" },
-      { "name": "护士证", "url": "https://www.2lwecan.com/", "domain": "2lwecan.com", "icon": "护" },
-      { "name": "基金/证券从业资格证", "url": "https://www.sac.net.cn/", "domain": "sac.net.cn", "icon": "证" },
-      { "name": "注册会计师", "url": "https://cpaexam.cicpa.org.cn/", "domain": "cpaexam.cicpa.org.cn", "icon": "会" },
-      { "name": "导游证", "url": "https://www.mct.gov.cn/", "domain": "mct.gov.cn", "icon": "导" },
-      { "name": "PMP项目管理认证", "url": "http://exam.chinapmp.cn/", "domain": "exam.chinapmp.cn", "icon": "P" },
-      { "name": "法律职业资格证书", "url": "http://www.moj.gov.cn/pub/sfl/jgszzsdw/zsdwgjsfkszx/", "domain": "moj.gov.cn", "icon": "法" },
-      { "name": "银行考试", "url": "http://cj.ccbp.org.cn/apply/", "domain": "cj.ccbp.org.cn", "icon": "银" },
-      { "name": "英语四六级", "url": "https://cet.neea.edu.cn/", "domain": "cet.neea.edu.cn", "icon": "英" },
-      { "name": "国考", "url": "http://www.scs.gov.cn/", "domain": "scs.gov.cn", "icon": "国" },
-      { "name": "翻译专业资格证", "url": "http://www.cpta.com.cn/", "domain": "cpta.com.cn", "icon": "翻" },
-      { "name": "拍卖师", "url": "http://www.caa123.org.cn/", "domain": "caa123.org.cn", "icon": "拍" }
+      {
+        "name": "普通话证书",
+        "url": "http://www.cltt.org/#/webHome",
+        "domain": "cltt.org",
+        "icon": "普"
+      },
+      {
+        "name": "中国人事考试网",
+        "url": "http://www.cpta.com.cn/",
+        "domain": "cpta.com.cn",
+        "icon": "资"
+      },
+      {
+        "name": "中医康复理疗师",
+        "url": "http://www.120px.cn/",
+        "domain": "120px.cn",
+        "icon": "医"
+      },
+      {
+        "name": "税务师/初级会计/审计",
+        "url": "http://kzp.mof.gov.cn/",
+        "domain": "kzp.mof.gov.cn",
+        "icon": "税"
+      },
+      {
+        "name": "教师资格证",
+        "url": "https://ntce.neea.edu.cn/html1/folder",
+        "domain": "ntce.neea.edu.cn",
+        "icon": "教"
+      },
+      {
+        "name": "执业药师/消防/监理/一二级造价师/翻译/社会工作师",
+        "url": "http://www.cpta.com.cn/",
+        "domain": "cpta.com.cn",
+        "icon": "资"
+      },
+      {
+        "name": "护士证",
+        "url": "https://www.2lwecan.com/",
+        "domain": "2lwecan.com",
+        "icon": "护"
+      },
+      {
+        "name": "基金/证券从业资格证",
+        "url": "https://www.sac.net.cn/",
+        "domain": "sac.net.cn",
+        "icon": "证"
+      },
+      {
+        "name": "注册会计师",
+        "url": "https://cpaexam.cicpa.org.cn/",
+        "domain": "cpaexam.cicpa.org.cn",
+        "icon": "会"
+      },
+      {
+        "name": "导游证",
+        "url": "https://www.mct.gov.cn/",
+        "domain": "mct.gov.cn",
+        "icon": "导"
+      },
+      {
+        "name": "PMP项目管理认证",
+        "url": "http://exam.chinapmp.cn/",
+        "domain": "exam.chinapmp.cn",
+        "icon": "P"
+      },
+      {
+        "name": "法律职业资格证书",
+        "url": "http://www.moj.gov.cn/pub/sfl/jgszzsdw/zsdwgjsfkszx/",
+        "domain": "moj.gov.cn",
+        "icon": "法"
+      },
+      {
+        "name": "银行考试",
+        "url": "http://cj.ccbp.org.cn/apply/",
+        "domain": "cj.ccbp.org.cn",
+        "icon": "银"
+      },
+      {
+        "name": "英语四六级",
+        "url": "https://cet.neea.edu.cn/",
+        "domain": "cet.neea.edu.cn",
+        "icon": "英"
+      },
+      {
+        "name": "国考",
+        "url": "http://www.scs.gov.cn/",
+        "domain": "scs.gov.cn",
+        "icon": "国"
+      },
+      {
+        "name": "翻译专业资格证",
+        "url": "http://www.cpta.com.cn/",
+        "domain": "cpta.com.cn",
+        "icon": "翻"
+      },
+      {
+        "name": "拍卖师",
+        "url": "http://www.caa123.org.cn/",
+        "domain": "caa123.org.cn",
+        "icon": "拍"
+      }
     ]
   },
   {
     "category": "教育健康",
     "items": [
-      { "name": "中国药典", "url": "http://db.ouryao.com/yd2015/", "domain": "ouryao.com", "icon": "中" },
-      { "name": "性爱姿势", "url": "https://sex-positions.online/zh-cn/", "domain": "sex-positions.online", "icon": "性" },
-      { "name": "内容列表", "url": "https://theporndude.com/zh", "domain": "theporndude.com", "icon": "内" },
-      { "name": "知性 KnowSex", "url": "https://knowsex.net", "domain": "knowsex.net", "icon": "知", "desc": "性教育平台" },
-      { "name": "香港家庭计划指导会", "url": "https://www.famplan.org.hk/sexedu/zh", "domain": "famplan.org.hk", "icon": "香", "desc": "性教育资源" },
-      { "name": "Archive for Sexology", "url": "http://www.sexarchive.info/CH/home.htm", "domain": "sexarchive.info", "icon": "档", "desc": "性学档案" },
-      { "name": "香港教育局性教育", "url": "https://www.edb.gov.hk/tc/curriculum-development/4-key-tasks/moral-civic/sea/sea.html", "domain": "edb.gov.hk", "icon": "教", "desc": "动画资源" },
-      { "name": "世界避孕日", "url": "https://www.china-wcd.com/", "domain": "china-wcd.com", "icon": "避", "desc": "避孕知识" }
+      {
+        "name": "中国药典",
+        "url": "http://db.ouryao.com/yd2015/",
+        "domain": "ouryao.com",
+        "icon": "中"
+      },
+      {
+        "name": "性爱姿势",
+        "url": "https://sex-positions.online/zh-cn/",
+        "domain": "sex-positions.online",
+        "icon": "性"
+      },
+      {
+        "name": "内容列表",
+        "url": "https://theporndude.com/zh",
+        "domain": "theporndude.com",
+        "icon": "内"
+      },
+      {
+        "name": "知性 KnowSex",
+        "url": "https://knowsex.net",
+        "domain": "knowsex.net",
+        "icon": "知",
+        "desc": "性教育平台"
+      },
+      {
+        "name": "香港家庭计划指导会",
+        "url": "https://www.famplan.org.hk/sexedu/zh",
+        "domain": "famplan.org.hk",
+        "icon": "香",
+        "desc": "性教育资源"
+      },
+      {
+        "name": "Archive for Sexology",
+        "url": "http://www.sexarchive.info/CH/home.htm",
+        "domain": "sexarchive.info",
+        "icon": "档",
+        "desc": "性学档案"
+      },
+      {
+        "name": "香港教育局性教育",
+        "url": "https://www.edb.gov.hk/tc/curriculum-development/4-key-tasks/moral-civic/sea/sea.html",
+        "domain": "edb.gov.hk",
+        "icon": "教",
+        "desc": "动画资源"
+      },
+      {
+        "name": "世界避孕日",
+        "url": "https://www.china-wcd.com/",
+        "domain": "china-wcd.com",
+        "icon": "避",
+        "desc": "避孕知识"
+      }
     ]
   },
   {
     "category": "理财",
     "items": [
-      { "name": "股票收益对比图表", "url": "https://totalrealreturns.com/n/QQQ,DIA,SPY,SCHD,SPMO,SCHG?start=2020-01-01&end=2025-12-05", "domain": "totalrealreturns.com", "icon": "股" }
+      {
+        "name": "股票收益对比图表",
+        "url": "https://totalrealreturns.com/n/QQQ,DIA,SPY,SCHD,SPMO,SCHG?start=2020-01-01&end=2025-12-05",
+        "domain": "totalrealreturns.com",
+        "icon": "股"
+      }
     ]
   },
   {
     "category": "项目",
     "items": [
-      { "name": "撸美金搜索", "url": "https://www.google.com/search?q=%E6%92%B8%E7%BE%8E%E9%87%91", "domain": "google.com", "icon": "撸" },
-      { "name": "首码项目网", "url": "https://www.huiyixian.com/", "domain": "huiyixian.com", "icon": "首" },
-      { "name": "生财有术", "url": "http://www.scysb.com/", "domain": "scysb.com", "icon": "生" },
-      { "name": "视频号挂机", "url": "https://www.woyaozhuanqian888.com/", "domain": "woyaozhuanqian888.com", "icon": "视" }
+      {
+        "name": "撸美金搜索",
+        "url": "https://www.google.com/search?q=%E6%92%B8%E7%BE%8E%E9%87%91",
+        "domain": "google.com",
+        "icon": "撸"
+      },
+      {
+        "name": "首码项目网",
+        "url": "https://www.huiyixian.com/",
+        "domain": "huiyixian.com",
+        "icon": "首"
+      },
+      {
+        "name": "生财有术",
+        "url": "http://www.scysb.com/",
+        "domain": "scysb.com",
+        "icon": "生"
+      },
+      {
+        "name": "视频号挂机",
+        "url": "https://www.woyaozhuanqian888.com/",
+        "domain": "woyaozhuanqian888.com",
+        "icon": "视"
+      }
     ]
   },
   {
     "category": "PPT资源",
     "items": [
-      { "name": "51PPT模板", "url": "http://www.51pptmoban.com/", "domain": "51pptmoban.com", "icon": "5" },
-      { "name": "优品PPT", "url": "https://www.ypppt.com/", "domain": "ypppt.com", "icon": "优" },
-      { "name": "第一PPT", "url": "http://www.1ppt.com/", "domain": "1ppt.com", "icon": "1" },
-      { "name": "叮当设计", "url": "https://www.dingdangsheji.com/", "domain": "dingdangsheji.com", "icon": "叮" },
-      { "name": "PPT超级市场", "url": "http://ppt.sotary.com/web/wxapp/index.html", "domain": "ppt.sotary.com", "icon": "超" }
+      {
+        "name": "51PPT模板",
+        "url": "http://www.51pptmoban.com/",
+        "domain": "51pptmoban.com",
+        "icon": "5"
+      },
+      {
+        "name": "优品PPT",
+        "url": "https://www.ypppt.com/",
+        "domain": "ypppt.com",
+        "icon": "优"
+      },
+      {
+        "name": "第一PPT",
+        "url": "http://www.1ppt.com/",
+        "domain": "1ppt.com",
+        "icon": "1"
+      },
+      {
+        "name": "叮当设计",
+        "url": "https://www.dingdangsheji.com/",
+        "domain": "dingdangsheji.com",
+        "icon": "叮"
+      },
+      {
+        "name": "PPT超级市场",
+        "url": "http://ppt.sotary.com/web/wxapp/index.html",
+        "domain": "ppt.sotary.com",
+        "icon": "超"
+      }
     ]
   },
   {
     "category": "未分类",
     "items": [
-      { "name": "第一试卷网", "url": "https://www.shijuan1.com/", "domain": "shijuan1.com", "icon": "第" },
-      { "name": "Scamalytics", "url": "https://scamalytics.com/", "domain": "scamalytics.com", "icon": "S" },
-      { "name": "Giffgaff激活教程", "url": "https://www.youtube.com/watch?v=XmaMEUQy7-k", "domain": "youtube.com", "icon": "G" }
+      {
+        "name": "第一试卷网",
+        "url": "https://www.shijuan1.com/",
+        "domain": "shijuan1.com",
+        "icon": "第"
+      },
+      {
+        "name": "Scamalytics",
+        "url": "https://scamalytics.com/",
+        "domain": "scamalytics.com",
+        "icon": "S"
+      },
+      {
+        "name": "Giffgaff激活教程",
+        "url": "https://www.youtube.com/watch?v=XmaMEUQy7-k",
+        "domain": "youtube.com",
+        "icon": "G"
+      }
     ]
   }
 ]
