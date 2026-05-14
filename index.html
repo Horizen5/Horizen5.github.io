@@ -195,19 +195,21 @@
         <div class="absolute top-[-20%] left-1/2 transform -translate-x-1/2 w-[80%] h-[500px] bg-primary/20 rounded-full mix-blend-screen filter blur-[120px] opacity-50"></div>
     </div>
 
-    <!-- 导航栏：将主题切换按钮移入其中，完美对齐 -->
+    <!-- 导航栏 -->
     <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-5 md:px-6 py-3 md:py-4 flex justify-between items-center">
             <a href="#home" class="text-2xl font-black tracking-tighter flex items-center gap-2 group">
                 <span class="text-white">Horizen<span class="text-slate-500">5</span></span>
             </a>
             
-            <div class="flex items-center gap-3 md:gap-6">
+            <!-- 增加 md:mr-[60px] 2xl:mr-0 防止 PC 端菜单文字与悬浮在最右侧的按钮重叠 -->
+            <div class="flex items-center gap-3 md:gap-6 md:mr-[60px] 2xl:mr-0">
                 <!-- PC端菜单 -->
                 <ul class="hidden md:flex space-x-8 text-sm font-medium text-slate-400 tracking-wide items-center">
-                    <li><a href="#home" class="hover:text-white transition-colors duration-300">首页</a></li>
+                    <li><a href="#home" class="text-white font-bold transition-colors duration-300">首页</a></li>
                     <li><a href="#projects" class="hover:text-white transition-colors duration-300">项目</a></li>
                     <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
+                    <li><a href="blog.html" class="hover:text-white transition-colors duration-300">知识库</a></li>
                     <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
                     <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
                     <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="hover:text-white transition-colors duration-300">关于</a></li>
@@ -215,8 +217,8 @@
 
                 <!-- 右侧操作区：主题切换 + 移动端菜单键 -->
                 <div class="flex items-center gap-2 md:gap-3">
-                    <!-- 全局主题切换按钮 -->
-                    <button id="global-theme-toggle" class="w-[38px] h-[38px] md:w-[44px] md:h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 global-theme-toggle" aria-label="切换主题">
+                    <!-- 全局主题切换按钮 (PC端使用绝对定位，移至最右侧并精准垂直居中) -->
+                    <button id="global-theme-toggle" class="w-[38px] h-[38px] md:w-[44px] md:h-[44px] rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 global-theme-toggle md:absolute md:top-1/2 md:-translate-y-1/2 md:right-[24px] md:z-[100]" aria-label="切换主题">
                         <svg class="w-[18px] h-[18px] md:w-[20px] md:h-[20px] moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
                         <svg class="w-[18px] h-[18px] md:w-[20px] md:h-[20px] sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
                     </button>
@@ -229,12 +231,13 @@
             </div>
         </div>
         
-        <!-- 移动端菜单：增大文字上下内边距，铺满可点击区域 -->
+        <!-- 移动端菜单 -->
         <div class="md:hidden bg-[#030305]/95 backdrop-blur-xl border-b border-white/5 absolute w-full overflow-hidden max-h-0 transition-all duration-500 ease-in-out" id="mobile-menu">
             <ul class="flex flex-col px-4 py-4 space-y-1 text-[15px] font-medium text-slate-300">
                 <li><a href="#home" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">首页</a></li>
                 <li><a href="#projects" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">项目</a></li>
                 <li><a href="#skills" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">技能</a></li>
+                <li><a href="blog.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">知识库</a></li>
                 <li><a href="website.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">工具</a></li>
                 <li><a href="#contact" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">联系</a></li>
                 <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">关于</a></li>
@@ -280,9 +283,9 @@
                     </a>
                     
                     <!-- Secondary Button (Glass Outline style) -->
-                    <a href="https://github.com/Horizen5" target="_blank" rel="noopener noreferrer" class="group px-8 py-4 w-full sm:w-auto rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
-                        GitHub
+                    <a href="blog.html" class="group px-8 py-4 w-full sm:w-auto rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        进入知识库
                     </a>
                 </div>
             </div>
@@ -443,7 +446,7 @@
                         渴望突破，探索未知。无论是创作者工具、全栈 Web 应用还是创新项目，我都在此恭候。
                     </p>
                     <a href="mailto:horizen5@example.com" class="inline-flex items-center px-10 py-5 bg-white text-dark font-bold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.15)] uppercase tracking-widest">
-                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         建立联系
                     </a>
                 </div>
@@ -458,7 +461,7 @@
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                         </a>
                         <a href="mailto:horizen5@example.com" class="text-slate-500 hover:text-white transition-colors" aria-label="Email">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         </a>
                         <a href="#" class="text-slate-500 hover:text-white transition-colors" aria-label="Twitter">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
@@ -527,7 +530,6 @@
             const mobileMenu = document.getElementById('mobile-menu');
             
             mobileBtn.addEventListener('click', () => {
-                // 使用 max-height 配合 class 来实现丝滑动画
                 if (mobileMenu.classList.contains('max-h-0')) {
                     mobileMenu.classList.remove('max-h-0');
                     mobileMenu.classList.add('max-h-[400px]');
@@ -566,13 +568,11 @@
             const revealObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
                     if (!entry.isIntersecting) {
-                        // 滑出视野时重置，下次划入可再次触发
                         entry.target.classList.remove('active');
                         if (entry.target.classList.contains('skill-bar-fill')) {
                             entry.target.style.width = '0';
                         }
                     } else {
-                        // 滑入视野时触发动画
                         entry.target.classList.add('active');
                         if (entry.target.classList.contains('skill-bar-fill')) {
                             entry.target.style.width = entry.target.getAttribute('data-width');
@@ -598,12 +598,12 @@
                     globalSun.classList.add('hidden');
                 }
             }
-            updateThemeIcons(); // init icons
+            updateThemeIcons(); 
             
             globalThemeToggle.addEventListener('click', () => {
                 document.documentElement.classList.toggle('light-mode');
                 const isLight = document.documentElement.classList.contains('light-mode');
-                localStorage.setItem('theme', isLight ? 'light' : 'dark'); // 同步数据至全局 key
+                localStorage.setItem('theme', isLight ? 'light' : 'dark'); 
                 updateThemeIcons();
             });
 
