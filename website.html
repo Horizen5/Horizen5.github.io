@@ -194,7 +194,6 @@
         /* 右侧内容区 */
         .settings-content-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         
-        /* 修复关闭按钮排版：增加层级、毛玻璃背景，避免遮挡滚动条和内容 */
         .settings-close-btn {
             position: absolute; top: 16px; right: 16px; 
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -205,7 +204,6 @@
         [data-theme="light"] .settings-close-btn { background: rgba(0, 0, 0, 0.05); }
         .settings-close-btn:hover { background: rgba(239, 68, 68, 0.8); color: white; border-color: transparent; transform: rotate(90deg); }
 
-        /* 顶部预留出关闭按钮的安全空间 */
         .settings-tab-content { display: none; padding: 60px 30px 30px; overflow-y: auto; flex: 1; height: 100%; }
         .settings-tab-content.active { display: block; animation: fadeIn 0.3s ease; }
         .settings-tab-content::-webkit-scrollbar { width: 6px; }
@@ -391,13 +389,16 @@
 
         /* ======== 核心修复：独立分离折叠屏/平板的媒体查询 ======== */
         
-        /* 1. 设置面板在平板/折叠屏 (<1024px) 强制转换为底部抽屉（解决图3拥挤排版） */
+        /* 1. 设置面板在平板/折叠屏 (<1024px) 强制转换为底部抽屉（解决拥挤及偏移动问题） */
         @media (max-width: 1024px) {
             .settings-modal { 
                 flex-direction: column; height: 90vh; width: 100%; max-width: none; 
-                border-radius: 24px 24px 0 0; top: auto; bottom: 0; transform: translateY(100%); 
+                border-radius: 24px 24px 0 0; top: auto; bottom: 0; 
+                left: 0; /* 【关键修复】：重置PC端的 left:50%，防止向右侧偏移50% */
+                transform: translateY(100%); 
             }
-            .settings-modal.show { transform: translateY(0); }
+            .settings-modal.show { transform: translateY(0); } /* 配合 left:0，不再需要 X 轴偏移 */
+            
             .settings-sidebar { 
                 width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); 
                 padding: 15px 20px; flex-direction: row; overflow-x: auto; align-items: center; gap: 12px; 
@@ -588,7 +589,7 @@
             <div class="settings-tab-content" id="tab-wp-unsplash">
                 <div class="wallpaper-header-actions">
                     <h4>Unsplash 在线图库<span>随机拉取无版权绝美摄影作品</span></h4>
-                    <button class="refresh-btn" onclick="fetchOnlineWallpapers('unsplash', 'grid-unsplash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 换一批</button>
+                    <button class="refresh-btn" onclick="fetchOnlineWallpapers('unsplash', 'grid-unsplash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 1 0 2.13-5.88L2 9"/></svg> 换一批</button>
                 </div>
                 <div class="wallpaper-grid" id="grid-unsplash"></div>
             </div>
@@ -1075,8 +1076,7 @@
         function initSearchSticky() {
             const searchBox = document.getElementById('searchBox'); if(!searchBox) return;
             window.addEventListener('scroll', () => {
-                // 根据排版调整触发吸顶动画的滚动距离
-                if (window.scrollY > 80) searchBox.classList.add('is-sticky'); else searchBox.classList.remove('is-sticky');
+                if (window.scrollY > 50) searchBox.classList.add('is-sticky'); else searchBox.classList.remove('is-sticky');
             });
         }
 
@@ -1146,3 +1146,4 @@
     </script>
 </body>
 </html>
+}
