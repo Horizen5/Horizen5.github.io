@@ -21,22 +21,17 @@
             --accent-active: #ffb74d;
             --thumb-color: #ffb74d;
             --track-color: rgba(255, 255, 255, 0.15);
-            --track-fill: linear-gradient(90deg, #7eb8da, #b39ddb, #ffb74d);
-            --star-color: rgba(255, 255, 255, 0.5);
             --safe-bottom: env(safe-area-inset-bottom, 16px);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Helvetica Neue', sans-serif;
             background: linear-gradient(180deg, #080d24 0%, #111a40 35%, #141f4a 65%, #0e152e 100%);
+            background-attachment: fixed;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -45,562 +40,442 @@
             -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none;
             user-select: none;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
         }
 
-        /* 星星背景 */
-        .stars-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        html {
+            background: #080d24;
         }
 
+        /* ===== 星星背景 ===== */
+        .stars-container {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
         .star {
-            position: absolute;
-            border-radius: 50%;
+            position: absolute; border-radius: 50%;
             background: #fff;
             animation: twinkle var(--dur) ease-in-out infinite;
             animation-delay: var(--delay);
             opacity: 0;
         }
-
         @keyframes twinkle {
-            0%,
-            100% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            25% {
-                opacity: var(--peak-opacity);
-                transform: scale(1.3);
-            }
-            50% {
-                opacity: 0.25;
-                transform: scale(0.9);
-            }
-            75% {
-                opacity: var(--peak-opacity);
-                transform: scale(1.15);
-            }
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            25% { opacity: var(--peak-opacity); transform: scale(1.3); }
+            50% { opacity: 0.25; transform: scale(0.9); }
+            75% { opacity: var(--peak-opacity); transform: scale(1.15); }
         }
-
         @keyframes floatUp {
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateY(-6px);
-                opacity: 1;
-            }
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(-6px); opacity: 1; }
         }
-
         @keyframes gentlePulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.04);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
         }
-
         @keyframes wakeGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(255, 183, 77, 0.3), 0 0 50px rgba(255, 183, 77, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 35px rgba(255, 183, 77, 0.55), 0 0 70px rgba(255, 183, 77, 0.25);
-            }
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 183, 77, 0.3), 0 0 50px rgba(255, 183, 77, 0.1); }
+            50% { box-shadow: 0 0 35px rgba(255, 183, 77, 0.55), 0 0 70px rgba(255, 183, 77, 0.25); }
         }
-
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 主容器 */
+        /* ===== 主容器 ===== */
         .main-container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 400px;
+            position: relative; z-index: 1;
+            width: 100%; max-width: 400px;
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 28px;
             border: 1px solid var(--card-border);
-            padding: 28px 24px 24px;
+            padding: 28px 24px 28px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
             animation: slideInUp 0.6s ease-out;
         }
 
-        /* 当前时间区域 */
+        /* ===== 当前时间 ===== */
         .current-time-section {
             text-align: center;
-            margin-bottom: 20px;
-            position: relative;
+            margin-bottom: 24px;
         }
-
         .now-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            font-weight: 500;
+            font-size: 13px; color: var(--text-muted);
+            letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 8px; font-weight: 500;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-
+        .now-label .moon-icon {
+            font-size: 16px;
+            animation: floatUp 4s ease-in-out infinite;
+            display: inline-block;
+        }
         .current-time-display {
-            font-size: 52px;
-            font-weight: 300;
-            color: var(--text-primary);
-            letter-spacing: -1px;
+            font-size: 52px; font-weight: 300;
+            color: var(--text-primary); letter-spacing: -1px;
             line-height: 1.1;
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum";
         }
-
         .current-time-display .time-colon {
             animation: gentlePulse 2s ease-in-out infinite;
             display: inline-block;
         }
-
-        .current-date-display {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        .moon-icon {
-            display: inline-block;
-            font-size: 22px;
-            animation: floatUp 4s ease-in-out infinite;
+        .current-time-display .ampm {
+            font-size: 18px; font-weight: 400;
+            color: var(--text-secondary);
             margin-left: 4px;
-            vertical-align: middle;
+        }
+        .current-date-display {
+            font-size: 14px; color: var(--text-muted);
+            margin-top: 6px; font-weight: 400;
         }
 
-        /* 分隔线 */
+        /* ===== 分隔线 ===== */
         .divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            margin: 16px 0;
-            border-radius: 1px;
+            margin: 20px 0; border-radius: 1px;
         }
 
-        /* 快速选择区域 */
-        .quick-select-section {
-            margin-bottom: 18px;
+        /* ===== 快速选择 ===== */
+        .quick-select-section { margin-bottom: 24px; }
+        .section-label {
+            font-size: 12px; color: var(--text-muted);
+            letter-spacing: 2px; text-align: center;
+            margin-bottom: 14px; font-weight: 500;
         }
-
-        .quick-select-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
         .quick-cards {
-            display: flex;
-            gap: 12px;
+            display: flex; gap: 12px;
         }
-
         .quick-card {
             flex: 1;
             background: rgba(255, 255, 255, 0.04);
             border: 2px solid transparent;
             border-radius: 16px;
-            padding: 14px 10px;
+            padding: 16px 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            min-height: 72px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
-
         .quick-card:active {
             transform: scale(0.96);
             transition: transform 0.15s ease-out;
         }
-
-        .quick-card.card-6h {
-            border-color: rgba(126, 184, 218, 0.3);
-        }
+        .quick-card.card-6h { border-color: rgba(126, 184, 218, 0.3); }
         .quick-card.card-6h.active {
             border-color: var(--accent-6h);
             background: rgba(126, 184, 218, 0.14);
             box-shadow: 0 0 24px rgba(126, 184, 218, 0.2);
         }
-
-        .quick-card.card-8h {
-            border-color: rgba(179, 157, 219, 0.3);
-        }
+        .quick-card.card-8h { border-color: rgba(179, 157, 219, 0.3); }
         .quick-card.card-8h.active {
             border-color: var(--accent-8h);
             background: rgba(179, 157, 219, 0.14);
             box-shadow: 0 0 24px rgba(179, 157, 219, 0.2);
         }
-
         .quick-card .card-hours {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
+            font-size: 22px; font-weight: 600;
+            color: var(--text-primary); letter-spacing: -0.5px;
         }
-        .quick-card.card-6h .card-hours {
-            color: var(--accent-6h);
-        }
-        .quick-card.card-8h .card-hours {
-            color: var(--accent-8h);
-        }
-
+        .quick-card.card-6h .card-hours { color: var(--accent-6h); }
+        .quick-card.card-8h .card-hours { color: var(--accent-8h); }
         .quick-card .card-wake-time {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            font-size: 14px; color: var(--text-secondary);
+            margin-top: 4px; font-weight: 500; letter-spacing: 0.3px;
         }
-
         .quick-card .card-tag {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-top: 1px;
-            letter-spacing: 0.5px;
+            font-size: 10px; color: var(--text-muted);
+            margin-top: 2px; letter-spacing: 0.5px;
         }
-
         .quick-card .check-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+            position: absolute; top: 8px; right: 8px;
+            width: 8px; height: 8px; border-radius: 50%;
             background: var(--accent-active);
-            opacity: 0;
-            transform: scale(0);
+            opacity: 0; transform: scale(0);
             transition: all 0.25s ease-out;
         }
         .quick-card.active .check-dot {
-            opacity: 1;
-            transform: scale(1);
+            opacity: 1; transform: scale(1);
         }
 
-        /* 自定义滑块区域 */
-        .custom-slider-section {
-            margin-bottom: 20px;
-            padding: 0 4px;
-        }
-
+        /* ===== 自定义滑块 ===== */
+        .custom-slider-section { margin-bottom: 24px; }
         .slider-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
+            display: flex; justify-content: space-between;
+            align-items: baseline; margin-bottom: 16px;
         }
-
         .slider-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            font-weight: 500;
+            font-size: 12px; color: var(--text-muted);
+            letter-spacing: 2px; font-weight: 500;
         }
-
         .slider-value-display {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
+            font-size: 28px; font-weight: 600;
+            color: var(--text-primary); letter-spacing: -0.5px;
             transition: all 0.2s ease;
         }
-
         .slider-value-display .unit {
-            font-size: 15px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            margin-left: 2px;
+            font-size: 15px; font-weight: 400;
+            color: var(--text-secondary); margin-left: 2px;
         }
 
-        /* 自定义 Range 滑块 */
         .range-wrapper {
-            position: relative;
-            width: 100%;
-            padding: 8px 0 4px;
+            position: relative; width: 100%; padding: 8px 0 4px;
         }
-
         .range-ticks {
-            position: relative;
-            width: 100%;
-            height: 20px;
-            margin-bottom: 2px;
-            pointer-events: none;
+            position: relative; width: 100%; height: 20px;
+            margin-bottom: 4px; pointer-events: none;
         }
-
         .range-tick {
-            position: absolute;
-            top: 0;
+            position: absolute; top: 0;
             transform: translateX(-50%);
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            font-size: 10px; color: var(--text-muted);
+            font-weight: 500; letter-spacing: 0.3px;
         }
-        .range-tick.tick-6h {
-            left: 45.45%;
-            color: var(--accent-6h);
-            font-weight: 600;
-        }
-        .range-tick.tick-8h {
-            left: 63.64%;
-            color: var(--accent-8h);
-            font-weight: 600;
-        }
+        .range-tick.tick-6h { left: 45.45%; color: var(--accent-6h); font-weight: 600; }
+        .range-tick.tick-8h { left: 63.64%; color: var(--accent-8h); font-weight: 600; }
 
         .tick-dot {
-            position: absolute;
-            top: 14px;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
+            position: absolute; top: 14px;
+            width: 4px; height: 4px; border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-50%);
-            pointer-events: none;
+            transform: translateX(-50%); pointer-events: none;
         }
-        .tick-dot.dot-6h {
-            left: 45.45%;
-            background: var(--accent-6h);
-            width: 5px;
-            height: 5px;
-        }
-        .tick-dot.dot-8h {
-            left: 63.64%;
-            background: var(--accent-8h);
-            width: 5px;
-            height: 5px;
-        }
+        .tick-dot.dot-6h { left: 45.45%; background: var(--accent-6h); width: 5px; height: 5px; }
+        .tick-dot.dot-8h { left: 63.64%; background: var(--accent-8h); width: 5px; height: 5px; }
 
         input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 44px;
-            background: transparent;
-            cursor: pointer;
-            outline: none;
-            position: relative;
-            z-index: 2;
-            margin: 0;
-            padding: 0;
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 44px;
+            background: transparent; cursor: pointer;
+            outline: none; position: relative; z-index: 2;
+            margin: 0; padding: 0;
         }
-
-        /* Track - Webkit */
         input[type="range"]::-webkit-slider-runnable-track {
-            -webkit-appearance: none;
-            height: 8px;
-            border-radius: 12px;
-            background: var(--track-color);
+            -webkit-appearance: none; height: 8px;
+            border-radius: 12px; background: var(--track-color);
             border: none;
-            position: relative;
         }
-
-        /* 使用一个包装来模拟填充轨道 */
         .range-track-bg {
-            position: absolute;
-            bottom: 18px;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            border-radius: 12px;
+            position: absolute; bottom: 18px; left: 0;
+            width: 100%; height: 8px; border-radius: 12px;
             background: var(--track-color);
-            pointer-events: none;
-            z-index: 0;
+            pointer-events: none; z-index: 0;
         }
-
         .range-track-fill {
-            position: absolute;
-            bottom: 18px;
-            left: 0;
-            height: 8px;
-            border-radius: 12px;
+            position: absolute; bottom: 18px; left: 0;
+            height: 8px; border-radius: 12px;
             background: linear-gradient(90deg, #5b9ecf, #8e7cc4, #f0a840);
-            pointer-events: none;
-            z-index: 0;
+            pointer-events: none; z-index: 0;
             transition: width 0.15s ease-out;
         }
-
-        /* Thumb - Webkit */
         input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--thumb-color);
-            cursor: pointer;
-            margin-top: -13px;
+            -webkit-appearance: none; appearance: none;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: #fff; border: 3px solid var(--thumb-color);
+            cursor: pointer; margin-top: -13px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 183, 77, 0.18);
             transition: all 0.2s ease;
-            position: relative;
-            z-index: 3;
+            position: relative; z-index: 3;
         }
-
         input[type="range"]::-webkit-slider-thumb:active {
             transform: scale(1.12);
             box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 0 10px rgba(255, 183, 77, 0.28);
             border-color: #ff9f2e;
         }
-
-        /* Thumb - Firefox */
         input[type="range"]::-moz-range-thumb {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--thumb-color);
+            width: 34px; height: 34px; border-radius: 50%;
+            background: #fff; border: 3px solid var(--thumb-color);
             cursor: pointer;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 183, 77, 0.18);
         }
-
-        /* Track - Firefox */
         input[type="range"]::-moz-range-track {
-            height: 8px;
-            border-radius: 12px;
-            background: var(--track-color);
-            border: none;
+            height: 8px; border-radius: 12px;
+            background: var(--track-color); border: none;
         }
 
-        /* 醒来时间展示区 */
+        /* ===== 醒来时间 ===== */
         .wake-time-section {
             text-align: center;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
-            padding: 18px 16px;
+            padding: 20px 16px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             animation: wakeGlow 3s ease-in-out infinite;
             transition: all 0.3s ease;
         }
-
         .wake-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            font-size: 12px; color: var(--text-muted);
+            letter-spacing: 2px; font-weight: 500;
+            margin-bottom: 6px;
+            display: flex; align-items: center;
+            justify-content: center; gap: 6px;
         }
-
         .wake-label .icon-sun {
-            font-size: 18px;
+            font-size: 16px;
             animation: floatUp 3s ease-in-out infinite;
             display: inline-block;
         }
-
         .wake-time-display {
-            font-size: 44px;
-            font-weight: 300;
-            color: var(--gold);
-            letter-spacing: -1px;
+            font-size: 44px; font-weight: 300;
+            color: var(--gold); letter-spacing: -1px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.2;
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum";
         }
-
         .wake-date-tag {
             display: inline-block;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 12px; font-weight: 500;
             color: #ffcc80;
             background: rgba(255, 183, 77, 0.15);
             border-radius: 10px;
-            padding: 3px 10px;
-            margin-top: 2px;
+            padding: 3px 10px; margin-top: 4px;
             letter-spacing: 0.5px;
             transition: all 0.25s ease;
         }
-
         .wake-sub-info {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            letter-spacing: 0.5px;
+            font-size: 12px; color: var(--text-muted);
+            margin-top: 8px; letter-spacing: 0.5px;
         }
 
-        /* 响应式微调 */
+        /* ===== 响应式：手机小屏 (<=360px) ===== */
         @media screen and (max-width: 360px) {
-            .current-time-display {
-                font-size: 42px;
-            }
-            .wake-time-display {
-                font-size: 36px;
-            }
-            .slider-value-display {
-                font-size: 24px;
-            }
-            .quick-card .card-hours {
-                font-size: 19px;
-            }
-            .quick-card {
-                padding: 12px 8px;
-                min-height: 64px;
-            }
-            .main-container {
-                padding: 22px 16px 18px;
-                border-radius: 24px;
-            }
-            input[type="range"]::-webkit-slider-thumb {
-                width: 30px;
-                height: 30px;
-                margin-top: -11px;
-            }
+            .current-time-display { font-size: 42px; }
+            .current-time-display .ampm { font-size: 15px; }
+            .wake-time-display { font-size: 36px; }
+            .slider-value-display { font-size: 24px; }
+            .quick-card .card-hours { font-size: 19px; }
+            .quick-card .card-wake-time { font-size: 12px; }
+            .quick-card { padding: 12px 8px; }
+            .main-container { padding: 20px 16px 20px; border-radius: 24px; }
+            input[type="range"]::-webkit-slider-thumb { width: 30px; height: 30px; margin-top: -11px; }
+            .section-label, .slider-label, .wake-label { font-size: 11px; }
+            .divider { margin: 14px 0; }
+            .current-time-section { margin-bottom: 18px; }
+            .quick-select-section { margin-bottom: 18px; }
+            .custom-slider-section { margin-bottom: 18px; }
         }
 
-        @media screen and (min-width: 400px) {
-            .current-time-display {
-                font-size: 56px;
-            }
-            .wake-time-display {
-                font-size: 48px;
-            }
+        /* ===== 响应式：大手机/手机横屏 (481px ~ 768px) ===== */
+        @media screen and (min-width: 481px) and (max-width: 768px) {
+            body { padding: 24px; }
+            .main-container { max-width: 480px; padding: 32px 28px 28px; }
+            .current-time-display { font-size: 60px; }
+            .current-time-display .ampm { font-size: 20px; }
+            .wake-time-display { font-size: 50px; }
+            .quick-card { padding: 18px 14px; }
+            .quick-card .card-hours { font-size: 24px; }
+            .quick-card .card-wake-time { font-size: 15px; }
+            .slider-value-display { font-size: 32px; }
+            input[type="range"]::-webkit-slider-thumb { width: 38px; height: 38px; margin-top: -15px; }
+            input[type="range"]::-moz-range-thumb { width: 38px; height: 38px; }
+            .range-tick { font-size: 11px; }
+            .wake-time-section { padding: 22px 20px; }
+        }
+
+        /* ===== 响应式：平板竖屏 (769px ~ 1024px) ===== */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            body { padding: 32px; }
+            .main-container { max-width: 520px; padding: 36px 32px 32px; border-radius: 32px; }
+            .current-time-display { font-size: 68px; }
+            .current-time-display .ampm { font-size: 22px; }
+            .current-date-display { font-size: 16px; }
+            .now-label { font-size: 14px; }
+            .wake-time-display { font-size: 56px; }
+            .section-label, .slider-label, .wake-label { font-size: 13px; }
+            .quick-card { padding: 20px 16px; border-radius: 18px; }
+            .quick-card .card-hours { font-size: 26px; }
+            .quick-card .card-wake-time { font-size: 15px; }
+            .quick-card .card-tag { font-size: 11px; }
+            .slider-value-display { font-size: 36px; }
+            .slider-value-display .unit { font-size: 17px; }
+            input[type="range"]::-webkit-slider-thumb { width: 42px; height: 42px; margin-top: -17px; }
+            input[type="range"]::-moz-range-thumb { width: 42px; height: 42px; }
+            input[type="range"]::-webkit-slider-runnable-track { height: 10px; }
+            .range-track-bg, .range-track-fill { height: 10px; bottom: 17px; }
+            .range-tick { font-size: 12px; }
+            .wake-time-section { padding: 24px 22px; border-radius: 22px; }
+            .wake-date-tag { font-size: 13px; padding: 4px 12px; }
+            .wake-sub-info { font-size: 13px; }
+            .divider { margin: 24px 0; }
+            .current-time-section { margin-bottom: 28px; }
+            .quick-select-section { margin-bottom: 28px; }
+            .custom-slider-section { margin-bottom: 28px; }
+        }
+
+        /* ===== 响应式：平板横屏/小桌面 (1025px ~ 1280px) ===== */
+        @media screen and (min-width: 1025px) and (max-width: 1280px) {
+            .main-container { max-width: 540px; padding: 40px 36px 36px; }
+            .current-time-display { font-size: 72px; }
+            .wake-time-display { font-size: 60px; }
+            .quick-card .card-hours { font-size: 28px; }
+        }
+
+        /* ===== 响应式：大桌面 (>=1281px) ===== */
+        @media screen and (min-width: 1281px) {
+            .main-container { max-width: 560px; padding: 44px 40px 40px; }
+            .current-time-display { font-size: 76px; }
+            .wake-time-display { font-size: 64px; }
+            .quick-card .card-hours { font-size: 30px; }
+        }
+
+        /* ===== 响应式：横屏低高度 ===== */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            body { align-items: flex-start; padding: 12px 20px; }
+            .main-container { max-width: 600px; padding: 16px 24px; border-radius: 20px; }
+            .current-time-section { margin-bottom: 10px; }
+            .current-time-display { font-size: 36px; }
+            .current-time-display .ampm { font-size: 14px; }
+            .now-label { font-size: 11px; margin-bottom: 4px; }
+            .current-date-display { font-size: 12px; margin-top: 2px; }
+            .divider { margin: 8px 0; }
+            .quick-select-section { margin-bottom: 10px; }
+            .section-label { font-size: 10px; margin-bottom: 8px; }
+            .quick-cards { gap: 8px; }
+            .quick-card { padding: 8px 10px; border-radius: 12px; }
+            .quick-card .card-hours { font-size: 16px; }
+            .quick-card .card-wake-time { font-size: 11px; }
+            .custom-slider-section { margin-bottom: 10px; }
+            .slider-header { margin-bottom: 10px; }
+            .slider-value-display { font-size: 20px; }
+            .wake-time-display { font-size: 30px; }
+            .wake-time-section { padding: 10px 14px; border-radius: 16px; }
+            .wake-label { font-size: 10px; margin-bottom: 2px; }
+            .wake-date-tag { font-size: 10px; }
+            .wake-sub-info { font-size: 10px; margin-top: 4px; }
+            input[type="range"] { height: 32px; }
+            input[type="range"]::-webkit-slider-thumb { width: 26px; height: 26px; margin-top: -9px; }
+            input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; }
+        }
+
+        /* ===== 高分辨率屏幕 ===== */
+        @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 192dpi) {
+            .main-container { border: 0.5px solid var(--card-border); }
+            .divider { height: 0.5px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 星星背景 -->
     <div class="stars-container" id="starsContainer"></div>
 
-    <!-- 主容器 -->
     <div class="main-container">
         <!-- 当前时间 -->
         <div class="current-time-section">
-            <div class="now-label">🌙 现在时间</div>
+            <div class="now-label">
+                <span class="moon-icon">&#127769;</span> 现在时间
+            </div>
             <div class="current-time-display" id="currentTime">--:--</div>
             <div class="current-date-display" id="currentDate">----年--月--日 周-</div>
         </div>
@@ -609,7 +484,7 @@
 
         <!-- 快速选择 -->
         <div class="quick-select-section">
-            <div class="quick-select-label">⚡ 快速选择睡眠时长</div>
+            <div class="section-label">&#9889; 快速选择睡眠时长</div>
             <div class="quick-cards">
                 <button class="quick-card card-6h" id="card6h" onclick="selectPreset(6)">
                     <span class="check-dot"></span>
@@ -629,26 +504,22 @@
         <!-- 自定义滑块 -->
         <div class="custom-slider-section">
             <div class="slider-header">
-                <span class="slider-label">🎚️ 自定义时长</span>
+                <span class="slider-label">&#127925; 自定义时长</span>
                 <span class="slider-value-display" id="sliderValueDisplay">
                     <span id="sliderHours">8</span><span class="unit">小时</span>
                 </span>
             </div>
             <div class="range-wrapper">
-                <!-- 刻度标记 -->
                 <div class="range-ticks">
                     <span class="range-tick" style="left:0%;">1h</span>
                     <span class="range-tick tick-6h">6h</span>
                     <span class="range-tick tick-8h">8h</span>
                     <span class="range-tick" style="left:100%;">12h</span>
                 </div>
-                <!-- 轨道背景 -->
                 <div class="range-track-bg"></div>
                 <div class="range-track-fill" id="rangeTrackFill"></div>
-                <!-- 小圆点标记 -->
                 <div class="tick-dot dot-6h"></div>
                 <div class="tick-dot dot-8h"></div>
-                <!-- 滑块 -->
                 <input type="range" id="sleepSlider" min="1" max="12" step="0.5" value="8" oninput="onSliderInput()" onchange="onSliderChange()">
             </div>
         </div>
@@ -656,7 +527,7 @@
         <!-- 醒来时间 -->
         <div class="wake-time-section" id="wakeSection">
             <div class="wake-label">
-                <span class="icon-sun">🌅</span> 预计醒来时间
+                <span class="icon-sun">&#127749;</span> 预计醒来时间
             </div>
             <div class="wake-time-display" id="wakeTimeDisplay">--:--</div>
             <span class="wake-date-tag" id="wakeDateTag">今天</span>
@@ -666,7 +537,6 @@
 
     <script>
         (function() {
-            // DOM 元素
             const currentTimeEl = document.getElementById('currentTime');
             const currentDateEl = document.getElementById('currentDate');
             const sleepSlider = document.getElementById('sleepSlider');
@@ -685,7 +555,6 @@
             const wakeSection = document.getElementById('wakeSection');
             const starsContainer = document.getElementById('starsContainer');
 
-            // 生成星星
             function createStars() {
                 const count = 45;
                 const frag = document.createDocumentFragment();
@@ -706,7 +575,6 @@
             }
             createStars();
 
-            // 格式化时间（12小时制）
             function formatTime(date) {
                 let hours = date.getHours();
                 const minutes = date.getMinutes();
@@ -714,213 +582,95 @@
                 hours = hours % 12;
                 if (hours === 0) hours = 12;
                 const minStr = minutes.toString().padStart(2, '0');
-                return {
-                    timeStr: hours + ':' + minStr,
-                    ampm: ampm,
-                    full: hours + ':' + minStr + ' ' + ampm
-                };
+                return { timeStr: hours + ':' + minStr, ampm, full: hours + ':' + minStr + ' ' + ampm };
             }
 
-            // 格式化日期
             function formatDate(date) {
                 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-                const weekday = weekdays[date.getDay()];
-                return year + '年' + month + '月' + day + '日 周' + weekday;
+                return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日 周' + weekdays[date.getDay()];
             }
 
-            // 判断是否跨天
-            function isDifferentDay(d1, d2) {
-                return d1.toDateString() !== d2.toDateString();
-            }
+            function isDifferentDay(d1, d2) { return d1.toDateString() !== d2.toDateString(); }
+            function getSleepHours() { return parseFloat(sleepSlider.value); }
 
-            // 获取睡眠时长（小时）
-            function getSleepHours() {
-                return parseFloat(sleepSlider.value);
-            }
-
-            // 格式化睡眠时长显示
             function formatSleepHours(hours) {
-                if (hours === Math.floor(hours)) {
-                    return Math.floor(hours) + ' 小时';
-                } else {
-                    const h = Math.floor(hours);
-                    const m = 30;
-                    return h + '小时' + m + '分';
-                }
+                return hours === Math.floor(hours) ? Math.floor(hours) + ' 小时' : Math.floor(hours) + '小时30分';
             }
 
-            // 计算醒来时间
             function calcWakeTime(sleepHours) {
-                const now = new Date();
-                const wakeMs = now.getTime() + sleepHours * 60 * 60 * 1000;
-                return new Date(wakeMs);
+                return new Date(Date.now() + sleepHours * 3600000);
             }
 
-            // 更新轨道填充
             function updateTrackFill() {
                 const min = parseFloat(sleepSlider.min);
                 const max = parseFloat(sleepSlider.max);
                 const val = parseFloat(sleepSlider.value);
-                const percent = ((val - min) / (max - min)) * 100;
-                rangeTrackFill.style.width = percent + '%';
+                rangeTrackFill.style.width = ((val - min) / (max - min)) * 100 + '%';
             }
 
-            // 更新所有显示
-            function updateAll(triggeredBySlider = false) {
+            function updateAll(triggeredBySlider) {
                 const now = new Date();
-
-                // 当前时间
                 const currentFormatted = formatTime(now);
                 currentTimeEl.innerHTML = currentFormatted.timeStr +
-                    '<span class="time-colon" style="font-size:52px;font-weight:300;color:#f0e6ff;">:</span>' +
+                    '<span class="time-colon">:</span>' +
                     currentFormatted.timeStr.split(':')[1] +
-                    ' <span style="font-size:18px;font-weight:400;color:#b8c4e8;">' + currentFormatted.ampm +
-                    '</span>';
+                    ' <span class="ampm">' + currentFormatted.ampm + '</span>';
                 currentDateEl.textContent = formatDate(now);
 
-                // 睡眠时长
                 const sleepHours = getSleepHours();
-                sliderHoursEl.textContent = sleepHours === Math.floor(sleepHours) ? Math.floor(sleepHours) : sleepHours
-                    .toFixed(1);
-
-                // 更新滑块值显示
-                const displayVal = sleepHours === Math.floor(sleepHours) ?
-                    Math.floor(sleepHours) :
-                    sleepHours.toFixed(1);
-                sliderHoursEl.textContent = displayVal;
-                // 更新单位
-                const unitEl = sliderValueDisplay.querySelector('.unit');
-                if (unitEl) {
-                    unitEl.textContent = '小时';
-                }
-
-                // 更新轨道填充
+                sliderHoursEl.textContent = sleepHours === Math.floor(sleepHours) ? Math.floor(sleepHours) : sleepHours.toFixed(1);
                 updateTrackFill();
 
-                // 自定义醒来时间
                 const wakeTime = calcWakeTime(sleepHours);
                 const wakeFormatted = formatTime(wakeTime);
                 wakeTimeDisplay.textContent = wakeFormatted.full;
 
-                // 判断跨天
                 const isTomorrow = isDifferentDay(now, wakeTime);
-                if (isTomorrow) {
-                    wakeDateTag.textContent = '明天';
-                    wakeDateTag.style.background = 'rgba(255,183,77,0.2)';
-                    wakeDateTag.style.color = '#ffcc80';
-                } else {
-                    wakeDateTag.textContent = '今天';
-                    wakeDateTag.style.background = 'rgba(255,255,255,0.08)';
-                    wakeDateTag.style.color = '#b8c4e8';
-                }
-
-                // 睡眠时长副标题
+                wakeDateTag.textContent = isTomorrow ? '明天' : '今天';
+                wakeDateTag.style.background = isTomorrow ? 'rgba(255,183,77,0.2)' : 'rgba(255,255,255,0.08)';
+                wakeDateTag.style.color = isTomorrow ? '#ffcc80' : '#b8c4e8';
                 wakeSubInfo.textContent = '睡眠 ' + formatSleepHours(sleepHours);
 
-                // 更新6小时卡片
                 const wake6h = calcWakeTime(6);
                 const w6 = formatTime(wake6h);
                 card6hWake.textContent = w6.full;
-                const is6Tomorrow = isDifferentDay(now, wake6h);
-                card6hTag.textContent = is6Tomorrow ? '明天醒来' : '今天醒来';
+                card6hTag.textContent = isDifferentDay(now, wake6h) ? '明天醒来' : '今天醒来';
 
-                // 更新8小时卡片
                 const wake8h = calcWakeTime(8);
                 const w8 = formatTime(wake8h);
                 card8hWake.textContent = w8.full;
-                const is8Tomorrow = isDifferentDay(now, wake8h);
-                card8hTag.textContent = is8Tomorrow ? '明天醒来' : '今天醒来';
+                card8hTag.textContent = isDifferentDay(now, wake8h) ? '明天醒来' : '今天醒来';
 
-                // 更新卡片激活状态
-                updateCardActiveState(sleepHours);
+                const tolerance = 0.15;
+                card6h.classList.toggle('active', Math.abs(sleepHours - 6) <= tolerance);
+                card8h.classList.toggle('active', Math.abs(sleepHours - 8) <= tolerance);
+                if (Math.abs(sleepHours - 6) > tolerance && Math.abs(sleepHours - 8) > tolerance) {
+                    card6h.classList.remove('active');
+                    card8h.classList.remove('active');
+                }
 
-                // 醒来时间区域的微动画
                 if (triggeredBySlider) {
                     wakeSection.style.transform = 'scale(1.02)';
-                    setTimeout(() => {
-                        wakeSection.style.transform = 'scale(1)';
-                    }, 180);
+                    setTimeout(() => { wakeSection.style.transform = 'scale(1)'; }, 180);
                 }
             }
 
-            // 更新卡片激活状态
-            function updateCardActiveState(sleepHours) {
-                const tolerance = 0.15;
-                if (Math.abs(sleepHours - 6) <= tolerance) {
-                    card6h.classList.add('active');
-                    card8h.classList.remove('active');
-                } else if (Math.abs(sleepHours - 8) <= tolerance) {
-                    card8h.classList.add('active');
-                    card6h.classList.remove('active');
-                } else {
-                    card6h.classList.remove('active');
-                    card8h.classList.remove('active');
-                }
-            }
-
-            // 滑块输入事件
-            function onSliderInput() {
-                updateAll(true);
-            }
-
-            function onSliderChange() {
-                updateAll(true);
-            }
-
-            // 预设选择
-            function selectPreset(hours) {
+            window.onSliderInput = function() { updateAll(true); };
+            window.onSliderChange = function() { updateAll(true); };
+            window.selectPreset = function(hours) {
                 sleepSlider.value = hours;
                 updateAll(true);
-                // 触觉反馈（如果支持）
-                if (navigator.vibrate) {
-                    navigator.vibrate(12);
-                }
-            }
+                if (navigator.vibrate) navigator.vibrate(12);
+            };
 
-            // 暴露到全局
-            window.selectPreset = selectPreset;
-            window.onSliderInput = onSliderInput;
-            window.onSliderChange = onSliderChange;
-
-            // 初始化
             updateTrackFill();
             updateAll();
-
-            // 定时更新（每20秒）
-            setInterval(() => {
-                updateAll(false);
-            }, 20000);
-
-            // 监听可见性变化，页面重新可见时立即更新
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) {
-                    updateAll(false);
-                }
-            });
-
-            // 监听屏幕方向变化
-            window.addEventListener('orientationchange', () => {
-                setTimeout(() => {
-                    updateTrackFill();
-                    updateAll(false);
-                }, 300);
-            });
-
-            // 防止意外滚动
+            setInterval(() => updateAll(false), 20000);
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) updateAll(false); });
+            window.addEventListener('orientationchange', () => { setTimeout(() => { updateTrackFill(); updateAll(false); }, 300); });
             document.addEventListener('gesturestart', function(e) {
-                if (e.target.tagName === 'INPUT' && e.target.type === 'range') {
-                    e.preventDefault();
-                }
+                if (e.target.tagName === 'INPUT' && e.target.type === 'range') e.preventDefault();
             }, { passive: false });
-
-            console.log('🌙 睡眠时间计算器已就绪');
-            console.log('  - 滑动滑块自定义睡眠时长');
-            console.log('  - 点击6小时/8小时卡片快速选择');
-            console.log('  - 实时显示预计醒来时间');
-            console.log('  💤 祝您好梦 ~');
         })();
     </script>
 </body>
