@@ -208,9 +208,10 @@
                 <ul class="hidden md:flex space-x-8 text-sm font-medium text-slate-400 tracking-wide items-center">
                     <li><a href="#home" class="text-white font-bold transition-colors duration-300">首页</a></li>
                     <li><a href="#projects" class="hover:text-white transition-colors duration-300">项目</a></li>
+                    <li><a href="#tools" class="hover:text-white transition-colors duration-300">工具</a></li>
                     <li><a href="#skills" class="hover:text-white transition-colors duration-300">技能</a></li>
                     <li><a href="blog.html" class="hover:text-white transition-colors duration-300">知识库</a></li>
-                    <li><a href="website.html" class="hover:text-white transition-colors duration-300">工具</a></li>
+                    <li><a href="website.html" class="hover:text-white transition-colors duration-300">资源导航</a></li>
                     <li><a href="#contact" class="hover:text-white transition-colors duration-300">联系</a></li>
                     <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="hover:text-white transition-colors duration-300">关于</a></li>
                 </ul>
@@ -236,9 +237,10 @@
             <ul class="flex flex-col px-4 py-4 space-y-1 text-[15px] font-medium text-slate-300">
                 <li><a href="#home" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">首页</a></li>
                 <li><a href="#projects" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">项目</a></li>
+                <li><a href="#tools" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">工具</a></li>
                 <li><a href="#skills" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">技能</a></li>
                 <li><a href="blog.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">知识库</a></li>
-                <li><a href="website.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">工具</a></li>
+                <li><a href="website.html" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">资源导航</a></li>
                 <li><a href="#contact" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">联系</a></li>
                 <li><a href="https://github.com/Horizen5/Horizen5.github.io" target="_blank" class="block w-full py-4 px-4 rounded-lg hover:bg-white/5 hover:text-white transition-colors">关于</a></li>
             </ul>
@@ -369,7 +371,57 @@
         </div>
     </section>
 
-    <!-- Snap Section 3: Skills -->
+    <!-- Snap Section 3: My Tools -->
+    <section id="tools" class="snap-section relative">
+        <div class="snap-section-content px-6">
+            <div class="max-w-6xl mx-auto py-12">
+                <div class="mb-16 reveal scale">
+                    <h2 class="text-4xl md:text-6xl font-black mb-4 text-white tracking-tighter">我的<br><span class="text-slate-500">工具.</span></h2>
+                    <p class="text-slate-400 text-lg max-w-xl leading-relaxed">我构建的实用小工具，开箱即用。</p>
+                    <div class="w-24 h-1 bg-white rounded-full opacity-20 mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tool 1: Sleep Calculator -->
+                    <a href="tools/sleep-calculator.html" class="premium-card rounded-2xl p-8 flex flex-col h-full reveal group" style="transition-delay: 0.1s;">
+                        <div class="w-14 h-14 mb-6 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
+                            <svg class="w-7 h-7 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white tracking-tight group-hover:text-primary transition-colors">睡眠时间计算器</h3>
+                        <p class="text-slate-400 mb-8 flex-grow leading-relaxed">
+                            根据科学睡眠周期，计算最佳入睡与起床时间，帮助你获得更高质量的睡眠。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">HTML</span>
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">CSS</span>
+                            <span class="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-white/10 text-slate-300">JS</span>
+                        </div>
+                        <span class="text-white text-sm font-semibold inline-flex items-center group-hover:text-primary transition-colors uppercase tracking-wider">
+                            立即使用
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </a>
+
+                    <!-- Placeholder: More tools coming soon -->
+                    <div class="premium-card rounded-2xl p-8 flex flex-col h-full reveal border-dashed" style="transition-delay: 0.2s;">
+                        <div class="w-14 h-14 mb-6 rounded-xl bg-white/5 border border-white/10 border-dashed flex items-center justify-center">
+                            <svg class="w-7 h-7 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-slate-600 tracking-tight">更多工具</h3>
+                        <p class="text-slate-600 mb-8 flex-grow leading-relaxed">
+                            持续开发中，敬请期待...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Snap Section 4: Skills -->
     <section id="skills" class="snap-section relative bg-[#020203]">
         <div class="snap-section-content px-6">
             <div class="max-w-5xl mx-auto py-12">
@@ -582,6 +634,40 @@
             }, revealOptions);
 
             document.querySelectorAll('.reveal, .skill-bar-fill').forEach(el => revealObserver.observe(el));
+
+            // Scroll-based nav highlight
+            const navSections = [
+                { id: 'home', el: document.getElementById('home') },
+                { id: 'projects', el: document.getElementById('projects') },
+                { id: 'tools', el: document.getElementById('tools') },
+                { id: 'skills', el: document.getElementById('skills') },
+                { id: 'contact', el: document.getElementById('contact') },
+            ];
+            const navLinks = document.querySelectorAll('.glass-nav a[href^="#"]');
+
+            function updateActiveNav() {
+                let current = '';
+                for (const section of navSections) {
+                    if (section.el) {
+                        const rect = section.el.getBoundingClientRect();
+                        if (rect.top <= window.innerHeight / 2) {
+                            current = section.id;
+                        }
+                    }
+                }
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === '#' + current) {
+                        link.classList.add('text-white', 'font-bold');
+                        link.classList.remove('text-slate-400');
+                    } else if (href.startsWith('#')) {
+                        link.classList.remove('text-white', 'font-bold');
+                        link.classList.add('text-slate-400');
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateActiveNav, { passive: true });
+            updateActiveNav();
 
             // 全局统一的主题切换逻辑
             const globalThemeToggle = document.getElementById('global-theme-toggle');
