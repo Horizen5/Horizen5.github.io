@@ -1795,6 +1795,13 @@
         "domain": "agefans.cc",
         "icon": "动",
         "desc": "动漫观看平台"
+      },
+      {
+        "name": "睡眠时间计算器",
+        "url": "https://horizen5.github.io/tools/sleep-calculator.html",
+        "domain": "horizen5.github.io",
+        "icon": "睡",
+        "desc": "计算最佳入睡和起床时间"
       }
     ]
   },
