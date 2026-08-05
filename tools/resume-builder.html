@@ -162,7 +162,7 @@ body {
 
 /* Custom birth-year/month picker */
 .birth-picker {
-  position: absolute; z-index: 100;
+  position: fixed; z-index: 1010;
   background: #fff; border: 1px solid var(--rule); border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.14); width: 280px;
   padding: 12px; font-size: 13px; display: none;
@@ -262,6 +262,8 @@ body {
   display: flex; justify-content: center; background: var(--bg); order: 1;
 }
 .resume-pages { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+/* Wrapper used to reserve scaled space when the A4 page is shrunk to fit mobile width */
+.resume-page-wrap { position: relative; }
 
 /* ========== Resume Page (A4) ========== */
 .resume-page {
@@ -403,7 +405,8 @@ body {
   .toolbar, .editor-panel, #resumeSource, .btn-export, .mobile-toggle { display: none !important; }
   .main-container { display: block !important; margin: 0 !important; padding: 0 !important; }
   .preview-panel { display: block !important; padding: 0 !important; height: auto !important; overflow: visible !important; background: #fff !important; }
-  .resume-pages { display: block !important; gap: 0 !important; width: auto !important; align-items: stretch !important; }
+  .resume-pages { display: block !important; gap: 0 !important; width: auto !important; align-items: stretch !important; overflow: visible !important; }
+  .resume-page-wrap { width: auto !important; height: auto !important; }
   .resume-page {
     width: 210mm !important; min-height: 297mm !important; max-height: 297mm !important;
     box-shadow: none !important; margin: 0 !important; padding: 0 !important;
@@ -432,10 +435,12 @@ body {
 @media screen and (max-width: 900px) {
   .main-container { flex-direction: column; }
   .editor-panel { width: 100%; min-width: 100%; height: auto; position: relative; top: 0; order: 1; border-left: none; border-bottom: 1px solid var(--rule); flex-direction: column; }
-  .editor-nav { width: 100%; min-width: 0; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--rule); gap: 6px; }
+  .editor-nav { width: 100%; min-width: 0; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--rule); gap: 6px; padding-bottom: 2px; }
   .nav-item { white-space: nowrap; flex: 0 0 auto; }
-  .preview-panel { order: 2; height: auto; padding: 20px; }
-  .resume-page { transform: none; width: 100%; max-width: 210mm; }
+  .preview-panel { order: 2; height: auto; padding: 16px 10px; }
+  /* Keep native A4 width; JS fitResumeMobile() scales it to fit screen width */
+  .resume-pages { overflow-x: hidden; }
+  .resume-page { width: 210mm; max-width: none; transform: none; }
 }
 .mobile-toggle { display: none; }
 @media screen and (max-width: 900px) {
@@ -458,6 +463,137 @@ body {
 @media screen and (max-width: 380px) {
   .toolbar-title { font-size: 13px; }
   .btn { padding: 5px 8px; font-size: 11px; }
+}
+
+/* ========== Mobile Bottom Navigation ========== */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0;
+  height: 56px; background: #fff; border-top: 1px solid var(--rule);
+  z-index: 1001; box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+}
+.mobile-nav-list { display: flex; height: 100%; }
+.mobile-nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; color: var(--muted); font-size: 11px; cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.05); transition: all .15s;
+}
+.mobile-nav-item:active { background: rgba(0,0,0,0.04); }
+.mobile-nav-item.active { color: var(--accent); }
+.mobile-nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+
+/* ========== Mobile Bottom Sheet ========== */
+.mobile-sheet-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  z-index: 1002; opacity: 0; transition: opacity .25s;
+}
+.mobile-sheet-overlay.visible { display: block; opacity: 1; }
+.mobile-sheet {
+  display: flex; position: fixed; left: 0; right: 0; bottom: 0;
+  max-height: 85vh; background: #fff; border-radius: 16px 16px 0 0;
+  z-index: 1003; transform: translateY(100%); transition: transform .28s cubic-bezier(.2,.8,.2,1);
+  flex-direction: column; visibility: hidden; pointer-events: none;
+}
+.mobile-sheet.visible { visibility: visible; pointer-events: auto; transform: translateY(0); }
+.mobile-sheet-header {
+  flex: 0 0 auto; display: grid; grid-template-columns: 40px 1fr 40px; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid var(--rule);
+}
+.mobile-sheet-title { font-size: 16px; font-weight: 600; color: var(--ink); text-align: center; }
+.mobile-sheet-back { justify-self: start; }
+.mobile-sheet-close { justify-self: end; }
+.mobile-sheet-close {
+  width: 32px; height: 32px; border: none; border-radius: 50%; background: var(--accent-light);
+  color: var(--accent); font-size: 20px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-sheet-back {
+  width: 32px; height: 32px; border: none; border-radius: 50%; background: var(--accent-light);
+  color: var(--accent); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-sheet-body { flex: 1 1 auto; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch; }
+
+/* Module list in mobile sheet */
+.mobile-module-list { display: flex; flex-direction: column; gap: 10px; }
+.mobile-module-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px; background: #f8f9fa; border-radius: 10px;
+}
+.mobile-module-info { display: flex; align-items: center; gap: 12px; }
+.mobile-module-icon {
+  width: 36px; height: 36px; border-radius: 8px; background: var(--accent-light);
+  color: var(--accent); display: flex; align-items: center; justify-content: center;
+}
+.mobile-module-icon svg { width: 20px; height: 20px; fill: currentColor; }
+.mobile-module-name { font-size: 15px; font-weight: 500; color: var(--ink); }
+.mobile-module-actions { display: flex; align-items: center; gap: 10px; }
+.mobile-module-edit {
+  padding: 5px 12px; border-radius: 14px; border: 1px solid var(--accent);
+  color: var(--accent); background: #fff; font-size: 12px; cursor: pointer;
+}
+.mobile-switch {
+  position: relative; width: 46px; height: 26px;
+}
+.mobile-switch input { opacity: 0; width: 0; height: 0; }
+.mobile-switch-slider {
+  position: absolute; inset: 0; border-radius: 26px; background: #ccc;
+  transition: .2s; cursor: pointer;
+}
+.mobile-switch-slider::before {
+  content: ''; position: absolute; left: 3px; top: 3px;
+  width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.mobile-switch input:checked + .mobile-switch-slider { background: var(--accent); }
+.mobile-switch input:checked + .mobile-switch-slider::before { transform: translateX(20px); }
+
+/* Mobile form reuse desktop styles */
+.mobile-form .field-group { margin-bottom: 14px; }
+.mobile-form .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.mobile-form .field-row > div { flex: 1; }
+.mobile-form .field-label { font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+.mobile-form .field-input,
+.mobile-form .field-select,
+.mobile-form .field-textarea {
+  width: 100%; padding: 11px 12px; border: 1px solid var(--rule);
+  border-radius: 8px; font-size: 15px; font-family: inherit; background: #fafafa;
+}
+.mobile-form .field-textarea { resize: none; overflow: hidden; line-height: 1.6; }
+.mobile-form .le-input { font-size: 15px; }
+.mobile-form .le-dot { font-size: 14px; }
+.mobile-form .date-input {
+  padding-left: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 9px center;
+}
+
+/* Mobile save options */
+.mobile-save-list { display: flex; flex-direction: column; gap: 10px; }
+.mobile-save-item {
+  display: flex; align-items: center; gap: 14px; padding: 16px; background: #f8f9fa;
+  border-radius: 10px; cursor: pointer; transition: background .15s;
+}
+.mobile-save-item:active { background: #eef2f4; }
+.mobile-save-icon { color: var(--accent); }
+.mobile-save-icon svg { width: 24px; height: 24px; fill: currentColor; }
+.mobile-save-text { font-size: 15px; font-weight: 500; color: var(--ink); }
+.mobile-save-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+@media screen and (max-width: 900px) {
+  .mobile-bottom-nav { display: block; }
+  body { padding-bottom: 56px; }
+  .main-container { margin-bottom: 0; }
+  .mobile-toggle { display: none; }
+  .editor-panel { display: none !important; }
+  .toolbar-right .btn-export,
+  .toolbar-right .btn-secondary { display: none; }
+  .toolbar-right { gap: 0; }
+}
+@media screen and (max-width: 600px) {
+  .mobile-sheet { max-height: 88vh; }
+  .mobile-sheet-body { padding: 14px; }
+  .mobile-form .field-row { flex-direction: column; gap: 0; }
 }
 </style>
 </head>
@@ -582,7 +718,7 @@ body {
           <div class="birth-col">
             <label class="field-label">出生年月</label>
             <div class="date-input-wrap">
-              <input type="text" class="field-input date-input" id="bi_birth" readonly placeholder="请选择出生年月" onclick="openBirthPicker()">
+              <input type="text" class="field-input date-input" id="bi_birth" readonly placeholder="请选择出生年月" onclick="openBirthPicker(this)">
             </div>
           </div>
           <div class="birth-age-col">
@@ -732,7 +868,11 @@ let resumeData = {
     phone: '', political: '', email: '', school: '',
     address: '', degree: '', marriage: '', showAge: false
   },
-  education: [], internships: [], projects: [], skills: [], selfEval: ''
+  education: [], internships: [], projects: [], skills: [], selfEval: '',
+  sectionsVisible: {
+    photo: true, basic: true, education: true, internship: true,
+    campus: true, skills: true, evaluation: true, header: true
+  }
 };
 
 let entryIdCounter = 0;
@@ -799,14 +939,18 @@ const sampleData = {
     '具备良好的数据分析、信息整理与文档撰写能力；',
     '具备较强的沟通协调意识与团队协作精神。'
   ],
-  selfEval: '具有良好的抗压能力和应变能力，能够迅速适应新环境，具备良好的团队协作精神和沟通能力，对待工作认真负责，拥有强大的责任心和执行力，勇于面对挑战，性格乐观开朗，积极向上，具有较强的学习能力，能够快速掌握新知识和技能，敢于面对挑战。'
+  selfEval: '具有良好的抗压能力和应变能力，能够迅速适应新环境，具备良好的团队协作精神和沟通能力，对待工作认真负责，拥有强大的责任心和执行力，勇于面对挑战，性格乐观开朗，积极向上，具有较强的学习能力，能够快速掌握新知识和技能，敢于面对挑战。',
+  sectionsVisible: {
+    photo: true, basic: true, education: true, internship: true,
+    campus: true, skills: true, evaluation: true, header: true
+  }
 };
 
 // ========== Render Functions ==========
 
-function renderEducationList() {
-  const container = document.getElementById('educationList');
-  container.innerHTML = resumeData.education.map((edu, i) => `
+function renderEducationList(container) {
+  const target = container || document.getElementById('educationList');
+  target.innerHTML = resumeData.education.map((edu, i) => `
     <div class="entry-card">
       <div class="entry-card-header">
         <span class="entry-card-title">教育经历 ${i + 1}</span>
@@ -838,9 +982,9 @@ function renderEducationList() {
   `).join('');
 }
 
-function renderInternshipList() {
-  const container = document.getElementById('internshipList');
-  container.innerHTML = resumeData.internships.map((item, i) => `
+function renderInternshipList(container) {
+  const target = container || document.getElementById('internshipList');
+  target.innerHTML = resumeData.internships.map((item, i) => `
     <div class="entry-card">
       <div class="entry-card-header">
         <span class="entry-card-title">实习经历 ${i + 1}</span>
@@ -868,9 +1012,9 @@ function renderInternshipList() {
   `).join('');
 }
 
-function renderProjectList() {
-  const container = document.getElementById('projectList');
-  container.innerHTML = resumeData.projects.map((item, i) => `
+function renderProjectList(container) {
+  const target = container || document.getElementById('projectList');
+  target.innerHTML = resumeData.projects.map((item, i) => `
     <div class="entry-card">
       <div class="entry-card-header">
         <span class="entry-card-title">校园经历 ${i + 1}</span>
@@ -991,9 +1135,9 @@ function leKey(ta, ev) {
   }
 }
 
-function renderSkillsList() {
-  const container = document.getElementById('skillsList');
-  container.innerHTML = resumeData.skills.map((s, i) => `
+function renderSkillsList(container) {
+  const target = container || document.getElementById('skillsList');
+  target.innerHTML = resumeData.skills.map((s, i) => `
     <div class="bullet-item">
       <span class="bullet-dot">●</span>
       <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[${i}]=this.value; updatePreview()">${esc(s)}</textarea>
@@ -1050,8 +1194,10 @@ function formatBirthForDisplay(v) {
 
 // Custom birth year/month picker: recent 10 years by default, arrow buttons slide by decade
 let birthPickerState = { decadeStart: 0, selectedYear: 0, selectedMonth: 0 };
-function openBirthPicker() {
-  const input = document.getElementById('bi_birth');
+let birthPickerTarget = null;
+function openBirthPicker(input) {
+  if (!input) input = document.getElementById('bi_birth');
+  birthPickerTarget = input;
   const picker = document.getElementById('birthPicker');
   const now = new Date();
   const currentYear = now.getFullYear();
@@ -1069,10 +1215,29 @@ function openBirthPicker() {
   }
   birthPickerState.decadeStart = start;
   renderBirthPicker();
+  // Make the picker fit on small screens and keep it within the viewport
+  if (window.innerWidth <= 600) {
+    const w = Math.min(320, window.innerWidth - 16);
+    picker.style.width = w + 'px';
+  } else {
+    picker.style.width = '280px';
+  }
+  picker.classList.add('visible');
   const rect = input.getBoundingClientRect();
   picker.style.left = rect.left + 'px';
   picker.style.top = (rect.bottom + 6) + 'px';
-  picker.classList.add('visible');
+  // Clamp horizontally so it never overflows the screen edge
+  const pw = picker.offsetWidth;
+  let left = rect.left;
+  const maxLeft = window.innerWidth - pw - 8;
+  if (left > maxLeft) left = Math.max(8, maxLeft);
+  if (left < 8) left = 8;
+  picker.style.left = left + 'px';
+  // If it would overflow the bottom, flip above the input
+  const ph = picker.offsetHeight;
+  if (rect.bottom + 6 + ph > window.innerHeight && rect.top - 6 - ph > 0) {
+    picker.style.top = (rect.top - 6 - ph) + 'px';
+  }
   setTimeout(function() {
     document.addEventListener('click', closeBirthPickerOnClickOutside, { once: true });
   }, 0);
@@ -1101,11 +1266,17 @@ function selectBirthYear(y) {
 }
 function selectBirthMonth(m) {
   birthPickerState.selectedMonth = m;
-  const input = document.getElementById('bi_birth');
+  const input = birthPickerTarget || document.getElementById('bi_birth');
   const y = birthPickerState.selectedYear;
   const val = y + '-' + String(m).padStart(2, '0');
   input.dataset.value = val;
   input.value = formatBirthForDisplay(val);
+  // sync to desktop field if picker was opened from mobile
+  const desktop = document.getElementById('bi_birth');
+  if (desktop && desktop !== input) {
+    desktop.dataset.value = val;
+    desktop.value = formatBirthForDisplay(val);
+  }
   closeBirthPicker();
   updatePreview();
 }
@@ -1138,6 +1309,7 @@ function renderBirthPicker() {
 function buildResumeContent() {
   const bi = resumeData.basicInfo;
   return `
+    ${resumeData.sectionsVisible.header !== false ? `
     <!-- Header -->
     <div class="resume-header">
       <div class="resume-header-left">
@@ -1159,8 +1331,9 @@ function buildResumeContent() {
     <div class="header-bar-wrap">
       <div class="header-slanted-bar"></div>
       <div class="header-slanted-bar thin"></div>
-    </div>
+    </div>` : ''}
 
+    ${resumeData.sectionsVisible.basic !== false ? `
     <!-- Basic Info Section -->
     <div class="resume-section">
       <div class="resume-section-header">
@@ -1188,14 +1361,15 @@ function buildResumeContent() {
           ${biRow(fmtLabel('住址'), bi.address)}
           ${biRow(fmtLabel('学历'), bi.degree)}
         </div>
+        ${resumeData.sectionsVisible.photo !== false ? `
         <div class="basic-info-photo">
           ${resumeData.photo ? `<img src="${resumeData.photo}" alt="证件照">` : '<span class="placeholder">证件照</span>'}
-        </div>
+        </div>` : ''}
       </div>
-    </div>
+    </div>` : ''}
 
     <!-- Education -->
-    ${resumeData.education.length > 0 ? `
+    ${resumeData.sectionsVisible.education !== false && resumeData.education.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
@@ -1223,7 +1397,7 @@ function buildResumeContent() {
     </div>` : ''}
 
     <!-- Internship -->
-    ${resumeData.internships.length > 0 ? `
+    ${resumeData.sectionsVisible.internship !== false && resumeData.internships.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
@@ -1252,7 +1426,7 @@ function buildResumeContent() {
     </div>` : ''}
 
     <!-- Campus Experience -->
-    ${resumeData.projects.length > 0 ? `
+    ${resumeData.sectionsVisible.campus !== false && resumeData.projects.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
@@ -1281,7 +1455,7 @@ function buildResumeContent() {
     </div>` : ''}
 
     <!-- Skills -->
-    ${resumeData.skills.length > 0 ? `
+    ${resumeData.sectionsVisible.skills !== false && resumeData.skills.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
@@ -1299,7 +1473,7 @@ function buildResumeContent() {
     </div>` : ''}
 
     <!-- Self Evaluation -->
-    ${resumeData.selfEval ? `
+    ${resumeData.sectionsVisible.evaluation !== false && resumeData.selfEval ? `
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
@@ -1417,8 +1591,60 @@ function paginate(margin) {
     });
   });
 
+  // Wrap each page so we can reserve scaled space on mobile
+  Array.from(pagesWrap.children).forEach(page => {
+    if (page.classList.contains('resume-page-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'resume-page-wrap';
+    pagesWrap.insertBefore(wrap, page);
+    wrap.appendChild(page);
+  });
+
   src.innerHTML = '';
+  fitResumeMobile();
 }
+
+// Scale the A4 resume pages down to fit the viewport width on small screens,
+// so the layout stays proportional and is never clipped (instead of being
+// squeezed to 100% width which breaks wrapping and overflow:hidden).
+function fitResumeMobile() {
+  const isMobile = window.innerWidth <= 900;
+  const pages = document.querySelectorAll('.resume-page');
+  if (!pages.length) return;
+  const container = document.getElementById('resumePages');
+  const cw = container ? container.clientWidth : window.innerWidth;
+  pages.forEach(p => {
+    const wrap = p.parentElement;
+    if (!wrap || !wrap.classList.contains('resume-page-wrap')) return;
+    if (isMobile) {
+      const scale = cw / p.offsetWidth;
+      p.style.transform = 'scale(' + scale + ')';
+      p.style.transformOrigin = 'top left';
+      wrap.style.width = cw + 'px';
+      wrap.style.height = (p.offsetHeight * scale) + 'px';
+    } else {
+      p.style.transform = '';
+      p.style.transformOrigin = '';
+      wrap.style.width = '';
+      wrap.style.height = '';
+    }
+  });
+}
+
+let _fitResumeRAF = null;
+let _wasMobile = window.innerWidth <= 900;
+function onResizeFit() {
+  const isMobile = window.innerWidth <= 900;
+  if (_wasMobile && !isMobile) {
+    // Switched from mobile back to desktop: refresh editor lists so they reflect latest data
+    refreshEditors();
+  }
+  _wasMobile = isMobile;
+  if (_fitResumeRAF) cancelAnimationFrame(_fitResumeRAF);
+  _fitResumeRAF = requestAnimationFrame(fitResumeMobile);
+}
+window.addEventListener('resize', onResizeFit);
+window.addEventListener('orientationchange', onResizeFit);
 
 // ========== Preview Rendering ==========
 function updatePreview() {
@@ -1460,29 +1686,47 @@ function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
 
 function addEducation() {
   resumeData.education.push({ id: nextId(), date: '', school: '', major: '', detail1: '', detail2: [''] });
-  renderEducationList(); leAutoGrowAll(); updatePreview();
+  renderEducationList();
+  const mobileContainer = document.getElementById('mobileEducationList');
+  if (mobileContainer) renderEducationList(mobileContainer);
+  leAutoGrowAll(); updatePreview();
 }
 function removeEducation(id) {
   resumeData.education = resumeData.education.filter(e => e.id !== id);
-  renderEducationList(); updatePreview();
+  renderEducationList();
+  const mobileContainer = document.getElementById('mobileEducationList');
+  if (mobileContainer) renderEducationList(mobileContainer);
+  updatePreview();
 }
 
 function addInternship() {
   resumeData.internships.push({ id: nextId(), date: '', org: '', role: '', bullets: [''] });
-  renderInternshipList(); leAutoGrowAll(); updatePreview();
+  renderInternshipList();
+  const mobileContainer = document.getElementById('mobileInternshipList');
+  if (mobileContainer) renderInternshipList(mobileContainer);
+  leAutoGrowAll(); updatePreview();
 }
 function removeInternship(id) {
   resumeData.internships = resumeData.internships.filter(e => e.id !== id);
-  renderInternshipList(); leAutoGrowAll(); updatePreview();
+  renderInternshipList();
+  const mobileContainer = document.getElementById('mobileInternshipList');
+  if (mobileContainer) renderInternshipList(mobileContainer);
+  leAutoGrowAll(); updatePreview();
 }
 
 function addProject() {
   resumeData.projects.push({ id: nextId(), date: '', org: '', role: '', bullets: [''] });
-  renderProjectList(); leAutoGrowAll(); updatePreview();
+  renderProjectList();
+  const mobileContainer = document.getElementById('mobileProjectList');
+  if (mobileContainer) renderProjectList(mobileContainer);
+  leAutoGrowAll(); updatePreview();
 }
 function removeProject(id) {
   resumeData.projects = resumeData.projects.filter(e => e.id !== id);
-  renderProjectList(); leAutoGrowAll(); updatePreview();
+  renderProjectList();
+  const mobileContainer = document.getElementById('mobileProjectList');
+  if (mobileContainer) renderProjectList(mobileContainer);
+  leAutoGrowAll(); updatePreview();
 }
 
 function addBullet(dataPath) {
@@ -1498,11 +1742,17 @@ function removeBullet(dataPath, index) {
 
 function addSkill() {
   resumeData.skills.push('');
-  renderSkillsList(); updatePreview();
+  renderSkillsList();
+  const mobileContainer = document.getElementById('mobileSkillsList');
+  if (mobileContainer) renderSkillsList(mobileContainer);
+  updatePreview();
 }
 function removeSkill(index) {
   resumeData.skills.splice(index, 1);
-  renderSkillsList(); updatePreview();
+  renderSkillsList();
+  const mobileContainer = document.getElementById('mobileSkillsList');
+  if (mobileContainer) renderSkillsList(mobileContainer);
+  updatePreview();
 }
 
 function refreshEditors() {
@@ -1617,7 +1867,11 @@ function resetForm() {
     header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
     photo: null,
     basicInfo: { name: '', birth: '', gender: '', ethnicity: '', height: '', phone: '', political: '', marriage: '', email: '', school: '', address: '', degree: '', showAge: false },
-    education: [], internships: [], projects: [], skills: [], selfEval: ''
+    education: [], internships: [], projects: [], skills: [], selfEval: '',
+    sectionsVisible: {
+      photo: true, basic: true, education: true, internship: true,
+      campus: true, skills: true, evaluation: true, header: true
+    }
   };
   entryIdCounter = 0;
   syncFormFields(); refreshEditors(); updatePhotoPreview(); updatePreview();
@@ -1646,6 +1900,13 @@ function loadFromLocal() {
       // Normalize old birth formats (2003.06 / 2003/06) to yyyy-mm for month input
       if (resumeData.basicInfo.birth) {
         resumeData.basicInfo.birth = normalizeBirth(resumeData.basicInfo.birth);
+      }
+      // Ensure section visibility object exists for older saves
+      if (!resumeData.sectionsVisible) {
+        resumeData.sectionsVisible = {
+          photo: true, basic: true, education: true, internship: true,
+          campus: true, skills: true, evaluation: true, header: true
+        };
       }
       // detail2 used to be a plain string; now it's a line-based array
       resumeData.education.forEach(edu => {
@@ -1696,6 +1957,340 @@ function showToast(msg) {
   setTimeout(() => { toast.style.opacity = '0'; }, 2000);
 }
 
+// ========== Mobile UI ==========
+const MOBILE_MODULES = [
+  { key: 'photo', name: '证件照', icon: ICON_PERSON },
+  { key: 'basic', name: '基本信息', icon: ICON_PERSON },
+  { key: 'education', name: '教育背景', icon: ICON_SCHOOL },
+  { key: 'internship', name: '实习经历', icon: ICON_WORK },
+  { key: 'campus', name: '校园经历', icon: ICON_SCHOOL },
+  { key: 'skills', name: '技能证书', icon: ICON_STAR },
+  { key: 'evaluation', name: '自我评价', icon: ICON_QUOTE },
+  { key: 'header', name: '标题标语', icon: ICON_BOOK }
+];
+
+let mobileSheetBackAction = null;
+
+function openMobileSheet(title, html, showBack, backAction) {
+  document.getElementById('mobileSheetTitle').textContent = title;
+  document.getElementById('mobileSheetBody').innerHTML = html;
+  const backBtn = document.getElementById('mobileSheetBack');
+  backBtn.style.display = showBack ? 'flex' : 'none';
+  mobileSheetBackAction = backAction || null;
+  document.getElementById('mobileSheetOverlay').classList.add('visible');
+  document.getElementById('mobileSheet').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  setTimeout(function() {
+    leAutoGrowAll();
+    fieldAutoGrowAll();
+  }, 0);
+}
+
+function closeMobileSheet() {
+  document.getElementById('mobileSheetOverlay').classList.remove('visible');
+  document.getElementById('mobileSheet').classList.remove('visible');
+  document.body.style.overflow = '';
+  mobileSheetBackAction = null;
+}
+
+function onMobileSheetBack() {
+  if (mobileSheetBackAction) mobileSheetBackAction();
+  else closeMobileSheet();
+}
+
+function getModuleName(key) {
+  const m = MOBILE_MODULES.find(x => x.key === key);
+  return m ? m.name : key;
+}
+
+function openMobileModules() {
+  openMobileSheet('模块编辑', renderMobileModuleList(), false);
+}
+
+function renderMobileModuleList() {
+  const visible = resumeData.sectionsVisible || {};
+  return `<div class="mobile-module-list">` + MOBILE_MODULES.map(m => {
+    const checked = visible[m.key] !== false ? 'checked' : '';
+    return `
+    <div class="mobile-module-item">
+      <div class="mobile-module-info">
+        <div class="mobile-module-icon">${m.icon}</div>
+        <div class="mobile-module-name">${esc(m.name)}</div>
+      </div>
+      <div class="mobile-module-actions">
+        <button class="mobile-module-edit" onclick="openMobileContent('${m.key}')">编辑内容</button>
+        <label class="mobile-switch">
+          <input type="checkbox" ${checked} onchange="toggleMobileSection('${m.key}', this.checked)">
+          <span class="mobile-switch-slider"></span>
+        </label>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function toggleMobileSection(key, visible) {
+  if (!resumeData.sectionsVisible) resumeData.sectionsVisible = {};
+  resumeData.sectionsVisible[key] = visible;
+  updatePreview();
+}
+
+function openMobileContent(key) {
+  let html = '';
+  switch (key) {
+    case 'photo': html = renderMobilePhoto(); break;
+    case 'basic': html = renderMobileBasicInfo(); break;
+    case 'education': html = renderMobileEducation(); break;
+    case 'internship': html = renderMobileInternship(); break;
+    case 'campus': html = renderMobileCampus(); break;
+    case 'skills': html = renderMobileSkills(); break;
+    case 'evaluation': html = renderMobileSelfEval(); break;
+    case 'header': html = renderMobileHeader(); break;
+  }
+  openMobileSheet(getModuleName(key), html, true, openMobileModules);
+  if (key === 'education') {
+    const c = document.getElementById('mobileEducationList');
+    if (c) renderEducationList(c);
+  }
+  if (key === 'internship') {
+    const c = document.getElementById('mobileInternshipList');
+    if (c) renderInternshipList(c);
+  }
+  if (key === 'campus') {
+    const c = document.getElementById('mobileProjectList');
+    if (c) renderProjectList(c);
+  }
+  if (key === 'skills') {
+    const c = document.getElementById('mobileSkillsList');
+    if (c) renderSkillsList(c);
+  }
+  leAutoGrowAll();
+  fieldAutoGrowAll();
+}
+
+function renderMobilePhoto() {
+  const img = resumeData.photo
+    ? `<img src="${resumeData.photo}" alt="photo" style="width:120px;height:160px;object-fit:cover;border-radius:4px;border:1px solid var(--rule);">`
+    : `<span style="display:flex;align-items:center;justify-content:center;width:120px;height:160px;background:#f5f5f5;border-radius:4px;color:var(--muted);">暂无照片</span>`;
+  return `
+    <div class="mobile-form" style="text-align:center;">
+      <div style="margin-bottom:16px;">${img}</div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button class="btn btn-secondary" onclick="document.getElementById('mobilePhotoFile').click()">上传照片</button>
+        <button class="btn btn-secondary" onclick="mobileRemovePhoto()">移除照片</button>
+      </div>
+      <input type="file" id="mobilePhotoFile" accept="image/*" style="display:none" onchange="mobileHandlePhotoUpload(event)">
+    </div>`;
+}
+
+function mobileHandlePhotoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    resumeData.photo = e.target.result;
+    updatePhotoPreview();
+    updatePreview();
+    openMobileContent('photo');
+  };
+  reader.readAsDataURL(file);
+}
+
+function mobileRemovePhoto() {
+  resumeData.photo = null;
+  document.getElementById('photoFile').value = '';
+  updatePhotoPreview();
+  updatePreview();
+  openMobileContent('photo');
+}
+
+function renderMobileBasicInfo() {
+  const bi = resumeData.basicInfo;
+  return `
+    <div class="mobile-form">
+      <div class="field-row">
+        <div><label class="field-label">姓名</label><input class="field-input" value="${esc(bi.name)}" oninput="mobileSetBasic('name', this.value)"></div>
+        <div><label class="field-label">性别</label><select class="field-select" onchange="mobileSetBasic('gender', this.value)"><option value="">请选择</option><option value="男" ${bi.gender==='男'?'selected':''}>男</option><option value="女" ${bi.gender==='女'?'selected':''}>女</option></select></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">出生年月</label><input type="text" class="field-input date-input" readonly placeholder="请选择出生年月" value="${esc(formatBirthForDisplay(bi.birth))}" data-value="${esc(normalizeBirth(bi.birth))}" onclick="openBirthPicker(this)"></div>
+        <div style="display:flex;align-items:flex-end;padding-bottom:10px;"><label class="checkbox-label"><input type="checkbox" ${bi.showAge?'checked':''} onchange="mobileSetBasic('showAge', this.checked)"><span class="checkmark"></span><span class="checkbox-text">转年龄</span></label></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">民族</label><input class="field-input" value="${esc(bi.ethnicity)}" oninput="mobileSetBasic('ethnicity', this.value)"></div>
+        <div><label class="field-label">身高</label><input class="field-input" value="${esc(bi.height)}" oninput="mobileSetBasic('height', this.value)"></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">婚姻状况</label><select class="field-select" onchange="mobileSetBasic('marriage', this.value)"><option value="">请选择</option><option value="未婚" ${bi.marriage==='未婚'?'selected':''}>未婚</option><option value="已婚" ${bi.marriage==='已婚'?'selected':''}>已婚</option><option value="保密" ${bi.marriage==='保密'?'selected':''}>保密</option></select></div>
+        <div><label class="field-label">政治面貌</label><select class="field-select" onchange="mobileSetBasic('political', this.value)"><option value="">请选择</option><option value="中共党员" ${bi.political==='中共党员'?'selected':''}>中共党员</option><option value="共青团员" ${bi.political==='共青团员'?'selected':''}>共青团员</option><option value="群众" ${bi.political==='群众'?'selected':''}>群众</option></select></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">电话</label><input class="field-input" value="${esc(bi.phone)}" oninput="mobileSetBasic('phone', this.value)"></div>
+        <div><label class="field-label">邮箱</label><input class="field-input" value="${esc(bi.email)}" oninput="mobileSetBasic('email', this.value)"></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">毕业院校</label><input class="field-input" value="${esc(bi.school)}" oninput="mobileSetBasic('school', this.value)"></div>
+        <div><label class="field-label">学历</label><input class="field-input" value="${esc(bi.degree)}" oninput="mobileSetBasic('degree', this.value)"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">住址</label>
+        <input class="field-input" value="${esc(bi.address)}" oninput="mobileSetBasic('address', this.value)">
+      </div>
+    </div>`;
+}
+
+function mobileSetBasic(key, value) {
+  resumeData.basicInfo[key] = value;
+  const desktop = document.getElementById('bi_' + key);
+  if (desktop) {
+    if (desktop.type === 'checkbox') desktop.checked = !!value;
+    else desktop.value = value;
+  }
+  updatePreview();
+}
+
+function renderMobileHeader() {
+  const h = resumeData.header;
+  return `
+    <div class="mobile-form">
+      <div class="field-group"><label class="field-label">主标题</label><input class="field-input" value="${esc(h.title)}" oninput="mobileSetHeader('title', this.value)"></div>
+      <div class="field-group"><label class="field-label">英文副标题</label><input class="field-input" value="${esc(h.subtitle)}" oninput="mobileSetHeader('subtitle', this.value)"></div>
+      <div class="field-group"><label class="field-label">标语</label><input class="field-input" value="${esc(h.tagline)}" oninput="mobileSetHeader('tagline', this.value)"></div>
+    </div>`;
+}
+
+function mobileSetHeader(key, value) {
+  resumeData.header[key] = value;
+  const desktop = document.getElementById('hdr_' + key);
+  if (desktop) desktop.value = value;
+  updatePreview();
+}
+
+function renderMobileSelfEval() {
+  return `
+    <div class="mobile-form">
+      <div class="field-group">
+        <label class="field-label">自我评价内容</label>
+        <textarea class="field-textarea" rows="1" placeholder="请输入自我评价..." oninput="fieldAutoGrow(this); mobileSetSelfEval(this.value)">${esc(resumeData.selfEval)}</textarea>
+      </div>
+    </div>`;
+}
+
+function mobileSetSelfEval(value) {
+  resumeData.selfEval = value;
+  const desktop = document.getElementById('selfEval');
+  if (desktop) desktop.value = value;
+  updatePreview();
+}
+
+function renderMobileEducation() {
+  return `
+    <div class="mobile-form">
+      <div id="mobileEducationList"></div>
+      <button class="btn-add" onclick="addEducation(); leAutoGrowAll();" style="margin-top:8px;">+ 添加教育经历</button>
+    </div>`;
+}
+
+function renderMobileInternship() {
+  return `
+    <div class="mobile-form">
+      <div id="mobileInternshipList"></div>
+      <button class="btn-add" onclick="addInternship(); leAutoGrowAll();" style="margin-top:8px;">+ 添加实习经历</button>
+    </div>`;
+}
+
+function renderMobileCampus() {
+  return `
+    <div class="mobile-form">
+      <div id="mobileProjectList"></div>
+      <button class="btn-add" onclick="addProject(); leAutoGrowAll();" style="margin-top:8px;">+ 添加校园经历</button>
+    </div>`;
+}
+
+function renderMobileSkills() {
+  return `
+    <div class="mobile-form">
+      <div id="mobileSkillsList"></div>
+      <button class="btn-add" onclick="addSkill();" style="margin-top:8px;">+ 添加技能</button>
+    </div>`;
+}
+
+function openMobileSpacing() {
+  const html = `
+    <div class="mobile-form">
+      <div class="field-group">
+        <label class="field-label">页边距（边框）</label>
+        <select class="field-select" id="mobilePageMargin" onchange="changeMargin(this.value)">
+          <option value="narrow" ${resumeData.margin==='narrow'?'selected':''}>窄</option>
+          <option value="normal" ${resumeData.margin==='normal'?'selected':''}>正常</option>
+          <option value="wide" ${resumeData.margin==='wide'?'selected':''}>宽</option>
+        </select>
+      </div>
+      <div class="field-group" style="font-size:12px;color:var(--muted);line-height:1.5;">
+        内容超出一页时会自动换页，每页均为 A4 幅面（与 Word / WPS 排版一致）。
+      </div>
+    </div>`;
+  openMobileSheet('间距设置', html, false);
+}
+
+function openMobileSkin() {
+  const colors = [
+    { c: '#4e7282', n: '青色' },
+    { c: '#2c5f8a', n: '藏青' },
+    { c: '#8b4513', n: '棕色' },
+    { c: '#555555', n: '深灰' },
+    { c: '#7a3d5e', n: '酒红' },
+    { c: '#2d7d4e', n: '墨绿' }
+  ];
+  const html = `
+    <div class="mobile-form">
+      <div class="field-label" style="margin-bottom:10px;">主题配色</div>
+      <div class="color-options" style="display:flex;flex-wrap:wrap;gap:12px;">
+        ${colors.map(x => `
+          <div class="color-swatch ${x.c === resumeData.themeColor ? 'active' : ''}" style="width:42px;height:42px;border-radius:50%;background:${x.c};${x.c === resumeData.themeColor ? 'box-shadow:0 0 0 3px #fff,0 0 0 5px '+x.c+';' : ''}" onclick="mobileChangeColor('${x.c}', this)" title="${x.n}"></div>
+        `).join('')}
+      </div>
+    </div>`;
+  openMobileSheet('皮肤设置', html, false);
+}
+
+function mobileChangeColor(color, el) {
+  resumeData.themeColor = color;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.documentElement.style.setProperty('--resume-accent', color);
+  document.documentElement.style.setProperty('--resume-section-bg', color);
+  updatePreview();
+}
+
+function openMobileSave() {
+  const html = `
+    <div class="mobile-save-list">
+      <div class="mobile-save-item" onclick="mobileSaveLocal(); closeMobileSheet();">
+        <div class="mobile-save-icon"><svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg></div>
+        <div><div class="mobile-save-text">保存到本地</div><div class="mobile-save-desc">将当前简历内容保存到浏览器本地存储</div></div>
+      </div>
+      <div class="mobile-save-item" onclick="closeMobileSheet(); exportPDF();">
+        <div class="mobile-save-icon"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div><div class="mobile-save-text">打印 / 另存 PDF</div><div class="mobile-save-desc">调用浏览器打印，可导出为 PDF 或打印 A4</div></div>
+      </div>
+      <div class="mobile-save-item" onclick="closeMobileSheet(); loadSample();">
+        <div class="mobile-save-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+        <div><div class="mobile-save-text">加载示例</div><div class="mobile-save-desc">恢复为模糊化示例数据</div></div>
+      </div>
+      <div class="mobile-save-item" onclick="closeMobileSheet(); resetForm();">
+        <div class="mobile-save-icon"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>
+        <div><div class="mobile-save-text">清空</div><div class="mobile-save-desc">清空所有内容（不可恢复）</div></div>
+      </div>
+    </div>`;
+  openMobileSheet('保存', html, false);
+}
+
+function mobileSaveLocal() {
+  updatePreview();
+  lsSet('resumeData', JSON.stringify(resumeData));
+  showToast('已保存到浏览器本地存储');
+}
+
 // ========== Init ==========
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -1710,6 +2305,10 @@ window.addEventListener('DOMContentLoaded', function() {
   });
   switchPage('basic');
   updatePreview();
+
+  // Mobile sheet overlay click to close
+  const overlay = document.getElementById('mobileSheetOverlay');
+  if (overlay) overlay.addEventListener('click', closeMobileSheet);
 });
 
 let saveTimer = null;
@@ -1731,6 +2330,39 @@ document.addEventListener('input', function() {
   </div>
   <div class="bp-years" id="bpYears"></div>
   <div class="bp-months" id="bpMonths"></div>
+</div>
+
+<!-- Mobile Bottom Navigation -->
+<div class="mobile-bottom-nav" id="mobileBottomNav">
+  <div class="mobile-nav-list">
+    <div class="mobile-nav-item" onclick="openMobileModules()">
+      <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+      <span>模块编辑</span>
+    </div>
+    <div class="mobile-nav-item" onclick="openMobileSpacing()">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z"/></svg>
+      <span>间距设置</span>
+    </div>
+    <div class="mobile-nav-item" onclick="openMobileSkin()">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      <span>皮肤设置</span>
+    </div>
+    <div class="mobile-nav-item" onclick="openMobileSave()">
+      <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+      <span>保存</span>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Bottom Sheet -->
+<div class="mobile-sheet-overlay" id="mobileSheetOverlay"></div>
+<div class="mobile-sheet" id="mobileSheet">
+  <div class="mobile-sheet-header">
+    <button class="mobile-sheet-back" id="mobileSheetBack" style="display:none" onclick="onMobileSheetBack()">‹</button>
+    <div class="mobile-sheet-title" id="mobileSheetTitle">模块编辑</div>
+    <button class="mobile-sheet-close" onclick="closeMobileSheet()">×</button>
+  </div>
+  <div class="mobile-sheet-body" id="mobileSheetBody"></div>
 </div>
 
 </body>
