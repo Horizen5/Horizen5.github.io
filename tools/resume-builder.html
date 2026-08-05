@@ -89,16 +89,21 @@ body {
   display: flex; flex-direction: column; gap: 3px;
 }
 .nav-item {
-  padding: 11px 6px; border-radius: 8px; font-size: 13px; color: var(--muted);
-  cursor: pointer; user-select: none; text-align: center; line-height: 1.25;
+  padding: 11px 10px 11px 14px; border-radius: 8px; font-size: 13px; color: var(--muted);
+  cursor: pointer; user-select: none; text-align: left; line-height: 1.25;
   border: 1px solid transparent; transition: all .15s;
   -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-item::before {
+  content: ''; width: 4px; height: 14px; background: transparent; border-radius: 2px; flex-shrink: 0;
 }
 .nav-item:hover { background: #e2e8ea; color: var(--ink); }
 .nav-item.active {
   background: #fff; color: var(--accent); font-weight: 600;
   border-color: var(--accent-light); box-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
+.nav-item.active::before { background: var(--accent); }
 .editor-section { margin-bottom: 24px; }
 .editor-section-title {
   font-size: 15px; font-weight: 600; color: var(--accent);
@@ -121,7 +126,13 @@ body {
 .field-input:focus, .field-textarea:focus, .field-select:focus {
   outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(61,107,125,0.1);
 }
-.field-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+.field-select {
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 10 12 16 18 10'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 30px; cursor: pointer;
+}
+.field-textarea { resize: none; min-height: 60px; line-height: 1.5; overflow: hidden; }
 /* Line-based bullet editor: each item is a REAL row (a ● dot + an auto-growing
    textarea) so the dot scrolls together with its line of text — not a fixed
    background. The data stays a clean string array (one entry per row). */
@@ -408,6 +419,7 @@ body {
   <!-- Editor Panel (右侧) -->
   <div class="editor-panel" id="editorPanel">
     <div class="editor-nav" id="editorNav">
+      <div class="nav-item" data-target="photo">证件照</div>
       <div class="nav-item" data-target="basic">基本信息</div>
       <div class="nav-item" data-target="education">教育背景</div>
       <div class="nav-item" data-target="internship">实习经历</div>
@@ -417,7 +429,6 @@ body {
       <div class="nav-item" data-target="settings">页面设置</div>
       <div class="nav-item" data-target="theme">主题配色</div>
       <div class="nav-item" data-target="header">标题标语</div>
-      <div class="nav-item" data-target="photo">证件照</div>
     </div>
     <div class="editor-body">
     <div class="editor-content">
@@ -496,18 +507,37 @@ body {
             <input class="field-input" id="bi_name" placeholder="如：张三" oninput="updatePreview()">
           </div>
           <div>
-            <label class="field-label">出生年月</label>
-            <input class="field-input" id="bi_birth" placeholder="如：1996.05" oninput="updatePreview()">
+            <label class="field-label">性别</label>
+            <select class="field-select" id="bi_gender" onchange="updatePreview()">
+              <option value="">请选择</option>
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
           </div>
         </div>
         <div class="field-row">
           <div>
+            <label class="field-label">出生年月</label>
+            <input class="field-input" id="bi_birth" placeholder="如：1996.05" oninput="updatePreview()">
+          </div>
+          <div>
             <label class="field-label">民族</label>
             <input class="field-input" id="bi_ethnicity" placeholder="如：汉" oninput="updatePreview()">
           </div>
+        </div>
+        <div class="field-row">
           <div>
             <label class="field-label">身高</label>
             <input class="field-input" id="bi_height" placeholder="如：170cm" oninput="updatePreview()">
+          </div>
+          <div>
+            <label class="field-label">婚姻状况</label>
+            <select class="field-select" id="bi_marriage" onchange="updatePreview()">
+              <option value="">请选择</option>
+              <option value="未婚">未婚</option>
+              <option value="已婚">已婚</option>
+              <option value="保密">保密</option>
+            </select>
           </div>
         </div>
         <div class="field-row">
@@ -517,7 +547,12 @@ body {
           </div>
           <div>
             <label class="field-label">政治面貌</label>
-            <input class="field-input" id="bi_political" placeholder="如：中共党员" oninput="updatePreview()">
+            <select class="field-select" id="bi_political" onchange="updatePreview()">
+              <option value="">请选择</option>
+              <option value="中共党员">中共党员</option>
+              <option value="共青团员">共青团员</option>
+              <option value="群众">群众</option>
+            </select>
           </div>
         </div>
         <div class="field-row">
@@ -575,7 +610,7 @@ body {
         <div class="editor-section-title">自我评价</div>
         <div class="field-group">
           <label class="field-label">自我评价内容</label>
-          <textarea class="field-textarea" id="selfEval" rows="4" placeholder="请输入自我评价..." oninput="updatePreview()"></textarea>
+          <textarea class="field-textarea" id="selfEval" rows="1" placeholder="请输入自我评价..." oninput="fieldAutoGrow(this); updatePreview()"></textarea>
         </div>
       </div>
 
@@ -619,9 +654,9 @@ let resumeData = {
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
   photo: '../assets/images/resume-template-photo.jpg',
   basicInfo: {
-    name: '', birth: '', ethnicity: '', height: '',
+    name: '', birth: '', gender: '', ethnicity: '', height: '',
     phone: '', political: '', email: '', school: '',
-    address: '', degree: ''
+    address: '', degree: '', marriage: ''
   },
   education: [], internships: [], projects: [], skills: [], selfEval: ''
 };
@@ -636,9 +671,9 @@ const sampleData = {
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
   photo: '../assets/images/resume-template-photo.jpg',
   basicInfo: {
-    name: '冯朕崴', birth: '2003.06', ethnicity: '汉', height: '',
+    name: '冯朕崴', birth: '2003.06', gender: '男', ethnicity: '汉', height: '',
     phone: '15938872348', political: '共青团员', email: '1323933251@qq.com',
-    school: '河南财政金融学院', address: '河南南阳', degree: '本科'
+    school: '河南财政金融学院', address: '河南南阳', degree: '本科', marriage: '未婚'
   },
   education: [{
     id: nextId(),
@@ -646,7 +681,7 @@ const sampleData = {
     school: '河南财政金融学院',
     major: '数学与应用数学（本科）',
     detail1: '专业成绩：GPA 2.55/4（专业前20%）',
-    detail2: '主修课程：高等代数、数值分析、数学建模、Python、实变函数、常微分方程、概率论、复变函数、运筹学'
+    detail2: ['高等代数','数值分析','数学建模','Python','实变函数','常微分方程','概率论','复变函数','运筹学']
   }],
   internships: [
     {
@@ -723,8 +758,8 @@ function renderEducationList() {
         <input class="field-input" value="${esc(edu.detail1)}" oninput="resumeData.education[${i}].detail1=this.value; updatePreview()" placeholder="如：GPA 3.5/4（专业前10%）">
       </div>
       <div class="field-group">
-        <label class="field-label">主修课程</label>
-        <textarea class="field-textarea" oninput="resumeData.education[${i}].detail2=this.value; updatePreview()" placeholder="如：数据结构、算法、操作系统...">${esc(edu.detail2)}</textarea>
+        <label class="field-label">主修课程（每行一门，回车新增一行）</label>
+        ${renderLinesEditor(`resumeData.education[${i}].detail2`, edu.detail2, '如：数据结构')}
       </div>
     </div>
   `).join('');
@@ -796,7 +831,7 @@ function renderBulletEditor(bullets, dataPath) {
       ${bullets.map((b, j) => `
         <div class="bullet-item">
           <span class="bullet-dot">●</span>
-          <textarea class="field-textarea" oninput="${dataPath}[${j}]=this.value; updatePreview()">${esc(b)}</textarea>
+          <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); ${dataPath}[${j}]=this.value; updatePreview()">${esc(b)}</textarea>
           <button class="bullet-remove" onclick="removeBullet('${dataPath}', ${j})">×</button>
         </div>
       `).join('')}
@@ -837,6 +872,13 @@ function leAutoGrow(ta) {
 }
 function leAutoGrowAll() {
   document.querySelectorAll('.le-input').forEach(ta => leAutoGrow(ta));
+}
+function fieldAutoGrow(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+function fieldAutoGrowAll() {
+  document.querySelectorAll('.field-textarea').forEach(ta => fieldAutoGrow(ta));
 }
 function leCollect(listEl) {
   const arr = resolvePath(listEl.dataset.path);
@@ -881,10 +923,11 @@ function renderSkillsList() {
   container.innerHTML = resumeData.skills.map((s, i) => `
     <div class="bullet-item">
       <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" oninput="resumeData.skills[${i}]=this.value; updatePreview()">${esc(s)}</textarea>
+      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[${i}]=this.value; updatePreview()">${esc(s)}</textarea>
       <button class="bullet-remove" onclick="removeSkill(${i})">×</button>
     </div>
   `).join('') + `<button class="btn-add" onclick="addSkill()">+ 添加技能</button>`;
+  fieldAutoGrowAll();
 }
 
 // ========== Label formatter (spaces for 2-char labels, matching DOCX template) ==========
@@ -944,9 +987,11 @@ function buildResumeContent() {
       <div class="basic-info-body">
         <div class="basic-info-grid">
           ${biRow(fmtLabel('姓名'), bi.name)}
+          ${biRow(fmtLabel('性别'), bi.gender)}
           ${biRow('出生年月：', bi.birth)}
           ${biRow(fmtLabel('民族'), bi.ethnicity)}
           ${biRow(fmtLabel('身高'), bi.height)}
+          ${biRow(fmtLabel('婚姻'), bi.marriage)}
           ${biRow(fmtLabel('电话'), bi.phone)}
           ${biRow('政治面貌：', bi.political)}
           ${biRow(fmtLabel('邮箱'), bi.email)}
@@ -982,7 +1027,7 @@ function buildResumeContent() {
               <span class="exp-role">${esc(edu.major)}</span>
             </div>
             ${edu.detail1 ? `<div class="edu-detail">${esc(edu.detail1)}</div>` : ''}
-            ${edu.detail2 ? `<div class="edu-detail"><span class="edu-detail-label">主修课程：</span>${esc(edu.detail2)}</div>` : ''}
+            ${edu.detail2 && edu.detail2.some(v => v.trim()) ? `<div class="edu-detail"><span class="edu-detail-label">主修课程：</span>${esc(edu.detail2.filter(v => v.trim()).join('、'))}</div>` : ''}
           </div>
         `).join('')}
       </div>
@@ -1191,8 +1236,10 @@ function updatePreview() {
 
   resumeData.basicInfo.name = document.getElementById('bi_name').value;
   resumeData.basicInfo.birth = document.getElementById('bi_birth').value;
+  resumeData.basicInfo.gender = document.getElementById('bi_gender').value;
   resumeData.basicInfo.ethnicity = document.getElementById('bi_ethnicity').value;
   resumeData.basicInfo.height = document.getElementById('bi_height').value;
+  resumeData.basicInfo.marriage = document.getElementById('bi_marriage').value;
   resumeData.basicInfo.phone = document.getElementById('bi_phone').value;
   resumeData.basicInfo.political = document.getElementById('bi_political').value;
   resumeData.basicInfo.email = document.getElementById('bi_email').value;
@@ -1219,8 +1266,8 @@ function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
 // ========== Add/Remove Functions ==========
 
 function addEducation() {
-  resumeData.education.push({ id: nextId(), date: '', school: '', major: '', detail1: '', detail2: '' });
-  renderEducationList(); updatePreview();
+  resumeData.education.push({ id: nextId(), date: '', school: '', major: '', detail1: '', detail2: [''] });
+  renderEducationList(); leAutoGrowAll(); updatePreview();
 }
 function removeEducation(id) {
   resumeData.education = resumeData.education.filter(e => e.id !== id);
@@ -1271,6 +1318,7 @@ function refreshEditors() {
   renderProjectList();
   renderSkillsList();
   leAutoGrowAll();
+  fieldAutoGrowAll();
 }
 
 // ========== Editor section pages (left nav) ==========
@@ -1287,6 +1335,7 @@ function switchPage(pageId) {
   if (body) body.scrollTop = 0;
   // Re-grow any line-editor textareas now that this page is visible
   if (typeof leAutoGrowAll === 'function') leAutoGrowAll();
+  if (typeof fieldAutoGrowAll === 'function') fieldAutoGrowAll();
 }
 
 // ========== Photo ==========
@@ -1346,8 +1395,10 @@ function syncFormFields() {
   document.getElementById('hdr_tagline').value = resumeData.header.tagline;
   document.getElementById('bi_name').value = resumeData.basicInfo.name || '';
   document.getElementById('bi_birth').value = resumeData.basicInfo.birth || '';
+  document.getElementById('bi_gender').value = resumeData.basicInfo.gender || '';
   document.getElementById('bi_ethnicity').value = resumeData.basicInfo.ethnicity || '';
   document.getElementById('bi_height').value = resumeData.basicInfo.height || '';
+  document.getElementById('bi_marriage').value = resumeData.basicInfo.marriage || '';
   document.getElementById('bi_phone').value = resumeData.basicInfo.phone || '';
   document.getElementById('bi_political').value = resumeData.basicInfo.political || '';
   document.getElementById('bi_email').value = resumeData.basicInfo.email || '';
@@ -1369,7 +1420,7 @@ function resetForm() {
     themeColor: '#4e7282', margin: 'normal',
     header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
     photo: null,
-    basicInfo: { name: '', birth: '', ethnicity: '', height: '', phone: '', political: '', email: '', school: '', address: '', degree: '' },
+    basicInfo: { name: '', birth: '', gender: '', ethnicity: '', height: '', phone: '', political: '', marriage: '', email: '', school: '', address: '', degree: '' },
     education: [], internships: [], projects: [], skills: [], selfEval: ''
   };
   entryIdCounter = 0;
@@ -1392,13 +1443,17 @@ function loadFromLocal() {
         resumeData.basicInfo.birth = resumeData.basicInfo.age;
         delete resumeData.basicInfo.age;
       }
-      if (resumeData.basicInfo.gender && !resumeData.basicInfo.height) {
-        delete resumeData.basicInfo.gender;
-      }
       if (resumeData.basicInfo.origin && !resumeData.basicInfo.address) {
         resumeData.basicInfo.address = resumeData.basicInfo.origin;
         delete resumeData.basicInfo.origin;
       }
+      // detail2 used to be a plain string; now it's a line-based array
+      resumeData.education.forEach(edu => {
+        if (typeof edu.detail2 === 'string') {
+          edu.detail2 = edu.detail2 ? edu.detail2.split(/[,，、;；]\s*/).filter(Boolean) : [''];
+        }
+        if (!Array.isArray(edu.detail2)) edu.detail2 = [''];
+      });
       entryIdCounter = Math.max(
         ...resumeData.education.map(e => e.id || 0),
         ...resumeData.internships.map(e => e.id || 0),
