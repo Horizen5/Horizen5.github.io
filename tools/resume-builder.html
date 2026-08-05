@@ -227,6 +227,7 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 /* ========== Section Header (SVG — exact DOCX custGeom paths) ========== */
 /* DOCX custGeom: 3 parallel slanted strips with white gaps (speed-line effect) */
 /* Path data extracted from document.xml, viewBox="0 0 1406296 288031" */
+/* Each section header area = banner + small dark triangle + horizontal line */
 .resume-section { padding: 0; margin-bottom: 4px; display: flex; flex-wrap: wrap; align-items: center; }
 .resume-section.no-header .resume-section-header { display: none; }
 .resume-section-header {
@@ -237,6 +238,16 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 .section-header-shape {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
 }
+/* DOCX Shape 1: rtTriangle, fill=#405E6C, rot=180°, size 0.40x0.29cm, offset (0, 0.80cm) */
+/* Positioned below the banner's left edge — small dark wedge decoration */
+.section-header-triangle {
+  position: absolute; left: 0; bottom: -0.29cm;
+  width: 0.40cm; height: 0.29cm;
+  background: var(--resume-header-dark);
+  /* rtTriangle rotated 180°: right angle at bottom-right */
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  z-index: 0;
+}
 .section-header-content {
   position: relative; z-index: 1;
   display: flex; align-items: center; gap: 6px;
@@ -244,7 +255,7 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 }
 .section-header-icon { width: 14px; height: 14px; fill: #fff; flex-shrink: 0; }
 .section-header-title { font-size: 12pt; font-weight: 700; color: #fff; letter-spacing: 1px; white-space: nowrap; }
-/* 板块标题后的水平延伸线 — 与标题同一行, 填充剩余空间 */
+/* DOCX Shape 2: line, fill=#4E7282, from banner right edge to page right margin */
 .resume-section-line {
   flex: 1; height: 1px; background: var(--resume-accent);
   margin: 0 28px 4px 0; min-width: 20px;
@@ -566,7 +577,11 @@ const ICON_WORK = '<svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2
 const ICON_SCHOOL = '<svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>';
 // SVG shape for section headers — exact DOCX custGeom path coordinates
 // 3 parallel slanted strips with white gaps (speed-line effect)
+// DOCX Shape 0: custGeom, fill=#4E7282, 3 subpaths in one <a:path>
 const SEC_SHAPE = '<svg class="section-header-shape" viewBox="0 0 1406296 288031" preserveAspectRatio="none"><path d="M 1093154,0 L 1171153,0 L 1406296,288031 L 1328297,288031 Z" fill="var(--resume-section-bg)"/><path d="M 1030297,0 L 1069917,0 L 1305060,288031 L 1265440,288031 Z" fill="var(--resume-section-bg)"/><path d="M 0,0 L 1007060,0 L 1242203,288031 L 0,288031 Z" fill="var(--resume-section-bg)"/></svg>';
+// DOCX Shape 1: rtTriangle, fill=#405E6C, rot=180°, size 0.40x0.29cm, pos (0, 0.80cm)
+// Small dark wedge below the banner's left edge
+const SEC_TRIANGLE = '<div class="section-header-triangle"></div>';
 
 // ========== Data Model ==========
 let resumeData = {
@@ -814,6 +829,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
           <span class="section-header-title">基本 信息</span>
@@ -846,6 +862,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
           <span class="section-header-title">教育背景</span>
@@ -874,6 +891,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
           <span class="section-header-title">实习经历</span>
@@ -903,6 +921,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
           <span class="section-header-title">校园经历</span>
@@ -932,6 +951,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           <span class="section-header-title">技能证书</span>
@@ -950,6 +970,7 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
+        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
           <span class="section-header-title">自我评价</span>
