@@ -873,6 +873,7 @@ body {
 <!-- Off-screen source used for measurement during pagination -->
 <div id="resumeSource" aria-hidden="true" style="position:absolute; left:-10000px; top:0; width:210mm; visibility:hidden;"></div>
 
+<script src="../assets/js/html2pdf.bundle.min.js"></script>
 <script>
 // ========== Constants ==========
 const A4_H_PX = Math.round(297 * 96 / 25.4); // 297mm @96dpi ≈ 1122px
@@ -883,7 +884,7 @@ let resumeData = {
   themeColor: '#3d6b7d',
   margin: 'normal',
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始。' },
-  photo: null,
+  photo: '../assets/images/resume-template-photo.jpg',
   basicInfo: {
     name: '', age: '', gender: '', ethnicity: '',
     political: '', origin: '', phone: '', email: '',
@@ -904,7 +905,7 @@ const sampleData = {
   themeColor: '#3d6b7d',
   margin: 'normal',
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始。' },
-  photo: null,
+  photo: '../assets/images/resume-template-photo.jpg',
   basicInfo: {
     name: '冯朕崴', age: '22岁', gender: '男', ethnicity: '汉',
     political: '共青团员', origin: '河南南阳', phone: '15938872348', email: '1323933251@qq.com',
@@ -1564,13 +1565,54 @@ function loadFromLocal() {
   return false;
 }
 
-function exportPDF() {
+async function exportPDF() {
   // Ensure preview is up to date
   updatePreview();
-  // Trigger print dialog (user can "Save as PDF")
-  setTimeout(() => {
-    window.print();
-  }, 100);
+
+  const btn = document.querySelector('.btn-export');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '⏳ 生成中…';
+  btn.disabled = true;
+
+  try {
+    const pages = document.querySelectorAll('.resume-page');
+    if (!pages.length) {
+      showToast('没有可导出的内容');
+      return;
+    }
+
+    // Build a clean, off-screen export container (no shadows/gaps)
+    const exportWrap = document.createElement('div');
+    exportWrap.style.cssText = 'position:absolute;left:-9999px;top:0;width:210mm;background:#fff;';
+    document.body.appendChild(exportWrap);
+
+    pages.forEach((page, idx) => {
+      const clone = page.cloneNode(true);
+      clone.style.boxShadow = 'none';
+      clone.style.margin = '0';
+      clone.style.transform = 'none';
+      clone.style.pageBreakAfter = (idx < pages.length - 1) ? 'always' : 'auto';
+      clone.style.borderRadius = '0';
+      exportWrap.appendChild(clone);
+    });
+
+    await html2pdf().set({
+      margin: 0,
+      filename: '个人简历.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#fff', logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    }).from(exportWrap).save();
+
+    document.body.removeChild(exportWrap);
+  } catch (err) {
+    console.error(err);
+    showToast('PDF 生成失败，请尝试使用浏览器打印另存为 PDF');
+  } finally {
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
+  }
 }
 
 function toggleEditor() {
