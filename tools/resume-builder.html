@@ -102,6 +102,8 @@ body {
   outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(61,107,125,0.1);
 }
 .field-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+/* Big textarea where each line = one bullet; Enter naturally adds a new line */
+.lines-editor { min-height: 140px; line-height: 1.8; font-size: 14px; }
 
 .entry-card { background: #f8f9fa; border: 1px solid var(--rule); border-radius: 8px; padding: 14px; margin-bottom: 12px; position: relative; }
 .entry-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -705,8 +707,8 @@ function renderInternshipList() {
         <input class="field-input" value="${esc(item.role)}" oninput="resumeData.internships[${i}].role=this.value; updatePreview()" placeholder="如：后端开发工程师">
       </div>
       <div class="field-group">
-        <label class="field-label">工作内容（每行一条）</label>
-        ${renderBulletEditor(item.bullets, `resumeData.internships[${i}].bullets`)}
+        <label class="field-label">工作内容（每行一条，回车换行即新增一条）</label>
+        ${renderLinesEditor(`resumeData.internships[${i}].bullets`, item.bullets, '例如：\n负责客户电脑BIOS参数调试...\n专项负责Intel平台XMP、AMD平台EXPO超频...')}
       </div>
     </div>
   `).join('');
@@ -735,8 +737,8 @@ function renderProjectList() {
         <input class="field-input" value="${esc(item.role)}" oninput="resumeData.projects[${i}].role=this.value; updatePreview()" placeholder="如：主席">
       </div>
       <div class="field-group">
-        <label class="field-label">经历内容（每行一条）</label>
-        ${renderBulletEditor(item.bullets, `resumeData.projects[${i}].bullets`)}
+        <label class="field-label">经历内容（每行一条，回车换行即新增一条）</label>
+        ${renderLinesEditor(`resumeData.projects[${i}].bullets`, item.bullets, '例如：\n组织XX活动，负责整体策划与执行...\n协调X个部门完成...')}
       </div>
     </div>
   `).join('');
@@ -754,6 +756,17 @@ function renderBulletEditor(bullets, dataPath) {
       `).join('')}
     </div>
     <button class="btn-add" onclick="addBullet('${dataPath}')">+ 添加一条</button>
+  `;
+}
+
+// Big single textarea: each line becomes one bullet. Pressing Enter naturally
+// creates a new line (textarea default), so the user types an item, hits Enter,
+// and the next line is the next bullet — no per-row add/remove buttons needed.
+function renderLinesEditor(dataPath, value, placeholder) {
+  const text = (value || []).join('\n');
+  return `
+    <textarea class="field-textarea lines-editor" rows="7" placeholder="${placeholder}"
+      oninput="${dataPath} = this.value.split('\\n'); updatePreview()">${esc(text)}</textarea>
   `;
 }
 
