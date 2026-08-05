@@ -171,13 +171,6 @@ body {
 }
 .resume-page-inner { box-sizing: border-box; height: 100%; position: relative; }
 
-/* ========== Left Vertical Line ========== */
-/* DOCX: 从标题栏下方开始, 延伸至页面底部 */
-.resume-left-line {
-  position: absolute; left: 8px; top: 120px; bottom: 20px;
-  width: 1.5px; background: var(--resume-accent); z-index: 5;
-}
-
 /* ========== Resume Header ========== */
 .resume-header {
   display: flex; align-items: flex-start; padding: 18px 28px 6px 20px; gap: 10px;
@@ -787,9 +780,6 @@ function fmtLabel(label) {
 function buildResumeContent() {
   const bi = resumeData.basicInfo;
   return `
-    <!-- Left Vertical Line -->
-    <div class="resume-left-line"></div>
-
     <!-- Header -->
     <div class="resume-header">
       <div class="resume-header-left">
@@ -980,10 +970,6 @@ function flattenUnits(inner) {
   const out = [];
   let secCounter = 0;
   Array.from(inner.children).forEach(block => {
-    if (block.classList.contains('resume-left-line')) {
-      // Skip decorative elements - they're positioned absolutely
-      return;
-    }
     if (block.classList.contains('resume-section')) {
       const head = block.querySelector('.resume-section-header');
       const body = block.querySelector('.resume-section-body');
@@ -1025,12 +1011,6 @@ function createPage(wrap, margin) {
   return inner;
 }
 
-function addDecorations(inner) {
-  const line = document.createElement('div');
-  line.className = 'resume-left-line';
-  inner.appendChild(line);
-}
-
 function paginate(margin) {
   const M = MARGINS[margin] || MARGINS.normal;
   const pagesWrap = document.getElementById('resumePages');
@@ -1044,7 +1024,6 @@ function paginate(margin) {
 
   const avail = A4_H_PX - 2 * M - 6;
   let curInner = createPage(pagesWrap, M);
-  addDecorations(curInner);
   let used = 0;
 
   units.forEach(unit => {
@@ -1053,7 +1032,6 @@ function paginate(margin) {
     if (used > 0 && used + h > avail) {
       curInner.removeChild(unit.el);
       curInner = createPage(pagesWrap, M);
-      addDecorations(curInner);
       curInner.appendChild(unit.el);
       used = h;
     } else {
