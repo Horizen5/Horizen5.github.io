@@ -74,7 +74,7 @@ body {
 
 /* ========== Editor Panel ========== */
 .editor-panel {
-  width: 460px; min-width: 460px; background: var(--bg2);
+  width: 506px; min-width: 506px; background: var(--bg2);
   border-left: 1px solid var(--rule);
   height: calc(100vh - 52px); position: sticky; top: 52px; order: 2;
   display: flex;
@@ -132,17 +132,75 @@ body {
   background-repeat: no-repeat; background-position: right 10px center;
   padding-right: 30px; cursor: pointer;
 }
+/* Birth-date row: label above input (like other fields), age toggle on the right */
+.birth-row { display: flex; align-items: flex-end; gap: 10px; }
+.birth-col { flex: 1 1 auto; }
+.birth-age-col { flex: 0 0 auto; padding-bottom: 9px; }
+.birth-row .date-input-wrap { position: relative; }
+.date-input {
+  padding-left: 34px; padding-right: 34px; cursor: pointer;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 10 12 16 18 10'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 9px center, right 10px center;
+}
+.checkbox-label {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  user-select: none;
+}
+.checkbox-label input { display: none; }
+.checkmark {
+  width: 16px; height: 16px; border: 2px solid var(--accent); border-radius: 3px;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.checkbox-label input:checked + .checkmark { background: var(--accent); }
+.checkbox-label input:checked + .checkmark::after {
+  content: '✓'; color: #fff; font-size: 12px; line-height: 1; font-weight: 700;
+}
+.checkbox-text { color: var(--accent); font-size: 13px; }
+
+/* Custom birth-year/month picker */
+.birth-picker {
+  position: absolute; z-index: 100;
+  background: #fff; border: 1px solid var(--rule); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.14); width: 280px;
+  padding: 12px; font-size: 13px; display: none;
+}
+.birth-picker.visible { display: block; }
+.bp-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; padding: 0 4px;
+}
+.bp-prev, .bp-next {
+  width: 28px; height: 28px; border: none; background: var(--accent-light);
+  border-radius: 6px; color: var(--accent); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.bp-prev:hover, .bp-next:hover { background: #dce4e8; }
+.bp-decade { font-weight: 600; color: var(--ink); }
+.bp-years, .bp-months { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.bp-months { grid-template-columns: repeat(6, 1fr); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.bp-cell {
+  height: 34px; border: 1px solid transparent; border-radius: 6px;
+  background: #f6f7f8; color: var(--ink); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .12s;
+}
+.bp-cell:hover { background: var(--accent-light); }
+.bp-cell.selected { background: var(--accent); color: #fff; }
+.bp-cell.disabled { color: #bbb; cursor: not-allowed; }
 .field-textarea { resize: none; min-height: 60px; line-height: 1.5; overflow: hidden; }
 /* Line-based bullet editor: each item is a REAL row (a ● dot + an auto-growing
    textarea) so the dot scrolls together with its line of text — not a fixed
    background. The data stays a clean string array (one entry per row). */
-.le-list { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; background: #fff; }
+.le-list { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; background: #fff; user-select: none; }
 .le-row { display: flex; align-items: flex-start; gap: 8px; margin: 4px 0; }
 .le-dot { color: #2b2b2b; font-size: 13px; line-height: 1.7; flex: 0 0 auto; margin-top: 1px; user-select: none; }
 .le-input {
   flex: 1 1 auto; border: none; outline: none; resize: none; overflow: hidden;
   font-size: 14px; line-height: 1.7; font-family: inherit; background: transparent;
-  padding: 0; color: inherit;
+  padding: 0; color: inherit; user-select: text;
 }
 .le-hint { color: #9aa0a6; font-size: 12px; margin-top: 4px; }
 
@@ -257,12 +315,12 @@ body {
 /* DOCX custGeom: 3 parallel slanted strips with white gaps (speed-line effect) */
 /* Path data extracted from document.xml, viewBox="0 0 1406296 288031" */
 /* Each section header area = banner + small dark triangle + horizontal line */
-.resume-section { padding: 0; margin-bottom: 4px; display: flex; flex-wrap: wrap; align-items: center; }
+.resume-section { padding: 0; margin-bottom: 4px; display: flex; flex-wrap: wrap; align-items: flex-end; }
 .resume-section.no-header .resume-section-header { display: none; }
 .resume-section-header {
   position: relative; display: inline-flex; align-items: center;
   width: 3.91cm; height: 0.8cm;
-  margin: 8px 0 4px 20px; overflow: visible;
+  margin: 8px 0 0 20px; overflow: visible;
 }
 .section-header-shape {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
@@ -276,8 +334,8 @@ body {
 .section-header-title { font-size: 12pt; font-weight: 700; color: #fff; letter-spacing: 1px; white-space: nowrap; }
 /* DOCX Shape 2: line, fill=#4E7282, from banner right edge to page right margin */
 .resume-section-line {
-  flex: 1; height: 1px; background: var(--resume-accent);
-  margin: 0 28px 4px 0; min-width: 20px;
+  flex: 1; border-bottom: 1px solid var(--resume-accent);
+  margin: 0 28px 0 0; min-width: 20px; height: 0;
 }
 
 /* ========== Basic Info ========== */
@@ -288,7 +346,11 @@ body {
   gap: 3px 20px; font-size: 10pt; color: #414141;
 }
 .basic-info-item { display: flex; align-items: baseline; }
-.basic-info-label { font-weight: 600; white-space: nowrap; color: #414141; }
+.basic-info-label {
+  font-weight: 600; color: #414141;
+  display: inline-block; width: 4em; white-space: nowrap;
+  text-align: justify; text-align-last: justify;
+}
 .basic-info-value { color: #414141; }
 .basic-info-photo {
   width: 82px; height: 110px; flex-shrink: 0; border: 1px solid #ddd;
@@ -298,15 +360,14 @@ body {
 .basic-info-photo .placeholder { color: var(--resume-muted); font-size: 9px; text-align: center; }
 
 /* ========== Section Body ========== */
-.resume-section-body { flex-basis: 100%; font-size: 10pt; line-height: 1.65; color: #414141; padding: 0 28px 0 20px; }
+.resume-section-body { flex-basis: 100%; font-size: 10pt; line-height: 1.65; color: #414141; padding: 4px 28px 0 20px; }
 
 /* ========== Experience / Education Entry ========== */
 .exp-entry { margin-bottom: 4px; }
 .exp-header-line { display: flex; align-items: baseline; font-size: 10pt; margin-bottom: 2px; }
 .exp-date { white-space: nowrap; flex-shrink: 0; color: #414141; }
 .exp-leader {
-  flex: 1; border-bottom: 1px dotted var(--resume-leader);
-  margin: 0 6px; height: 0; position: relative; top: -3px; min-width: 20px;
+  flex: 1; margin: 0 6px; height: 0; position: relative; top: -3px; min-width: 20px;
 }
 .exp-org { white-space: nowrap; flex-shrink: 0; font-weight: 500; color: #414141; }
 .exp-role { white-space: nowrap; flex-shrink: 0; color: #414141; }
@@ -316,7 +377,9 @@ body {
   text-align: justify; font-size: 10pt; color: #414141;
 }
 .exp-bullets li::before {
-  content: '●'; position: absolute; left: 0; top: 0; font-size: 5px; color: var(--resume-accent);
+  content: '●'; position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  font-size: 5px; line-height: 1; color: var(--resume-accent);
 }
 
 /* Education details */
@@ -364,7 +427,7 @@ body {
 
 /* ========== Responsive ========== */
 @media screen and (max-width: 1100px) {
-  .resume-page { transform: scale(0.82); transform-origin: top center; }
+  .resume-page { transform: scale(0.95); transform-origin: top center; }
 }
 @media screen and (max-width: 900px) {
   .main-container { flex-direction: column; }
@@ -515,21 +578,32 @@ body {
             </select>
           </div>
         </div>
-        <div class="field-row">
-          <div>
+        <div class="field-row birth-row">
+          <div class="birth-col">
             <label class="field-label">出生年月</label>
-            <input class="field-input" id="bi_birth" placeholder="如：1996.05" oninput="updatePreview()">
+            <div class="date-input-wrap">
+              <input type="text" class="field-input date-input" id="bi_birth" readonly placeholder="请选择出生年月" onclick="openBirthPicker()">
+            </div>
           </div>
-          <div>
-            <label class="field-label">民族</label>
-            <input class="field-input" id="bi_ethnicity" placeholder="如：汉" oninput="updatePreview()">
+          <div class="birth-age-col">
+            <label class="checkbox-label">
+              <input type="checkbox" id="bi_showAge" onchange="updatePreview()">
+              <span class="checkmark"></span>
+              <span class="checkbox-text">转年龄</span>
+            </label>
           </div>
         </div>
         <div class="field-row">
           <div>
+            <label class="field-label">民族</label>
+            <input class="field-input" id="bi_ethnicity" placeholder="如：汉" oninput="updatePreview()">
+          </div>
+          <div>
             <label class="field-label">身高</label>
             <input class="field-input" id="bi_height" placeholder="如：170cm" oninput="updatePreview()">
           </div>
+        </div>
+        <div class="field-row">
           <div>
             <label class="field-label">婚姻状况</label>
             <select class="field-select" id="bi_marriage" onchange="updatePreview()">
@@ -538,12 +612,6 @@ body {
               <option value="已婚">已婚</option>
               <option value="保密">保密</option>
             </select>
-          </div>
-        </div>
-        <div class="field-row">
-          <div>
-            <label class="field-label">电话</label>
-            <input class="field-input" id="bi_phone" placeholder="如：13800138000" oninput="updatePreview()">
           </div>
           <div>
             <label class="field-label">政治面貌</label>
@@ -557,22 +625,28 @@ body {
         </div>
         <div class="field-row">
           <div>
+            <label class="field-label">电话</label>
+            <input class="field-input" id="bi_phone" placeholder="如：13800138000" oninput="updatePreview()">
+          </div>
+          <div>
             <label class="field-label">邮箱</label>
             <input class="field-input" id="bi_email" placeholder="如：abc@qq.com" oninput="updatePreview()">
           </div>
+        </div>
+        <div class="field-row">
           <div>
             <label class="field-label">毕业院校</label>
             <input class="field-input" id="bi_school" placeholder="如：XX大学" oninput="updatePreview()">
+          </div>
+          <div>
+            <label class="field-label">学历</label>
+            <input class="field-input" id="bi_degree" placeholder="如：本科" oninput="updatePreview()">
           </div>
         </div>
         <div class="field-row">
           <div>
             <label class="field-label">住址</label>
             <input class="field-input" id="bi_address" placeholder="如：浙江省杭州市" oninput="updatePreview()">
-          </div>
-          <div>
-            <label class="field-label">学历</label>
-            <input class="field-input" id="bi_degree" placeholder="如：本科" oninput="updatePreview()">
           </div>
         </div>
       </div>
@@ -656,7 +730,7 @@ let resumeData = {
   basicInfo: {
     name: '', birth: '', gender: '', ethnicity: '', height: '',
     phone: '', political: '', email: '', school: '',
-    address: '', degree: '', marriage: ''
+    address: '', degree: '', marriage: '', showAge: false
   },
   education: [], internships: [], projects: [], skills: [], selfEval: ''
 };
@@ -671,15 +745,15 @@ const sampleData = {
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
   photo: '../assets/images/resume-template-photo.jpg',
   basicInfo: {
-    name: '冯朕崴', birth: '2003.06', gender: '男', ethnicity: '汉', height: '',
-    phone: '15938872348', political: '共青团员', email: '1323933251@qq.com',
-    school: '河南财政金融学院', address: '河南南阳', degree: '本科', marriage: '未婚'
+    name: '张三', birth: '1999-06', gender: '女', ethnicity: '汉', height: '',
+    phone: '138****8888', political: '共青团员', email: 'example@email.com',
+    school: 'XX大学', address: 'XX省XX市', degree: '本科', marriage: '未婚', showAge: false
   },
   education: [{
     id: nextId(),
     date: '2022.09-2026.07',
-    school: '河南财政金融学院',
-    major: '数学与应用数学（本科）',
+    school: 'XX大学',
+    major: 'XX专业（本科）',
     detail1: '专业成绩：GPA 2.55/4（专业前20%）',
     detail2: ['高等代数','数值分析','数学建模','Python','实变函数','常微分方程','概率论','复变函数','运筹学']
   }],
@@ -687,44 +761,43 @@ const sampleData = {
     {
       id: nextId(),
       date: '2024.09-2025.07',
-      org: '郑东新区方块电脑商行',
+      org: 'XX公司',
       role: '设备调试员',
       bullets: [
-        '负责客户电脑BIOS参数调试，通过合理配置参数提升CPU与内存运行频率，优化设备整体性能；',
-        '专项负责Intel平台XMP、AMD平台EXPO超频，深入研究AMD系列CPU参数，拥有差异化技术判断与实操方案；',
-        '负责客户电脑售后及软硬件技术问题处理，主导软硬件故障排查与解决，保障设备正常运行；',
-        '通过高效沟通与销售策略转化，实习期内电脑销售额达20万元；',
-        '针对不同客户实施差异化沟通，提升客户满意度与用户粘性，客户复购率远高于同事。'
+        '负责设备调试与日常售后技术支持工作，保障设备稳定运行；',
+        '协助完成硬件参数配置与性能优化，提升整体运行效率；',
+        '对接客户技术问题，及时响应并解决，提升服务满意度。'
       ]
     },
     {
       id: nextId(),
       date: '2024.09-2025.07',
-      org: '河南盛帝科技有限公司',
+      org: 'XX公司',
       role: '客户销售',
       bullets: [
-        '根据客户需求，准确配置电脑主机，清晰讲解各硬件参数及整体性能，完成电脑主机销售工作。',
-        '负责线上渠道的电脑配置讲解、主机选择性搭配指导，推广并销售整套电脑主机，解答客户各类相关疑问。',
-        '熟练掌握电脑主机八大硬件的核心知识，对各硬件的高中低档品牌、产品类别、型号差异及硬件间的兼容性有清晰认知。'
+        '负责客户接待、产品讲解与销售跟进工作；',
+        '根据客户需求提供针对性方案，协助完成销售转化目标；',
+        '维护客户关系，做好售前咨询与售后回访，提升复购率。'
       ]
     }
   ],
   projects: [{
     id: nextId(),
-    date: '2024.09-2025.01',
-    org: 'Python脚本开发与商业化运营',
-    role: '后端开发',
-    bullets: [
-      '独立完成面向设备注册的自动化脚本开发，解决链上操作繁琐、注册效率低的问题，整体流程效率提升约60%。',
-      '利用ChatGPT构建智能调试与代码生成体系，实现从功能实现到调试部署的快速闭环。',
-      '负责脚本文档撰写、用户指引与线上宣传发布，通过平台累计服务80+用户，用户满意度达90%。',
-      '基于用户行为与使用反馈进行功能优化与版本更新，逐步完善商业化模型，实现从技术开发到收益转化的闭环。'
-    ]
+      date: '2024.09-2025.01',
+      org: 'XX项目',
+      role: '项目成员',
+      bullets: [
+        '负责项目开发与日常协作推进工作；',
+        '参与需求梳理与功能实现，配合团队完成阶段交付；',
+        '撰写相关文档并参与项目复盘，积累协作与实操经验。'
+      ]
   }],
   skills: [
-    '熟练掌握Python（擅长自动化脚本编写、DePIN交互）及Linux环境运维；',
-    '精通MySQL数据库管理与Excel高级数据建模；',
-    '作为ChatGPT深度用户，擅长利用Prompt Engineering（提示词工程）辅助代码重构、复杂逻辑拆解及技术文档撰写，能够将AI工具深度集成于开发全流程，显著提升交付效率。'
+    '具备扎实的专业基础知识与良好的自主学习能力；',
+    '熟练使用常用办公软件及信息化协作工具；',
+    '持有相关职业资格证书（如英语等级、计算机等级等）；',
+    '具备良好的数据分析、信息整理与文档撰写能力；',
+    '具备较强的沟通协调意识与团队协作精神。'
   ],
   selfEval: '具有良好的抗压能力和应变能力，能够迅速适应新环境，具备良好的团队协作精神和沟通能力，对待工作认真负责，拥有强大的责任心和执行力，勇于面对挑战，性格乐观开朗，积极向上，具有较强的学习能力，能够快速掌握新知识和技能，敢于面对挑战。'
 };
@@ -932,9 +1005,6 @@ function renderSkillsList() {
 
 // ========== Label formatter (spaces for 2-char labels, matching DOCX template) ==========
 function fmtLabel(label) {
-  if (label.length === 2) {
-    return label[0] + '\u2003\u2003\u2003\u2003' + label[1] + '：';
-  }
   return label + '：';
 }
 
@@ -942,7 +1012,126 @@ function fmtLabel(label) {
 function biRow(label, value) {
   const v = (value == null ? '' : String(value)).trim();
   if (!v) return '';
-  return `<div class="basic-info-item"><span class="basic-info-label">${label}</span><span class="basic-info-value">${esc(v)}</span></div>`;
+  const hasColon = label.endsWith('：');
+  const text = hasColon ? label.slice(0, -1) : label;
+  const colon = hasColon ? '：' : '';
+  return `<div class="basic-info-item"><span class="basic-info-label">${esc(text)}</span>${colon}<span class="basic-info-value">${esc(v)}</span></div>`;
+}
+
+// Birth date helpers: input uses yyyy-mm, display can be yyyy.mm or age
+function normalizeBirth(v) {
+  if (!v) return '';
+  const s = String(v).trim();
+  const m = s.match(/^(\d{4})[.\-/年](\d{1,2})[月]?$/);
+  if (!m) return s;
+  const y = m[1], mo = m[2].padStart(2, '0');
+  return `${y}-${mo}`;
+}
+function formatBirth(v) {
+  if (!v) return '';
+  const s = String(v).trim();
+  return s.replace(/-/g, '.');
+}
+function calculateAge(birth) {
+  if (!birth) return '';
+  const m = String(birth).match(/^(\d{4})-(\d{2})/);
+  if (!m) return '';
+  const by = +m[1], bm = +m[2];
+  const now = new Date();
+  let age = now.getFullYear() - by;
+  if (now.getMonth() + 1 < bm) age--;
+  return age >= 0 ? age + '岁' : '';
+}
+function formatBirthForDisplay(v) {
+  if (!v) return '';
+  const m = String(v).match(/^(\d{4})-(\d{2})$/);
+  return m ? m[1] + '年' + m[2] + '月' : v;
+}
+
+// Custom birth year/month picker: recent 10 years by default, arrow buttons slide by decade
+let birthPickerState = { decadeStart: 0, selectedYear: 0, selectedMonth: 0 };
+function openBirthPicker() {
+  const input = document.getElementById('bi_birth');
+  const picker = document.getElementById('birthPicker');
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  let val = input.dataset.value || '';
+  let y = currentYear, m = now.getMonth() + 1;
+  const mm = val.match(/^(\d{4})-(\d{2})$/);
+  if (mm) { y = +mm[1]; m = +mm[2]; }
+  birthPickerState.selectedYear = y;
+  birthPickerState.selectedMonth = m;
+  let start = currentYear - 9;
+  if (y < start) {
+    start = y - ((y - start) % 10);
+    while (y < start) start -= 10;
+    while (y > start + 9) start += 10;
+  }
+  birthPickerState.decadeStart = start;
+  renderBirthPicker();
+  const rect = input.getBoundingClientRect();
+  picker.style.left = rect.left + 'px';
+  picker.style.top = (rect.bottom + 6) + 'px';
+  picker.classList.add('visible');
+  setTimeout(function() {
+    document.addEventListener('click', closeBirthPickerOnClickOutside, { once: true });
+  }, 0);
+}
+function closeBirthPickerOnClickOutside(e) {
+  const picker = document.getElementById('birthPicker');
+  const input = document.getElementById('bi_birth');
+  if (!picker.contains(e.target) && e.target !== input) {
+    picker.classList.remove('visible');
+  }
+}
+function closeBirthPicker() {
+  document.getElementById('birthPicker').classList.remove('visible');
+}
+function changeBirthDecade(dir) {
+  const currentYear = new Date().getFullYear();
+  birthPickerState.decadeStart += dir * 10;
+  if (birthPickerState.decadeStart > currentYear - 9) {
+    birthPickerState.decadeStart = currentYear - 9;
+  }
+  renderBirthPicker();
+}
+function selectBirthYear(y) {
+  birthPickerState.selectedYear = y;
+  renderBirthPicker();
+}
+function selectBirthMonth(m) {
+  birthPickerState.selectedMonth = m;
+  const input = document.getElementById('bi_birth');
+  const y = birthPickerState.selectedYear;
+  const val = y + '-' + String(m).padStart(2, '0');
+  input.dataset.value = val;
+  input.value = formatBirthForDisplay(val);
+  closeBirthPicker();
+  updatePreview();
+}
+function renderBirthPicker() {
+  const start = birthPickerState.decadeStart;
+  const end = start + 9;
+  document.getElementById('bpDecade').textContent = start + '-' + end;
+  const yearsContainer = document.getElementById('bpYears');
+  const monthsContainer = document.getElementById('bpMonths');
+  yearsContainer.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const y = start + i;
+    const cell = document.createElement('div');
+    cell.className = 'bp-cell' + (y === birthPickerState.selectedYear ? ' selected' : '');
+    cell.textContent = y;
+    cell.onclick = (function(year){ return function(){ selectBirthYear(year); }; })(y);
+    yearsContainer.appendChild(cell);
+  }
+  monthsContainer.innerHTML = '';
+  for (let i = 1; i <= 12; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'bp-cell' + (i === birthPickerState.selectedMonth ? ' selected' : '');
+    cell.textContent = i + '月';
+    cell.onclick = (function(month){ return function(){ selectBirthMonth(month); }; })(i);
+    monthsContainer.appendChild(cell);
+  }
 }
 
 // ========== Resume content builder ==========
@@ -988,7 +1177,7 @@ function buildResumeContent() {
         <div class="basic-info-grid">
           ${biRow(fmtLabel('姓名'), bi.name)}
           ${biRow(fmtLabel('性别'), bi.gender)}
-          ${biRow('出生年月：', bi.birth)}
+          ${bi.showAge ? biRow(fmtLabel('年龄'), calculateAge(bi.birth)) : biRow('出生年月：', formatBirth(bi.birth))}
           ${biRow(fmtLabel('民族'), bi.ethnicity)}
           ${biRow(fmtLabel('身高'), bi.height)}
           ${biRow(fmtLabel('婚姻'), bi.marriage)}
@@ -1150,14 +1339,17 @@ function flattenUnits(inner) {
         return;
       }
       const sid = 's' + (secCounter++);
-      getSectionItems(body).forEach(item => {
+      getSectionItems(body).forEach((item, idx) => {
         const u = document.createElement('div');
         u.className = 'resume-section';
         u.dataset.sec = sid;
         if (head) u.appendChild(head.cloneNode(true));
-        const line = document.createElement('div');
-        line.className = 'resume-section-line';
-        u.appendChild(line);
+        // 只有该分节的第一个条目才保留标题下方的横线，后续条目不再重复出现
+        if (idx === 0) {
+          const line = document.createElement('div');
+          line.className = 'resume-section-line';
+          u.appendChild(line);
+        }
         const b = document.createElement('div');
         b.className = 'resume-section-body';
         b.appendChild(item.cloneNode(true));
@@ -1235,7 +1427,8 @@ function updatePreview() {
   resumeData.header.tagline = document.getElementById('hdr_tagline').value;
 
   resumeData.basicInfo.name = document.getElementById('bi_name').value;
-  resumeData.basicInfo.birth = document.getElementById('bi_birth').value;
+  resumeData.basicInfo.birth = document.getElementById('bi_birth').dataset.value || '';
+  resumeData.basicInfo.showAge = document.getElementById('bi_showAge').checked;
   resumeData.basicInfo.gender = document.getElementById('bi_gender').value;
   resumeData.basicInfo.ethnicity = document.getElementById('bi_ethnicity').value;
   resumeData.basicInfo.height = document.getElementById('bi_height').value;
@@ -1394,7 +1587,10 @@ function syncFormFields() {
   document.getElementById('hdr_subtitle').value = resumeData.header.subtitle;
   document.getElementById('hdr_tagline').value = resumeData.header.tagline;
   document.getElementById('bi_name').value = resumeData.basicInfo.name || '';
-  document.getElementById('bi_birth').value = resumeData.basicInfo.birth || '';
+  const birthNorm = normalizeBirth(resumeData.basicInfo.birth) || '';
+  document.getElementById('bi_birth').dataset.value = birthNorm;
+  document.getElementById('bi_birth').value = formatBirthForDisplay(birthNorm);
+  document.getElementById('bi_showAge').checked = !!resumeData.basicInfo.showAge;
   document.getElementById('bi_gender').value = resumeData.basicInfo.gender || '';
   document.getElementById('bi_ethnicity').value = resumeData.basicInfo.ethnicity || '';
   document.getElementById('bi_height').value = resumeData.basicInfo.height || '';
@@ -1420,7 +1616,7 @@ function resetForm() {
     themeColor: '#4e7282', margin: 'normal',
     header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始' },
     photo: null,
-    basicInfo: { name: '', birth: '', gender: '', ethnicity: '', height: '', phone: '', political: '', marriage: '', email: '', school: '', address: '', degree: '' },
+    basicInfo: { name: '', birth: '', gender: '', ethnicity: '', height: '', phone: '', political: '', marriage: '', email: '', school: '', address: '', degree: '', showAge: false },
     education: [], internships: [], projects: [], skills: [], selfEval: ''
   };
   entryIdCounter = 0;
@@ -1446,6 +1642,10 @@ function loadFromLocal() {
       if (resumeData.basicInfo.origin && !resumeData.basicInfo.address) {
         resumeData.basicInfo.address = resumeData.basicInfo.origin;
         delete resumeData.basicInfo.origin;
+      }
+      // Normalize old birth formats (2003.06 / 2003/06) to yyyy-mm for month input
+      if (resumeData.basicInfo.birth) {
+        resumeData.basicInfo.birth = normalizeBirth(resumeData.basicInfo.birth);
       }
       // detail2 used to be a plain string; now it's a line-based array
       resumeData.education.forEach(edu => {
@@ -1521,6 +1721,17 @@ document.addEventListener('input', function() {
   }, 1000);
 });
 </script>
+
+<!-- Custom birth year/month picker -->
+<div class="birth-picker" id="birthPicker">
+  <div class="bp-header">
+    <button class="bp-prev" type="button" onclick="changeBirthDecade(-1)">‹</button>
+    <span class="bp-decade" id="bpDecade">2017-2026</span>
+    <button class="bp-next" type="button" onclick="changeBirthDecade(1)">›</button>
+  </div>
+  <div class="bp-years" id="bpYears"></div>
+  <div class="bp-months" id="bpMonths"></div>
+</div>
 
 </body>
 </html>
