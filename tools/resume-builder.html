@@ -19,7 +19,7 @@
   --danger: #d95555;
   --success: #4a9d5f;
   --resume-bg: #ffffff;
-  --resume-ink: #3a3a3a;
+  --resume-ink: #414141;
   --resume-muted: #888888;
   --resume-accent: #4e7282;
   --resume-section-bg: #4e7282;
@@ -178,78 +178,88 @@ body.pdf-mode .resume-page {
 body.pdf-mode .resume-pages { gap: 0 !important; align-items: stretch !important; }
 body.pdf-mode .preview-panel { padding: 0 !important; }
 
-/* ========== Corner Decorations ========== */
-.resume-corner {
-  position: absolute; width: 16px; height: 16px;
-  border: 2px solid var(--resume-accent); z-index: 5;
-}
-.resume-corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-.resume-corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
-.resume-corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
-.resume-corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-
-/* ========== Left Edge Dots ========== */
-.resume-left-dots {
-  position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 6px; z-index: 5;
-}
-.resume-left-dots span {
-  width: 3px; height: 3px; border-radius: 50%; background: var(--resume-accent);
+/* ========== Left Vertical Line ========== */
+/* DOCX: 从标题栏下方开始, 延伸至页面底部 */
+.resume-left-line {
+  position: absolute; left: 8px; top: 120px; bottom: 20px;
+  width: 1.5px; background: var(--resume-accent); z-index: 5;
 }
 
 /* ========== Resume Header ========== */
 .resume-header {
-  display: flex; align-items: flex-start; padding: 18px 36px 6px; gap: 16px;
+  display: flex; align-items: flex-start; padding: 18px 28px 6px 20px; gap: 10px;
 }
 .resume-header-left { flex-shrink: 0; }
-.resume-title-row { display: flex; align-items: center; gap: 6px; }
 .resume-title {
-  font-size: 28px; font-weight: 700; color: #333; letter-spacing: 3px; line-height: 1.1;
+  font-size: 36px; font-weight: 700; color: var(--resume-accent); letter-spacing: 2px; line-height: 1.1;
 }
 .resume-title-divider {
-  display: inline-block; width: 2px; height: 26px; background: var(--resume-accent);
+  display: inline-block; width: 1.5px; height: 52px; background: var(--resume-accent);
+  margin: 0 8px; vertical-align: middle;
 }
+.resume-header-center { flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; padding-top: 4px; }
+.resume-tagline { font-size: 10pt; color: var(--resume-accent); white-space: nowrap; line-height: 1.3; }
 .resume-subtitle-en {
-  font-size: 11px; color: var(--resume-muted); letter-spacing: 1.5px; margin-top: 3px;
+  font-size: 18px; color: var(--resume-accent); letter-spacing: 1px; margin-top: 2px; line-height: 1.2;
 }
-.resume-header-center { flex: 1; display: flex; align-items: center; justify-content: center; padding-top: 6px; }
-.resume-tagline { font-size: 11px; color: var(--resume-muted); font-style: italic; white-space: nowrap; }
-.resume-header-icons { display: flex; gap: 10px; flex-shrink: 0; padding-top: 4px; }
+.resume-header-icons { display: flex; gap: 8px; flex-shrink: 0; padding-top: 4px; margin-left: auto; }
 .resume-header-icon {
-  width: 34px; height: 34px; border-radius: 50%; background: var(--resume-accent);
+  width: 32px; height: 32px; border-radius: 50%; background: #808080;
   display: flex; align-items: center; justify-content: center; color: #fff;
 }
-.resume-header-icon svg { width: 16px; height: 16px; fill: #fff; }
+.resume-header-icon svg { width: 15px; height: 15px; fill: #fff; }
 
-/* ========== Slanted Decorative Bar ========== */
+/* ========== Two-Layer Slanted Bar ========== */
+/* DOCX WPS7: 左竖右斜(向外); WPS8: 左斜(向外)右竖 — 对称斜切 */
+.header-bar-wrap { margin: 2px 28px 0 20px; }
 .header-slanted-bar {
-  height: 5px; background: var(--resume-accent);
-  margin: 4px 28px 0;
-  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  height: 6px; background: var(--resume-accent);
+  /* 左竖右斜(向外): 左边垂直, 右边上窄下宽 */
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+}
+.header-slanted-bar.thin {
+  height: 2px; margin-top: 3px;
+  /* DOCX path: M 0,0 L 3308894,0 L 3308894,190500 L 105319,190500 */
+  /* 左边上宽下窄(0%→3.2%), 右边垂直 */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%);
 }
 
-/* ========== Section Header (slanted parallelogram) ========== */
-.resume-section { padding: 0; margin-bottom: 6px; }
+/* ========== Section Header (SVG — exact DOCX custGeom paths) ========== */
+/* DOCX custGeom: 3 parallel slanted strips with white gaps (speed-line effect) */
+/* Path data extracted from document.xml, viewBox="0 0 1406296 288031" */
+.resume-section { padding: 0; margin-bottom: 4px; display: flex; flex-wrap: wrap; align-items: center; }
 .resume-section.no-header .resume-section-header { display: none; }
 .resume-section-header {
+  position: relative; display: inline-flex; align-items: center;
+  width: 3.91cm; height: 0.8cm;
+  margin: 8px 0 4px 20px; overflow: visible;
+}
+.section-header-shape {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+}
+.section-header-content {
+  position: relative; z-index: 1;
   display: flex; align-items: center; gap: 6px;
-  background: var(--resume-section-bg); color: #fff;
-  padding: 4px 14px; margin: 10px 28px 6px;
-  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  padding-left: 10px; color: #fff; height: 100%;
 }
 .section-header-icon { width: 14px; height: 14px; fill: #fff; flex-shrink: 0; }
-.section-header-title { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+.section-header-title { font-size: 12pt; font-weight: 700; color: #fff; letter-spacing: 1px; white-space: nowrap; }
+/* 板块标题后的水平延伸线 — 与标题同一行, 填充剩余空间 */
+.resume-section-line {
+  flex: 1; height: 1px; background: var(--resume-accent);
+  margin: 0 28px 4px 0; min-width: 20px;
+}
 
 /* ========== Basic Info ========== */
-.resume-basic-info { padding: 4px 36px 0; }
-.basic-info-body { display: flex; gap: 20px; align-items: flex-start; }
+.resume-basic-info { padding: 4px 28px 0 20px; }
+.basic-info-body { display: flex; gap: 16px; align-items: flex-start; }
 .basic-info-grid {
   flex: 1; display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4px 24px; font-size: 10pt; color: var(--resume-ink);
+  gap: 3px 20px; font-size: 10pt; color: #414141;
 }
 .basic-info-item { display: flex; align-items: baseline; }
-.basic-info-label { font-weight: 600; white-space: nowrap; color: var(--resume-ink); }
-.basic-info-value { color: var(--resume-ink); }
+.basic-info-label { font-weight: 600; white-space: nowrap; color: #414141; }
+.basic-info-value { color: #414141; }
 .basic-info-photo {
   width: 82px; height: 110px; flex-shrink: 0; border: 1px solid #ddd;
   overflow: hidden; background: #f5f5f5; display: flex; align-items: center; justify-content: center;
@@ -258,39 +268,39 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 .basic-info-photo .placeholder { color: var(--resume-muted); font-size: 9px; text-align: center; }
 
 /* ========== Section Body ========== */
-.resume-section-body { font-size: 9pt; line-height: 1.7; color: var(--resume-ink); padding: 0 36px; }
+.resume-section-body { flex-basis: 100%; font-size: 10pt; line-height: 1.65; color: #414141; padding: 0 28px 0 20px; }
 
 /* ========== Experience / Education Entry ========== */
-.exp-entry { margin-bottom: 6px; }
-.exp-header-line { display: flex; align-items: baseline; font-size: 9pt; margin-bottom: 3px; }
-.exp-date { white-space: nowrap; flex-shrink: 0; color: var(--resume-ink); }
+.exp-entry { margin-bottom: 4px; }
+.exp-header-line { display: flex; align-items: baseline; font-size: 10pt; margin-bottom: 2px; }
+.exp-date { white-space: nowrap; flex-shrink: 0; color: #414141; }
 .exp-leader {
   flex: 1; border-bottom: 1px dotted var(--resume-leader);
   margin: 0 6px; height: 0; position: relative; top: -3px; min-width: 20px;
 }
-.exp-org { white-space: nowrap; flex-shrink: 0; font-weight: 500; color: var(--resume-ink); }
-.exp-role { white-space: nowrap; flex-shrink: 0; color: var(--resume-muted); }
+.exp-org { white-space: nowrap; flex-shrink: 0; font-weight: 500; color: #414141; }
+.exp-role { white-space: nowrap; flex-shrink: 0; color: #414141; }
 .exp-bullets { list-style: none; padding-left: 0; margin-top: 2px; }
 .exp-bullets li {
-  position: relative; padding-left: 14px; margin-bottom: 1px; line-height: 1.6;
-  text-align: justify;
+  position: relative; padding-left: 12px; margin-bottom: 0px; line-height: 1.55;
+  text-align: justify; font-size: 10pt; color: #414141;
 }
 .exp-bullets li::before {
-  content: '●'; position: absolute; left: 0; top: 0; font-size: 6px; color: var(--resume-accent);
+  content: '●'; position: absolute; left: 0; top: 0; font-size: 5px; color: var(--resume-accent);
 }
 
 /* Education details */
-.edu-detail { font-size: 9pt; margin-bottom: 1px; }
+.edu-detail { font-size: 10pt; margin-bottom: 0px; color: #414141; }
 .edu-detail-label { font-weight: 600; }
 
 /* Skills (no bullets, plain text) */
 .skills-list { list-style: none; padding-left: 0; }
 .skills-list li {
-  margin-bottom: 2px; line-height: 1.6; text-align: justify; font-size: 9pt;
+  margin-bottom: 1px; line-height: 1.55; text-align: justify; font-size: 10pt; color: #414141;
 }
 
 /* Self-eval */
-.self-eval-text { font-size: 9pt; line-height: 1.7; text-align: justify; }
+.self-eval-text { font-size: 10pt; line-height: 1.65; text-align: justify; color: #414141; }
 
 /* ========== Print Styles ========== */
 @media print {
@@ -554,6 +564,9 @@ const ICON_STAR = '<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.
 const ICON_QUOTE = '<svg viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>';
 const ICON_WORK = '<svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>';
 const ICON_SCHOOL = '<svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>';
+// SVG shape for section headers — exact DOCX custGeom path coordinates
+// 3 parallel slanted strips with white gaps (speed-line effect)
+const SEC_SHAPE = '<svg class="section-header-shape" viewBox="0 0 1406296 288031" preserveAspectRatio="none"><path d="M 1093154,0 L 1171153,0 L 1406296,288031 L 1328297,288031 Z" fill="var(--resume-section-bg)"/><path d="M 1030297,0 L 1069917,0 L 1305060,288031 L 1265440,288031 Z" fill="var(--resume-section-bg)"/><path d="M 0,0 L 1007060,0 L 1242203,288031 L 0,288031 Z" fill="var(--resume-section-bg)"/></svg>';
 
 // ========== Data Model ==========
 let resumeData = {
@@ -759,10 +772,10 @@ function renderSkillsList() {
   `).join('') + `<button class="btn-add" onclick="addSkill()">+ 添加技能</button>`;
 }
 
-// ========== Label formatter (dots for 2-char labels) ==========
+// ========== Label formatter (spaces for 2-char labels, matching DOCX template) ==========
 function fmtLabel(label) {
   if (label.length === 2) {
-    return label[0] + '····' + label[1] + '：';
+    return label[0] + '\u2003\u2003\u2003\u2003' + label[1] + '：';
   }
   return label + '：';
 }
@@ -771,28 +784,18 @@ function fmtLabel(label) {
 function buildResumeContent() {
   const bi = resumeData.basicInfo;
   return `
-    <!-- Corner Decorations -->
-    <div class="resume-corner tl"></div>
-    <div class="resume-corner tr"></div>
-    <div class="resume-corner bl"></div>
-    <div class="resume-corner br"></div>
-
-    <!-- Left Edge Dots -->
-    <div class="resume-left-dots">
-      <span></span><span></span><span></span><span></span>
-    </div>
+    <!-- Left Vertical Line -->
+    <div class="resume-left-line"></div>
 
     <!-- Header -->
     <div class="resume-header">
       <div class="resume-header-left">
-        <div class="resume-title-row">
-          <span class="resume-title">${esc(resumeData.header.title)}</span>
-          <span class="resume-title-divider"></span>
-        </div>
-        <div class="resume-subtitle-en">${esc(resumeData.header.subtitle)}</div>
+        <span class="resume-title">${esc(resumeData.header.title)}</span>
       </div>
+      <span class="resume-title-divider"></span>
       <div class="resume-header-center">
-        <span class="resume-tagline">"${esc(resumeData.header.tagline)}"</span>
+        <span class="resume-tagline">${esc(resumeData.header.tagline)}</span>
+        <span class="resume-subtitle-en">${esc(resumeData.header.subtitle)}</span>
       </div>
       <div class="resume-header-icons">
         <div class="resume-header-icon">${ICON_GRAD}</div>
@@ -801,15 +804,22 @@ function buildResumeContent() {
       </div>
     </div>
 
-    <!-- Slanted Decorative Bar -->
-    <div class="header-slanted-bar"></div>
+    <!-- Two-Layer Slanted Bar -->
+    <div class="header-bar-wrap">
+      <div class="header-slanted-bar"></div>
+      <div class="header-slanted-bar thin"></div>
+    </div>
 
     <!-- Basic Info Section -->
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        <span class="section-header-title">基本信息</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span class="section-header-title">基本 信息</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
     </div>
     <div class="resume-basic-info">
       <div class="basic-info-body">
@@ -835,9 +845,13 @@ function buildResumeContent() {
     ${resumeData.education.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-        <span class="section-header-title">教育背景</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+          <span class="section-header-title">教育背景</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
       <div class="resume-section-body">
         ${resumeData.education.map(edu => `
           <div class="exp-entry">
@@ -859,9 +873,13 @@ function buildResumeContent() {
     ${resumeData.internships.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
-        <span class="section-header-title">实习经历</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+          <span class="section-header-title">实习经历</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
       <div class="resume-section-body">
         ${resumeData.internships.map(item => `
           <div class="exp-entry">
@@ -884,9 +902,13 @@ function buildResumeContent() {
     ${resumeData.projects.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-        <span class="section-header-title">校园经历</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+          <span class="section-header-title">校园经历</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
       <div class="resume-section-body">
         ${resumeData.projects.map(item => `
           <div class="exp-entry">
@@ -909,9 +931,13 @@ function buildResumeContent() {
     ${resumeData.skills.length > 0 ? `
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <span class="section-header-title">技能证书</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <span class="section-header-title">技能证书</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
       <div class="resume-section-body">
         <ul class="skills-list">
           ${resumeData.skills.filter(s => s.trim()).map(s => `<li>${esc(s)}</li>`).join('')}
@@ -923,9 +949,13 @@ function buildResumeContent() {
     ${resumeData.selfEval ? `
     <div class="resume-section">
       <div class="resume-section-header">
-        <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-        <span class="section-header-title">自我评价</span>
+        ${SEC_SHAPE}
+        <div class="section-header-content">
+          <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+          <span class="section-header-title">自我评价</span>
+        </div>
       </div>
+      <div class="resume-section-line"></div>
       <div class="resume-section-body">
         <div class="self-eval-text">${esc(resumeData.selfEval)}</div>
       </div>
@@ -947,7 +977,7 @@ function flattenUnits(inner) {
   const out = [];
   let secCounter = 0;
   Array.from(inner.children).forEach(block => {
-    if (block.classList.contains('resume-corner') || block.classList.contains('resume-left-dots')) {
+    if (block.classList.contains('resume-left-line')) {
       // Skip decorative elements - they're positioned absolutely
       return;
     }
@@ -965,6 +995,9 @@ function flattenUnits(inner) {
         u.className = 'resume-section';
         u.dataset.sec = sid;
         if (head) u.appendChild(head.cloneNode(true));
+        const line = document.createElement('div');
+        line.className = 'resume-section-line';
+        u.appendChild(line);
         const b = document.createElement('div');
         b.className = 'resume-section-body';
         b.appendChild(item.cloneNode(true));
@@ -990,16 +1023,9 @@ function createPage(wrap, margin) {
 }
 
 function addDecorations(inner) {
-  const corners = ['tl','tr','bl','br'];
-  corners.forEach(c => {
-    const d = document.createElement('div');
-    d.className = 'resume-corner ' + c;
-    inner.appendChild(d);
-  });
-  const dots = document.createElement('div');
-  dots.className = 'resume-left-dots';
-  dots.innerHTML = '<span></span><span></span><span></span><span></span>';
-  inner.appendChild(dots);
+  const line = document.createElement('div');
+  line.className = 'resume-left-line';
+  inner.appendChild(line);
 }
 
 function paginate(margin) {
