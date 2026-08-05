@@ -42,27 +42,30 @@ body {
 .toolbar {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 52px;
+  min-height: 52px;
   background: var(--accent-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
-.toolbar-left { display: flex; align-items: center; gap: 16px; }
+.toolbar-left { display: flex; align-items: center; gap: 10px; flex-shrink: 1; min-width: 0; }
 .toolbar-title {
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 .toolbar-subtitle {
   color: rgba(255,255,255,0.6);
-  font-size: 12px;
+  font-size: 11px;
+  display: none; /* 手机端默认隐藏，桌面端可按需开启 */
 }
-.toolbar-right { display: flex; align-items: center; gap: 10px; }
+.toolbar-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex-shrink: 1; }
 .btn {
   padding: 8px 18px;
   border: none;
@@ -621,6 +624,29 @@ body {
     display: inline-flex;
   }
   .editor-panel.collapsed { display: none; }
+}
+
+/* ========== Mobile (< 600px) 精细适配 ========== */
+@media (max-width: 600px) {
+  .toolbar { padding: 6px 10px; gap: 4px; }
+  .toolbar-left { gap: 6px; }
+  .toolbar-title { font-size: 14px; }
+  .toolbar-right { gap: 4px; }
+  .btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+  .btn-export { padding: 6px 10px; font-size: 12px; }
+  .editor-content { padding: 14px 14px 50px; }
+  .field-row { flex-direction: column; gap: 0; }
+  .field-input, .field-textarea, .field-select { font-size: 14px; padding: 10px 12px; }
+  .color-options { gap: 8px; }
+  .color-swatch { width: 28px; height: 28px; }
+}
+@media (max-width: 380px) {
+  .toolbar-title { font-size: 13px; }
+  .btn { padding: 5px 8px; font-size: 11px; }
 }
 </style>
 </head>
