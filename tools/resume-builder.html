@@ -776,6 +776,13 @@ function fmtLabel(label) {
   return label + '：';
 }
 
+// Basic-info row: hide the whole row when the editor field is empty
+function biRow(label, value) {
+  const v = (value == null ? '' : String(value)).trim();
+  if (!v) return '';
+  return `<div class="basic-info-item"><span class="basic-info-label">${label}</span><span class="basic-info-value">${esc(v)}</span></div>`;
+}
+
 // ========== Resume content builder ==========
 function buildResumeContent() {
   const bi = resumeData.basicInfo;
@@ -817,16 +824,16 @@ function buildResumeContent() {
     <div class="resume-basic-info">
       <div class="basic-info-body">
         <div class="basic-info-grid">
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('姓名')}</span><span class="basic-info-value">${esc(bi.name) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">出生年月：</span><span class="basic-info-value">${esc(bi.birth) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('民族')}</span><span class="basic-info-value">${esc(bi.ethnicity) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('身高')}</span><span class="basic-info-value">${esc(bi.height) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('电话')}</span><span class="basic-info-value">${esc(bi.phone) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">政治面貌：</span><span class="basic-info-value">${esc(bi.political) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('邮箱')}</span><span class="basic-info-value">${esc(bi.email) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">毕业院校：</span><span class="basic-info-value">${esc(bi.school) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('住址')}</span><span class="basic-info-value">${esc(bi.address) || '—'}</span></div>
-          <div class="basic-info-item"><span class="basic-info-label">${fmtLabel('学历')}</span><span class="basic-info-value">${esc(bi.degree) || '—'}</span></div>
+          ${biRow(fmtLabel('姓名'), bi.name)}
+          ${biRow('出生年月：', bi.birth)}
+          ${biRow(fmtLabel('民族'), bi.ethnicity)}
+          ${biRow(fmtLabel('身高'), bi.height)}
+          ${biRow(fmtLabel('电话'), bi.phone)}
+          ${biRow('政治面貌：', bi.political)}
+          ${biRow(fmtLabel('邮箱'), bi.email)}
+          ${biRow('毕业院校：', bi.school)}
+          ${biRow(fmtLabel('住址'), bi.address)}
+          ${biRow(fmtLabel('学历'), bi.degree)}
         </div>
         <div class="basic-info-photo">
           ${resumeData.photo ? `<img src="${resumeData.photo}" alt="证件照">` : '<span class="placeholder">证件照</span>'}
