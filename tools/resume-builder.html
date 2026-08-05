@@ -13,18 +13,18 @@
   --ink: #333333;
   --muted: #666666;
   --rule: #e0e0e0;
-  --accent: #3d6b7d;
-  --accent2: #5b8fa3;
-  --accent-dark: #2d5566;
-  --accent-light: #e8f0f3;
+  --accent: #4e7282;
+  --accent2: #5e8597;
+  --accent-dark: #405e6c;
+  --accent-light: #e8eef1;
   --danger: #d95555;
   --success: #4a9d5f;
   --resume-bg: #ffffff;
   --resume-ink: #414141;
   --resume-muted: #888888;
-  --resume-accent: #3d6b7d;
-  --resume-section-bg: #3d6b7d;
-  --resume-header-dark: #2d5566;
+  --resume-accent: #4e7282;
+  --resume-section-bg: #4e7282;
+  --resume-header-dark: #405e6c;
 }
 
 /* ========== Reset ========== */
@@ -369,67 +369,91 @@ body {
   height: 100%;
 }
 
-/* Resume Header */
+/* Clean-capture mode for PDF export: remove shadows/scale so the
+   rendered file matches the preview exactly (no blank margin/clipping) */
+body.pdf-mode .resume-page {
+  box-shadow: none !important;
+  transform: none !important;
+  margin: 0 !important;
+  page-break-after: always;
+}
+body.pdf-mode .resume-page:last-child { page-break-after: auto; }
+body.pdf-mode .resume-pages { gap: 0 !important; align-items: stretch !important; }
+
+/* Resume Header (teal banner, like the Word template) */
 .resume-header {
   position: relative;
-  padding: 0 0 14px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 14px;
+  background: var(--resume-accent);
+  border-radius: 4px;
+  padding: 16px 20px;
+  color: #fff;
 }
-.resume-header-left { flex: 1; }
+.resume-header-left { flex: 1; min-width: 0; }
 .resume-title {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
-  color: var(--resume-accent);
+  color: #fff;
   letter-spacing: 4px;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 .resume-subtitle-en {
-  font-size: 13px;
-  color: var(--resume-muted);
+  font-size: 12px;
+  color: rgba(255,255,255,0.82);
   letter-spacing: 2px;
   margin-top: 2px;
 }
 .resume-tagline {
   font-size: 11px;
-  color: var(--resume-muted);
-  margin-top: 4px;
+  color: rgba(255,255,255,0.88);
+  margin-top: 3px;
 }
+/* Header icons — the three small square icons from the docx template */
 .resume-header-icons {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  flex-shrink: 0;
 }
 .resume-header-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--resume-accent);
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-size: 14px;
 }
-.resume-header-divider {
-  width: 100%;
-  height: 2px;
-  margin-top: 10px;
-  background: linear-gradient(to right, var(--resume-accent), var(--resume-accent) 60%, transparent);
+/* Photo sits at the top-right of the header, exactly like the template */
+.resume-header-photo {
+  width: 96px;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255,255,255,0.6);
 }
+.resume-header-photo img { width: 100%; height: 100%; object-fit: cover; }
+.resume-header-photo .placeholder { color: var(--resume-muted); font-size: 10px; text-align: center; }
+.resume-header-divider { display: none; }
 
 /* Basic Info Section */
 .resume-basic-info {
-  display: flex;
-  padding: 14px 0;
-  gap: 20px;
+  display: block;
+  padding: 12px 0 4px;
 }
 .basic-info-left {
-  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px 20px;
+  gap: 3px 28px;
   font-size: 10pt;
   color: var(--resume-ink);
 }
@@ -441,35 +465,12 @@ body {
 .basic-info-label {
   color: var(--resume-ink);
   white-space: nowrap;
+  font-weight: 600;
 }
 .basic-info-value {
   color: var(--resume-ink);
 }
-.basic-info-right {
-  width: 90px;
-  flex-shrink: 0;
-}
-.basic-info-photo {
-  width: 90px;
-  height: 115px;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  overflow: hidden;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.basic-info-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.basic-info-photo .placeholder {
-  color: var(--muted);
-  font-size: 10px;
-  text-align: center;
-}
+.basic-info-right { display: none; }
 
 /* Section Header */
 .resume-section {
@@ -482,24 +483,22 @@ body {
   align-items: center;
   gap: 8px;
   margin-bottom: 8px;
-  padding-bottom: 4px;
+  background: var(--resume-section-bg);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 3px;
 }
 .section-header-bar {
-  width: 4px;
-  height: 18px;
-  background: var(--resume-accent);
-  border-radius: 2px;
+  display: none;
 }
 .section-header-title {
   font-size: 14px;
   font-weight: 700;
-  color: var(--resume-accent);
+  color: #fff;
   letter-spacing: 1px;
 }
 .section-header-line {
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
+  display: none;
 }
 .resume-section-body {
   font-size: 9pt;
@@ -726,7 +725,7 @@ body {
       <div class="editor-section">
         <div class="editor-section-title">主题配色</div>
         <div class="color-options" id="colorOptions">
-          <div class="color-swatch active" style="background:#3d6b7d" data-color="#3d6b7d" onclick="changeColor(this)"></div>
+          <div class="color-swatch active" style="background:#4e7282" data-color="#4e7282" onclick="changeColor(this)"></div>
           <div class="color-swatch" style="background:#2c5f8a" data-color="#2c5f8a" onclick="changeColor(this)"></div>
           <div class="color-swatch" style="background:#8b4513" data-color="#8b4513" onclick="changeColor(this)"></div>
           <div class="color-swatch" style="background:#555555" data-color="#555555" onclick="changeColor(this)"></div>
@@ -881,7 +880,7 @@ const MARGINS = { narrow: 16, normal: 40, wide: 72 }; // 页边距（px）
 
 // ========== Data Model ==========
 let resumeData = {
-  themeColor: '#3d6b7d',
+  themeColor: '#4e7282',
   margin: 'normal',
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始。' },
   photo: '../assets/images/resume-template-photo.jpg',
@@ -902,7 +901,7 @@ function nextId() { return ++entryIdCounter; }
 
 // ========== Sample Data ==========
 const sampleData = {
-  themeColor: '#3d6b7d',
+  themeColor: '#4e7282',
   margin: 'normal',
   header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始。' },
   photo: '../assets/images/resume-template-photo.jpg',
@@ -1090,7 +1089,7 @@ function renderSkillsList() {
 // ========== Resume content builder ==========
 function buildResumeContent() {
   return `
-    <!-- Header -->
+    <!-- Header (teal banner + photo, matching the Word template) -->
     <div class="resume-header">
       <div class="resume-header-left">
         <div class="resume-title">${esc(resumeData.header.title)}</div>
@@ -1098,31 +1097,28 @@ function buildResumeContent() {
         <div class="resume-tagline">${esc(resumeData.header.tagline)}</div>
       </div>
       <div class="resume-header-icons">
-        <div class="resume-header-icon">🎓</div>
-        <div class="resume-header-icon">💼</div>
-        <div class="resume-header-icon">★</div>
+        <div class="resume-header-icon">▦</div>
+        <div class="resume-header-icon">✉</div>
+        <div class="resume-header-icon">☎</div>
       </div>
-      <div class="resume-header-divider"></div>
+      <div class="resume-header-photo">
+        ${resumeData.photo ? `<img src="${resumeData.photo}" alt="photo">` : '<span class="placeholder">证件照</span>'}
+      </div>
     </div>
 
     <!-- Basic Info -->
     <div class="resume-basic-info">
       <div class="basic-info-left">
         <div class="basic-info-item"><span class="basic-info-label">姓　名：</span><span class="basic-info-value">${esc(resumeData.basicInfo.name) || '—'}</span></div>
-        <div class="basic-info-item"><span class="basic-info-label">年　龄：</span><span class="basic-info-value">${esc(resumeData.basicInfo.age) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">民　族：</span><span class="basic-info-value">${esc(resumeData.basicInfo.ethnicity) || '—'}</span></div>
+        <div class="basic-info-item"><span class="basic-info-label">年　龄：</span><span class="basic-info-value">${esc(resumeData.basicInfo.age) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">性　别：</span><span class="basic-info-value">${esc(resumeData.basicInfo.gender) || '—'}</span></div>
-        <div class="basic-info-item"><span class="basic-info-label">电　话：</span><span class="basic-info-value">${esc(resumeData.basicInfo.phone) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">政治面貌：</span><span class="basic-info-value">${esc(resumeData.basicInfo.political) || '—'}</span></div>
-        <div class="basic-info-item"><span class="basic-info-label">邮　箱：</span><span class="basic-info-value">${esc(resumeData.basicInfo.email) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">籍　贯：</span><span class="basic-info-value">${esc(resumeData.basicInfo.origin) || '—'}</span></div>
+        <div class="basic-info-item"><span class="basic-info-label">电　话：</span><span class="basic-info-value">${esc(resumeData.basicInfo.phone) || '—'}</span></div>
+        <div class="basic-info-item"><span class="basic-info-label">邮　箱：</span><span class="basic-info-value">${esc(resumeData.basicInfo.email) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">毕业院校：</span><span class="basic-info-value">${esc(resumeData.basicInfo.school) || '—'}</span></div>
         <div class="basic-info-item"><span class="basic-info-label">学　历：</span><span class="basic-info-value">${esc(resumeData.basicInfo.degree) || '—'}</span></div>
-      </div>
-      <div class="basic-info-right">
-        <div class="basic-info-photo">
-          ${resumeData.photo ? `<img src="${resumeData.photo}" alt="photo">` : '<span class="placeholder">证件照</span>'}
-        </div>
       </div>
     </div>
 
@@ -1149,6 +1145,58 @@ function buildResumeContent() {
       </div>
     </div>` : ''}
 
+    <!-- Self Evaluation -->
+    ${resumeData.selfEval ? `
+    <div class="resume-section">
+      <div class="resume-section-header">
+        <div class="section-header-bar"></div>
+        <div class="section-header-title">自我评价</div>
+        <div class="section-header-line"></div>
+      </div>
+      <div class="resume-section-body">
+        <div class="self-eval-text">${esc(resumeData.selfEval)}</div>
+      </div>
+    </div>` : ''}
+
+    <!-- Skills -->
+    ${resumeData.skills.length > 0 ? `
+    <div class="resume-section">
+      <div class="resume-section-header">
+        <div class="section-header-bar"></div>
+        <div class="section-header-title">技能证书</div>
+        <div class="section-header-line"></div>
+      </div>
+      <div class="resume-section-body">
+        <ul class="skills-list">
+          ${resumeData.skills.map(s => `<li>${esc(s)}</li>`).join('')}
+        </ul>
+      </div>
+    </div>` : ''}
+
+    <!-- Campus Experience (mapped from 项目经验) -->
+    ${resumeData.projects.length > 0 ? `
+    <div class="resume-section">
+      <div class="resume-section-header">
+        <div class="section-header-bar"></div>
+        <div class="section-header-title">校园经历</div>
+        <div class="section-header-line"></div>
+      </div>
+      <div class="resume-section-body">
+        ${resumeData.projects.map(item => `
+          <div class="exp-entry">
+            <div class="exp-header-line">
+              <span class="exp-date">${esc(item.date)}</span>
+              <span class="exp-org">${esc(item.org)}</span>
+              <span class="exp-role">${esc(item.role)}</span>
+            </div>
+            <ul class="exp-bullets">
+              ${item.bullets.map(b => `<li>${esc(b)}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
     <!-- Internship -->
     ${resumeData.internships.length > 0 ? `
     <div class="resume-section">
@@ -1170,58 +1218,6 @@ function buildResumeContent() {
             </ul>
           </div>
         `).join('')}
-      </div>
-    </div>` : ''}
-
-    <!-- Project -->
-    ${resumeData.projects.length > 0 ? `
-    <div class="resume-section">
-      <div class="resume-section-header">
-        <div class="section-header-bar"></div>
-        <div class="section-header-title">项目经验</div>
-        <div class="section-header-line"></div>
-      </div>
-      <div class="resume-section-body">
-        ${resumeData.projects.map(item => `
-          <div class="exp-entry">
-            <div class="exp-header-line">
-              <span class="exp-date">${esc(item.date)}</span>
-              <span class="exp-org">${esc(item.org)}</span>
-              <span class="exp-role">${esc(item.role)}</span>
-            </div>
-            <ul class="exp-bullets">
-              ${item.bullets.map(b => `<li>${esc(b)}</li>`).join('')}
-            </ul>
-          </div>
-        `).join('')}
-      </div>
-    </div>` : ''}
-
-    <!-- Skills -->
-    ${resumeData.skills.length > 0 ? `
-    <div class="resume-section">
-      <div class="resume-section-header">
-        <div class="section-header-bar"></div>
-        <div class="section-header-title">技能特长</div>
-        <div class="section-header-line"></div>
-      </div>
-      <div class="resume-section-body">
-        <ul class="skills-list">
-          ${resumeData.skills.map(s => `<li>${esc(s)}</li>`).join('')}
-        </ul>
-      </div>
-    </div>` : ''}
-
-    <!-- Self Evaluation -->
-    ${resumeData.selfEval ? `
-    <div class="resume-section">
-      <div class="resume-section-header">
-        <div class="section-header-bar"></div>
-        <div class="section-header-title">自我评价</div>
-        <div class="section-header-line"></div>
-      </div>
-      <div class="resume-section-body">
-        <div class="self-eval-text">${esc(resumeData.selfEval)}</div>
       </div>
     </div>` : ''}
   `;
@@ -1523,7 +1519,7 @@ function syncFormFields() {
 function resetForm() {
   if (!confirm('确定要清空所有内容吗？')) return;
   resumeData = {
-    themeColor: '#3d6b7d',
+    themeColor: '#4e7282',
     margin: 'normal',
     header: { title: '个人简历', subtitle: 'Personal resume', tagline: '细心从每一个小细节开始。' },
     photo: null,
@@ -1575,41 +1571,29 @@ async function exportPDF() {
   btn.disabled = true;
 
   try {
-    const pages = document.querySelectorAll('.resume-page');
-    if (!pages.length) {
+    const pagesEl = document.getElementById('resumePages');
+    if (!pagesEl || !pagesEl.children.length) {
       showToast('没有可导出的内容');
       return;
     }
 
-    // Build a clean, off-screen export container (no shadows/gaps)
-    const exportWrap = document.createElement('div');
-    exportWrap.style.cssText = 'position:absolute;left:-9999px;top:0;width:210mm;background:#fff;';
-    document.body.appendChild(exportWrap);
-
-    pages.forEach((page, idx) => {
-      const clone = page.cloneNode(true);
-      clone.style.boxShadow = 'none';
-      clone.style.margin = '0';
-      clone.style.transform = 'none';
-      clone.style.pageBreakAfter = (idx < pages.length - 1) ? 'always' : 'auto';
-      clone.style.borderRadius = '0';
-      exportWrap.appendChild(clone);
-    });
+    // Capture the live, on-screen preview (off-screen clones render blank in
+    // html2canvas). Neutralize shadows/scale via a temporary body class.
+    document.body.classList.add('pdf-mode');
 
     await html2pdf().set({
       margin: 0,
       filename: '个人简历.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#fff', logging: false },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
-    }).from(exportWrap).save();
-
-    document.body.removeChild(exportWrap);
+    }).from(pagesEl).save();
   } catch (err) {
     console.error(err);
     showToast('PDF 生成失败，请尝试使用浏览器打印另存为 PDF');
   } finally {
+    document.body.classList.remove('pdf-mode');
     btn.innerHTML = originalHTML;
     btn.disabled = false;
   }
