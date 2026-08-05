@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>我的工具</title>
     <style>
+
+        /* 移动端触摸优化：消除300ms延迟+点击反馈 */
+        a, button, [role=button], input[type=submit], input[type=button], [onclick] {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
         :root {
             --bg-color: #0f172a;
             --card-bg: rgba(255, 255, 255, 0.03);
@@ -41,7 +48,7 @@
             display: flex; align-items: center; gap: 16px;
         }
         .back-btn {
-            width: 40px; height: 40px; border-radius: 12px;
+            width: 44px; height: 44px; border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
@@ -49,6 +56,8 @@
             display: flex; align-items: center; justify-content: center;
             transition: all 0.2s; flex-shrink: 0;
             font-size: 18px; text-decoration: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(255,255,255,0.15);
         }
         .back-btn:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-bg); }
         .top-bar h1 {

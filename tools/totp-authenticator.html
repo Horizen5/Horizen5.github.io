@@ -8,6 +8,13 @@
     <meta http-equiv="Expires" content="0">
     <title>2FA 验证器</title>
     <style>
+
+        /* 移动端触摸优化：消除300ms延迟+点击反馈 */
+        a, button, [role=button], input[type=submit], input[type=button], [onclick] {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
         :root {
             --bg-primary: #0a0e1a;
             --bg-secondary: #111827;
