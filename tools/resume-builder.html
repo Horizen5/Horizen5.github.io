@@ -171,13 +171,6 @@ body {
 }
 .resume-page-inner { box-sizing: border-box; height: 100%; position: relative; }
 
-/* PDF export mode */
-body.pdf-mode .resume-page {
-  box-shadow: none !important; transform: none !important; margin: 0 !important;
-}
-body.pdf-mode .resume-pages { gap: 0 !important; align-items: stretch !important; }
-body.pdf-mode .preview-panel { padding: 0 !important; }
-
 /* ========== Left Vertical Line ========== */
 /* DOCX: 从标题栏下方开始, 延伸至页面底部 */
 .resume-left-line {
@@ -237,16 +230,6 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 }
 .section-header-shape {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-}
-/* DOCX Shape 1: rtTriangle, fill=#405E6C, rot=180°, size 0.40x0.29cm, offset (0, 0.80cm) */
-/* Positioned below the banner's left edge — small dark wedge decoration */
-.section-header-triangle {
-  position: absolute; left: 0; bottom: -0.29cm;
-  width: 0.40cm; height: 0.29cm;
-  background: var(--resume-header-dark);
-  /* rtTriangle rotated 180°: right angle at bottom-right */
-  clip-path: polygon(100% 0, 0 100%, 100% 100%);
-  z-index: 0;
 }
 .section-header-content {
   position: relative; z-index: 1;
@@ -315,14 +298,23 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 
 /* ========== Print Styles ========== */
 @media print {
-  body { background: #fff; }
-  .toolbar, .editor-panel, #resumeSource { display: none !important; }
-  .main-container { display: block; margin: 0; }
-  .preview-panel { display: block; padding: 0; height: auto; overflow: visible; background: #fff; }
-  .resume-pages { display: block; gap: 0; width: auto; }
-  .resume-page { width: 210mm; min-height: 297mm; box-shadow: none; overflow: hidden; page-break-after: always; margin: 0; }
-  .resume-page:last-child { page-break-after: auto; }
   @page { size: A4; margin: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { background: #fff !important; height: auto !important; overflow: visible !important; }
+  .toolbar, .editor-panel, #resumeSource, .btn-export, .mobile-toggle { display: none !important; }
+  .main-container { display: block !important; margin: 0 !important; padding: 0 !important; }
+  .preview-panel { display: block !important; padding: 0 !important; height: auto !important; overflow: visible !important; background: #fff !important; }
+  .resume-pages { display: block !important; gap: 0 !important; width: auto !important; align-items: stretch !important; }
+  .resume-page {
+    width: 210mm !important; min-height: 297mm !important; max-height: 297mm !important;
+    box-shadow: none !important; margin: 0 !important; padding: 0 !important;
+    transform: none !important; transform-origin: top left !important;
+    page-break-after: always !important; page-break-inside: avoid !important;
+    overflow: hidden !important; box-sizing: border-box !important;
+  }
+  .resume-page:last-child { page-break-after: auto !important; }
+  .resume-section, .exp-entry, .basic-info-item, .basic-info-photo { page-break-inside: avoid !important; }
+  img { max-width: 100% !important; }
 }
 
 /* ========== Scrollbar ========== */
@@ -381,7 +373,7 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
     <button class="btn btn-secondary" onclick="loadSample()">加载示例</button>
     <button class="btn btn-secondary" onclick="resetForm()">清空</button>
     <button class="btn btn-secondary" onclick="saveToLocal()">保存</button>
-    <button class="btn btn-export" onclick="exportPDF()">📄 导出PDF</button>
+    <button class="btn btn-export" onclick="exportPDF()">🖨️ 打印 / 另存PDF</button>
   </div>
 </div>
 
@@ -559,7 +551,6 @@ body.pdf-mode .preview-panel { padding: 0 !important; }
 <!-- Off-screen source for measurement -->
 <div id="resumeSource" aria-hidden="true" style="position:absolute; left:-10000px; top:0; width:210mm; visibility:hidden;"></div>
 
-<script src="../assets/js/html2pdf.bundle.min.js"></script>
 <script>
 // ========== Constants ==========
 const A4_H_PX = Math.round(297 * 96 / 25.4); // ≈1122px
@@ -579,9 +570,6 @@ const ICON_SCHOOL = '<svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l
 // 3 parallel slanted strips with white gaps (speed-line effect)
 // DOCX Shape 0: custGeom, fill=#4E7282, 3 subpaths in one <a:path>
 const SEC_SHAPE = '<svg class="section-header-shape" viewBox="0 0 1406296 288031" preserveAspectRatio="none"><path d="M 1093154,0 L 1171153,0 L 1406296,288031 L 1328297,288031 Z" fill="var(--resume-section-bg)"/><path d="M 1030297,0 L 1069917,0 L 1305060,288031 L 1265440,288031 Z" fill="var(--resume-section-bg)"/><path d="M 0,0 L 1007060,0 L 1242203,288031 L 0,288031 Z" fill="var(--resume-section-bg)"/></svg>';
-// DOCX Shape 1: rtTriangle, fill=#405E6C, rot=180°, size 0.40x0.29cm, pos (0, 0.80cm)
-// Small dark wedge below the banner's left edge
-const SEC_TRIANGLE = '<div class="section-header-triangle"></div>';
 
 // ========== Data Model ==========
 let resumeData = {
@@ -829,7 +817,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
           <span class="section-header-title">基本 信息</span>
@@ -862,7 +849,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
           <span class="section-header-title">教育背景</span>
@@ -891,7 +877,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
           <span class="section-header-title">实习经历</span>
@@ -921,7 +906,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
           <span class="section-header-title">校园经历</span>
@@ -951,7 +935,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           <span class="section-header-title">技能证书</span>
@@ -970,7 +953,6 @@ function buildResumeContent() {
     <div class="resume-section">
       <div class="resume-section-header">
         ${SEC_SHAPE}
-        ${SEC_TRIANGLE}
         <div class="section-header-content">
           <svg class="section-header-icon" viewBox="0 0 24 24"><path fill="#fff" d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
           <span class="section-header-title">自我评价</span>
@@ -1308,60 +1290,15 @@ function loadFromLocal() {
   return false;
 }
 
-// ========== PDF Export (fixed: render each page individually) ==========
-async function exportPDF() {
+// ========== PDF Export: use browser print for crisp A4 output ==========
+function exportPDF() {
   updatePreview();
-  const btn = document.querySelector('.btn-export');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '⏳ 生成中…';
-  btn.disabled = true;
-
-  try {
-    const pages = document.querySelectorAll('.resume-page');
-    if (!pages.length) {
-      showToast('没有可导出的内容');
-      return;
-    }
-
-    document.body.classList.add('pdf-mode');
-    // Wait for layout to settle
-    await new Promise(r => setTimeout(r, 200));
-
-    // Get jsPDF constructor from html2pdf bundle
-    const JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-    if (!JsPDF) throw new Error('jsPDF not found');
-
-    const pdf = new JsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-    const pageWidth = 210;
-    const pageHeight = 297;
-
-    for (let i = 0; i < pages.length; i++) {
-      const canvas = await html2canvas(pages[i], {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        width: pages[i].offsetWidth,
-        height: pages[i].offsetHeight,
-        windowWidth: pages[i].scrollWidth
-      });
-
-      const imgData = canvas.toDataURL('image/jpeg', 0.98);
-
-      if (i > 0) pdf.addPage();
-      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
-    }
-
-    pdf.save('个人简历.pdf');
-  } catch (err) {
-    console.error(err);
-    showToast('PDF 生成失败，请尝试使用浏览器打印另存为 PDF');
-  } finally {
-    document.body.classList.remove('pdf-mode');
-    btn.innerHTML = originalHTML;
-    btn.disabled = false;
+  const pages = document.querySelectorAll('.resume-page');
+  if (!pages.length) {
+    showToast('没有可导出的内容');
+    return;
   }
+  window.print();
 }
 
 function toggleEditor() {
