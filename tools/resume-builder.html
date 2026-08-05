@@ -75,10 +75,30 @@ body {
 /* ========== Editor Panel ========== */
 .editor-panel {
   width: 460px; min-width: 460px; background: var(--bg2);
-  border-left: 1px solid var(--rule); overflow-y: auto;
+  border-left: 1px solid var(--rule);
   height: calc(100vh - 52px); position: sticky; top: 52px; order: 2;
+  display: flex;
 }
+.editor-body { flex: 1 1 auto; overflow-y: auto; }
 .editor-content { padding: 20px 24px 60px; }
+/* ========== Editor Left Nav (section pages) ========== */
+.editor-nav {
+  width: 112px; min-width: 112px; flex-shrink: 0;
+  background: #eef2f4; border-right: 1px solid var(--rule);
+  padding: 12px 8px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.nav-item {
+  padding: 11px 6px; border-radius: 8px; font-size: 13px; color: var(--muted);
+  cursor: pointer; user-select: none; text-align: center; line-height: 1.25;
+  border: 1px solid transparent; transition: all .15s;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+}
+.nav-item:hover { background: #e2e8ea; color: var(--ink); }
+.nav-item.active {
+  background: #fff; color: var(--accent); font-weight: 600;
+  border-color: var(--accent-light); box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
 .editor-section { margin-bottom: 24px; }
 .editor-section-title {
   font-size: 15px; font-weight: 600; color: var(--accent);
@@ -337,7 +357,9 @@ body {
 }
 @media screen and (max-width: 900px) {
   .main-container { flex-direction: column; }
-  .editor-panel { width: 100%; min-width: 100%; height: auto; position: relative; top: 0; order: 1; border-left: none; border-bottom: 1px solid var(--rule); }
+  .editor-panel { width: 100%; min-width: 100%; height: auto; position: relative; top: 0; order: 1; border-left: none; border-bottom: 1px solid var(--rule); flex-direction: column; }
+  .editor-nav { width: 100%; min-width: 0; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--rule); gap: 6px; }
+  .nav-item { white-space: nowrap; flex: 0 0 auto; }
   .preview-panel { order: 2; height: auto; padding: 20px; }
   .resume-page { transform: none; width: 100%; max-width: 210mm; }
 }
@@ -385,10 +407,23 @@ body {
 <div class="main-container">
   <!-- Editor Panel (右侧) -->
   <div class="editor-panel" id="editorPanel">
+    <div class="editor-nav" id="editorNav">
+      <div class="nav-item" data-target="basic">基本信息</div>
+      <div class="nav-item" data-target="education">教育背景</div>
+      <div class="nav-item" data-target="internship">实习经历</div>
+      <div class="nav-item" data-target="campus">校园经历</div>
+      <div class="nav-item" data-target="skills">技能证书</div>
+      <div class="nav-item" data-target="evaluation">自我评价</div>
+      <div class="nav-item" data-target="settings">页面设置</div>
+      <div class="nav-item" data-target="theme">主题配色</div>
+      <div class="nav-item" data-target="header">标题标语</div>
+      <div class="nav-item" data-target="photo">证件照</div>
+    </div>
+    <div class="editor-body">
     <div class="editor-content">
 
       <!-- Page Settings -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="settings">
         <div class="editor-section-title">页面设置</div>
         <div class="field-row">
           <div>
@@ -406,7 +441,7 @@ body {
       </div>
 
       <!-- Theme Color -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="theme">
         <div class="editor-section-title">主题配色</div>
         <div class="color-options" id="colorOptions">
           <div class="color-swatch active" style="background:#4e7282" data-color="#4e7282" onclick="changeColor(this)"></div>
@@ -419,7 +454,7 @@ body {
       </div>
 
       <!-- Header -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="header">
         <div class="editor-section-title">标题与标语</div>
         <div class="field-row">
           <div>
@@ -438,7 +473,7 @@ body {
       </div>
 
       <!-- Photo -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="photo">
         <div class="editor-section-title">证件照</div>
         <div class="photo-upload-area">
           <div class="photo-preview" id="photoPreview">
@@ -453,7 +488,7 @@ body {
       </div>
 
       <!-- Basic Info -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="basic">
         <div class="editor-section-title">基本信息</div>
         <div class="field-row">
           <div>
@@ -508,35 +543,35 @@ body {
       </div>
 
       <!-- Education -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="education">
         <div class="editor-section-title">教育背景</div>
         <div id="educationList"></div>
         <button class="btn-add" onclick="addEducation()">+ 添加教育经历</button>
       </div>
 
       <!-- Internship -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="internship">
         <div class="editor-section-title">实习经历</div>
         <div id="internshipList"></div>
         <button class="btn-add" onclick="addInternship()">+ 添加实习经历</button>
       </div>
 
       <!-- Campus Experience -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="campus">
         <div class="editor-section-title">校园经历</div>
         <div id="projectList"></div>
         <button class="btn-add" onclick="addProject()">+ 添加校园经历</button>
       </div>
 
       <!-- Skills -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="skills">
         <div class="editor-section-title">技能证书</div>
         <div id="skillsList"></div>
         <button class="btn-add" onclick="addSkill()">+ 添加技能</button>
       </div>
 
       <!-- Self Evaluation -->
-      <div class="editor-section">
+      <div class="editor-section" data-page="evaluation">
         <div class="editor-section-title">自我评价</div>
         <div class="field-group">
           <label class="field-label">自我评价内容</label>
@@ -545,6 +580,7 @@ body {
       </div>
 
     </div>
+    </div><!-- /.editor-body -->
   </div>
 
   <!-- Preview Panel (左侧) -->
@@ -1237,6 +1273,22 @@ function refreshEditors() {
   leAutoGrowAll();
 }
 
+// ========== Editor section pages (left nav) ==========
+// Each nav click opens exactly ONE section as a standalone page (no scrolling
+// through everything). The others are hidden until their nav item is clicked.
+function switchPage(pageId) {
+  document.querySelectorAll('.editor-section[data-page]').forEach(function(s) {
+    s.style.display = (s.getAttribute('data-page') === pageId) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(function(n) {
+    n.classList.toggle('active', n.getAttribute('data-target') === pageId);
+  });
+  var body = document.querySelector('.editor-body');
+  if (body) body.scrollTop = 0;
+  // Re-grow any line-editor textareas now that this page is visible
+  if (typeof leAutoGrowAll === 'function') leAutoGrowAll();
+}
+
 // ========== Photo ==========
 
 function handlePhotoUpload(event) {
@@ -1395,6 +1447,13 @@ window.addEventListener('DOMContentLoaded', function() {
   if (!loadFromLocal()) {
     loadSample();
   }
+  // Bind editor left-nav clicks -> switch to that section's page
+  document.querySelectorAll('.nav-item').forEach(function(n) {
+    n.addEventListener('click', function() {
+      switchPage(n.getAttribute('data-target'));
+    });
+  });
+  switchPage('basic');
   updatePreview();
 });
 
