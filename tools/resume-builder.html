@@ -1355,11 +1355,11 @@ let resumeData = {
   },
   jobTarget: '', education: [], workExp: [], projectExp: [], internships: [], projects: [],
   skills: [], honors: [], selfEval: '', interests: [], customSections: [],
-  sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','evaluation','interests','custom'],
+  sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','interests','evaluation','custom'],
   sectionsVisible: {
     photo: true, basic: true, education: true, work: true,
-    project: true, internship: true, campus: true, skills: true, honors: true,
-    evaluation: true, interests: true, custom: true, header: true
+    project: true, internship: true, campus: false, skills: true, honors: false,
+    evaluation: true, interests: true, custom: false, header: true
   }
 };
 
@@ -1384,7 +1384,7 @@ const sampleData = {
     school: 'XX大学',
     major: 'XX专业（本科）',
     detail1: '专业成绩：GPA 2.55/4（专业前20%）',
-    detail2: ['高等代数','数值分析','数学建模','Python','实变函数','常微分方程','概率论','复变函数','运筹学']
+    detail2: ['高等代数','数值分析','数学建模','Python','运筹学']
   }],
   internships: [
     {
@@ -1394,7 +1394,6 @@ const sampleData = {
       role: '设备调试员',
       bullets: [
         '负责设备调试与日常售后技术支持工作，保障设备稳定运行；',
-        '协助完成硬件参数配置与性能优化，提升整体运行效率；',
         '对接客户技术问题，及时响应并解决，提升服务满意度。'
       ]
     },
@@ -1405,8 +1404,7 @@ const sampleData = {
       role: '客户销售',
       bullets: [
         '负责客户接待、产品讲解与销售跟进工作；',
-        '根据客户需求提供针对性方案，协助完成销售转化目标；',
-        '维护客户关系，做好售前咨询与售后回访，提升复购率。'
+        '根据客户需求提供针对性方案，协助完成销售转化目标。'
       ]
     }
   ],
@@ -1417,8 +1415,7 @@ const sampleData = {
       role: '项目成员',
       bullets: [
         '负责项目开发与日常协作推进工作；',
-        '参与需求梳理与功能实现，配合团队完成阶段交付；',
-        '撰写相关文档并参与项目复盘，积累协作与实操经验。'
+        '参与需求梳理与功能实现，配合团队完成阶段交付。'
       ]
   }],
   workExp: [{
@@ -1428,8 +1425,7 @@ const sampleData = {
     role: '前端开发工程师',
     bullets: [
       '负责公司核心业务系统的前端开发与日常维护，保障页面稳定与性能；',
-      '与后端协作完成接口对接与联调，优化交互体验与加载速度；',
-      '参与组件库建设，沉淀可复用模块，提升团队开发效率。'
+      '与后端协作完成接口对接与联调，优化交互体验与加载速度。'
     ]
   }],
   projectExp: [{
@@ -1438,37 +1434,33 @@ const sampleData = {
     org: 'XX项目',
     role: '核心成员',
     bullets: [
-      '参与项目需求梳理与功能模块开发，配合团队完成阶段交付；',
-      '负责部分模块的设计与实现，撰写相关文档并参与复盘；',
-      '在项目中锻炼了协作沟通与问题定位能力。'
-    ]
+        '参与项目需求梳理与功能模块开发，配合团队完成阶段交付；',
+        '负责部分模块的设计与实现，撰写相关文档并参与复盘。'
+      ]
   }],
   skills: [
     '具备扎实的专业基础知识与良好的自主学习能力；',
     '熟练使用常用办公软件及信息化协作工具；',
-    '持有相关职业资格证书（如英语等级、计算机等级等）；',
-    '具备良好的数据分析、信息整理与文档撰写能力；',
-    '具备较强的沟通协调意识与团队协作精神。'
+    '具备良好的数据分析、信息整理与文档撰写能力。'
   ],
   honors: [
     '全国大学生数学建模竞赛 省级一等奖',
     '大学英语六级（CET-6）',
     '计算机二级（MS Office 高级应用）'
   ],
-  selfEval: '具有良好的抗压能力和应变能力，能够迅速适应新环境，具备良好的团队协作精神和沟通能力，对待工作认真负责，拥有强大的责任心和执行力，勇于面对挑战，性格乐观开朗，积极向上，具有较强的学习能力，能够快速掌握新知识和技能，敢于面对挑战。',
+  selfEval: '具备良好的抗压能力与应变能力，能够迅速适应新环境；工作认真负责，责任心强，执行力强；性格开朗乐观，善于学习新知识并勇于面对挑战。',
   interests: [
     '篮球、羽毛球等团队运动',
-    '阅读技术博客与开源社区资讯',
-    '业余参与电子制作与硬件 DIY'
+    '阅读技术博客与开源社区资讯'
   ],
   customSections: [
     { id: nextId(), title: '个人作品集', items: ['可在此添加任意内容，如作品链接、志愿者经历、证书补充等'] }
   ],
-  sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','evaluation','interests','custom'],
+  sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','interests','evaluation','custom'],
   sectionsVisible: {
     photo: true, basic: true, education: true, work: true,
-    project: true, internship: true, campus: true, skills: true, honors: true,
-    evaluation: true, interests: true, custom: true, header: true
+    project: true, internship: true, campus: false, skills: true, honors: false,
+    evaluation: true, interests: true, custom: false, header: true
   }
 };
 
@@ -2247,7 +2239,7 @@ function buildResumeContent() {
   if (resumeData.sectionsVisible.header !== false) out.push(headerBlock());
   const order = (Array.isArray(resumeData.sectionOrder) && resumeData.sectionOrder.length)
     ? resumeData.sectionOrder
-    : ['basic','education','work','project','internship','campus','skills','honors','evaluation','interests','custom'];
+    : ['basic','education','work','project','internship','campus','skills','honors','interests','evaluation','custom'];
   const map = {
     basic: function() { return basicBlock(resumeData.basicInfo); },
     education: educationBlock,
@@ -2799,11 +2791,11 @@ function resetForm() {
     basicInfo: { name: '', birth: '', gender: '', ethnicity: '', height: '', phone: '', political: '', marriage: '', email: '', school: '', address: '', degree: '', showAge: false },
     jobTarget: '', education: [], workExp: [], projectExp: [], internships: [], projects: [],
     skills: [], honors: [], selfEval: '', interests: [], customSections: [],
-    sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','evaluation','interests','custom'],
+    sectionOrder: ['basic','education','work','project','internship','campus','skills','honors','interests','evaluation','custom'],
     sectionsVisible: {
       photo: true, basic: true, education: true, work: true,
-      project: true, internship: true, campus: true, skills: true, honors: true,
-      evaluation: true, interests: true, custom: true, header: true
+      project: true, internship: true, campus: false, skills: true, honors: false,
+      evaluation: true, interests: true, custom: false, header: true
     }
   };
   entryIdCounter = 0;
@@ -2858,9 +2850,9 @@ function loadFromLocal() {
       if (!Array.isArray(resumeData.honors)) resumeData.honors = [];
       if (!Array.isArray(resumeData.interests)) resumeData.interests = [];
       // Drag-and-drop reordering has been removed; always enforce the fixed nav order
-      resumeData.sectionOrder = ['basic','education','work','project','internship','campus','skills','honors','evaluation','interests','custom'];
+      resumeData.sectionOrder = ['basic','education','work','project','internship','campus','skills','honors','interests','evaluation','custom'];
       // Ensure visibility flags exist for all modules
-      const visDefaults = { photo:true, basic:true, education:true, work:true, project:true, internship:true, campus:true, skills:true, honors:true, evaluation:true, interests:true, custom:true, header:true };
+      const visDefaults = { photo:true, basic:true, education:true, work:true, project:true, internship:true, campus:false, skills:true, honors:false, evaluation:true, interests:true, custom:false, header:true };
       if (!resumeData.sectionsVisible) resumeData.sectionsVisible = {};
       Object.keys(visDefaults).forEach(k => { if (typeof resumeData.sectionsVisible[k] === 'undefined') resumeData.sectionsVisible[k] = visDefaults[k]; });
       entryIdCounter = Math.max(
