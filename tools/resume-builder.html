@@ -1686,8 +1686,7 @@ function leClearAll(btn) {
 
 function renderSkillsList(container) {
   const target = container || document.getElementById('skillsList');
-  target.innerHTML = renderLinesEditor('resumeData.skills', resumeData.skills, '如：熟练使用XX工具…') +
-    `<button class="btn-add" onclick="addSkill()">+ 添加技能</button>`;
+  target.innerHTML = renderLinesEditor('resumeData.skills', resumeData.skills, '如：熟练使用XX工具…');
   leAutoGrowAll();
 }
 
@@ -3246,7 +3245,7 @@ function renderMobileSkills() {
   return `
     <div class="mobile-form">
       <div id="mobileSkillsList"></div>
-      <button class="btn-add" onclick="addSkill();" style="margin-top:8px;">+ 添加技能</button>
+      <button class="btn-add" onclick="addSkill(); leAutoGrowAll();" style="margin-top:8px;">+ 添加技能</button>
     </div>`;
 }
 
