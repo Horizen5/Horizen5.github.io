@@ -226,7 +226,7 @@ body {
   height: 34px; border: 1px solid transparent; border-radius: 6px;
   background: #f6f7f8; color: var(--ink); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all .12s;
+  transition: all .12s; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .bp-cell:hover { background: var(--accent-light); }
 .bp-cell.selected { background: var(--accent); color: #fff; }
@@ -1831,6 +1831,7 @@ function formatBirthForDisplay(v) {
 // Custom birth year/month picker: recent 10 years by default, arrow buttons slide by decade
 let birthPickerState = { decadeStart: 0, selectedYear: 0, selectedMonth: 0 };
 let birthPickerTarget = null;
+let birthPickerSelected = { year: false, month: false };
 function openBirthPicker(input) {
   if (!input) input = document.getElementById('bi_birth');
   birthPickerTarget = input;
@@ -1843,6 +1844,7 @@ function openBirthPicker(input) {
   if (mm) { y = +mm[1]; m = +mm[2]; }
   birthPickerState.selectedYear = y;
   birthPickerState.selectedMonth = m;
+  birthPickerSelected = { year: false, month: false };
   let start = currentYear - 9;
   if (y < start) {
     start = y - ((y - start) % 10);
@@ -1875,18 +1877,23 @@ function openBirthPicker(input) {
     picker.style.top = (rect.top - 6 - ph) + 'px';
   }
   setTimeout(function() {
-    document.addEventListener('click', closeBirthPickerOnClickOutside, { once: true });
+    document.removeEventListener('click', closeBirthPickerOnClickOutside);
+    document.addEventListener('click', closeBirthPickerOnClickOutside);
   }, 0);
 }
 function closeBirthPickerOnClickOutside(e) {
-  const picker = document.getElementById('birthPicker');
-  const input = document.getElementById('bi_birth');
-  if (!picker.contains(e.target) && e.target !== input) {
-    picker.classList.remove('visible');
+  var picker = document.getElementById('birthPicker');
+  if (!picker.classList.contains('visible')) {
+    document.removeEventListener('click', closeBirthPickerOnClickOutside);
+    return;
   }
+  if (picker.contains(e.target)) return;
+  if (birthPickerTarget && e.target === birthPickerTarget) return;
+  closeBirthPicker();
 }
 function closeBirthPicker() {
   document.getElementById('birthPicker').classList.remove('visible');
+  document.removeEventListener('click', closeBirthPickerOnClickOutside);
 }
 function changeBirthDecade(dir) {
   const currentYear = new Date().getFullYear();
@@ -1898,23 +1905,45 @@ function changeBirthDecade(dir) {
 }
 function selectBirthYear(y) {
   birthPickerState.selectedYear = y;
-  renderBirthPicker();
-}
-function selectBirthMonth(m) {
-  birthPickerState.selectedMonth = m;
-  const input = birthPickerTarget || document.getElementById('bi_birth');
-  const y = birthPickerState.selectedYear;
-  const val = y + '-' + String(m).padStart(2, '0');
+  // Update the input value so year selection takes effect immediately
+  var input = birthPickerTarget || document.getElementById('bi_birth');
+  var m = birthPickerState.selectedMonth;
+  var val = y + '-' + String(m).padStart(2, '0');
   input.dataset.value = val;
   input.value = formatBirthForDisplay(val);
-  // sync to desktop field if picker was opened from mobile
-  const desktop = document.getElementById('bi_birth');
+  var desktop = document.getElementById('bi_birth');
   if (desktop && desktop !== input) {
     desktop.dataset.value = val;
     desktop.value = formatBirthForDisplay(val);
   }
-  closeBirthPicker();
-  updatePreview();
+  renderBirthPicker();
+  birthPickerSelected.year = true;
+  // Auto-close only after both year and month have been clicked
+  if (birthPickerSelected.month) {
+    closeBirthPicker();
+    updatePreview();
+  }
+}
+function selectBirthMonth(m) {
+  birthPickerState.selectedMonth = m;
+  var input = birthPickerTarget || document.getElementById('bi_birth');
+  var y = birthPickerState.selectedYear;
+  var val = y + '-' + String(m).padStart(2, '0');
+  input.dataset.value = val;
+  input.value = formatBirthForDisplay(val);
+  // sync to desktop field if picker was opened from mobile
+  var desktop = document.getElementById('bi_birth');
+  if (desktop && desktop !== input) {
+    desktop.dataset.value = val;
+    desktop.value = formatBirthForDisplay(val);
+  }
+  renderBirthPicker();
+  birthPickerSelected.month = true;
+  // Auto-close only after both year and month have been clicked
+  if (birthPickerSelected.year) {
+    closeBirthPicker();
+    updatePreview();
+  }
 }
 function renderBirthPicker() {
   const start = birthPickerState.decadeStart;
