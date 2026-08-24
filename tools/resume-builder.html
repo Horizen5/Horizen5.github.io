@@ -1073,37 +1073,7 @@ body {
       <!-- Skills -->
       <div class="editor-section" data-page="skills" style="display: none;">
         <div class="editor-section-title">技能特长</div>
-        <div id="skillsList">
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[0]=this.value; updatePreview()" style="height: 0px;">具备扎实的专业基础知识与良好的自主学习能力；</textarea>
-      <button class="bullet-remove" onclick="removeSkill(0)">×</button>
-    </div>
-  
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[1]=this.value; updatePreview()" style="height: 0px;">熟练使用常用办公软件及信息化协作工具；</textarea>
-      <button class="bullet-remove" onclick="removeSkill(1)">×</button>
-    </div>
-  
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[2]=this.value; updatePreview()" style="height: 0px;">持有相关职业资格证书（如英语等级、计算机等级等）；</textarea>
-      <button class="bullet-remove" onclick="removeSkill(2)">×</button>
-    </div>
-  
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[3]=this.value; updatePreview()" style="height: 0px;">具备良好的数据分析、信息整理与文档撰写能力；</textarea>
-      <button class="bullet-remove" onclick="removeSkill(3)">×</button>
-    </div>
-  
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[4]=this.value; updatePreview()" style="height: 0px;">具备较强的沟通协调意识与团队协作精神。</textarea>
-      <button class="bullet-remove" onclick="removeSkill(4)">×</button>
-    </div>
-  <button class="btn-add" onclick="addSkill()">+ 添加技能</button></div>
+        <div id="skillsList"></div>
         <button class="btn-add" onclick="addSkill()">+ 添加技能</button>
       </div>
 
@@ -1716,14 +1686,9 @@ function leClearAll(btn) {
 
 function renderSkillsList(container) {
   const target = container || document.getElementById('skillsList');
-  target.innerHTML = resumeData.skills.map((s, i) => `
-    <div class="bullet-item">
-      <span class="bullet-dot">●</span>
-      <textarea class="field-textarea" rows="1" oninput="fieldAutoGrow(this); resumeData.skills[${i}]=this.value; updatePreview()">${esc(s)}</textarea>
-      <button class="bullet-remove" onclick="removeSkill(${i})">×</button>
-    </div>
-  `).join('') + `<button class="btn-add" onclick="addSkill()">+ 添加技能</button>`;
-  fieldAutoGrowAll();
+  target.innerHTML = renderLinesEditor('resumeData.skills', resumeData.skills, '如：熟练使用XX工具…') +
+    `<button class="btn-add" onclick="addSkill()">+ 添加技能</button>`;
+  leAutoGrowAll();
 }
 
 function renderExpList(container, arrName, containerId, addFn, placeholder) {
@@ -2689,6 +2654,7 @@ function addSkill() {
   renderSkillsList();
   const mobileContainer = document.getElementById('mobileSkillsList');
   if (mobileContainer) renderSkillsList(mobileContainer);
+  leAutoGrowAll();
   updatePreview();
 }
 function removeSkill(index) {
@@ -2696,6 +2662,7 @@ function removeSkill(index) {
   renderSkillsList();
   const mobileContainer = document.getElementById('mobileSkillsList');
   if (mobileContainer) renderSkillsList(mobileContainer);
+  leAutoGrowAll();
   updatePreview();
 }
 
