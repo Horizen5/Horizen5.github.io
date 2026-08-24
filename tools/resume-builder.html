@@ -1577,7 +1577,7 @@ function renderLinesEditor(dataPath, value, placeholder) {
 function leRowHtml(v, placeholder) {
   return `<div class="le-row"><span class="le-dot">●</span>` +
     `<textarea class="le-input" rows="1" placeholder="${esc(placeholder || '')}"` +
-    ` oninput="leInput(this)" onkeydown="leKey(this,event)">${esc(v)}</textarea></div>`;
+    ` oninput="leInput(this)" onkeydown="leKey(this,event)" onbeforeinput="leBeforeInput(this,event)">${esc(v)}</textarea></div>`;
 }
 function resolvePath(path) {
   // path like "resumeData.internships[0].bullets" -> walk the local resumeData
@@ -1648,20 +1648,44 @@ function leKey(ta, ev) {
   if (ev.key === 'Enter') {
     // Let the browser insert \n, then leInput will split the row.
     // This works reliably on both desktop and mobile.
-  } else if (ev.key === 'Backspace' && ta.value === '') {
-    var rows = listEl.querySelectorAll('.le-row');
-    if (rows.length > 1) {
-      ev.preventDefault();
+  } else if (ev.key === 'Backspace') {
+    // Merge with previous row when cursor is at the beginning (any line)
+    var atStart = ta.selectionStart === 0 && ta.selectionEnd === 0;
+    if (atStart) {
       var row = ta.closest('.le-row');
       var prev = row.previousElementSibling;
-      row.remove();
-      var pta = prev && prev.querySelector('.le-input');
-      if (pta) {
-        pta.focus();
-        pta.setSelectionRange(pta.value.length, pta.value.length);
+      if (prev) {
+        ev.preventDefault();
+        mergeRowUp(ta, prev, listEl);
       }
-      leCollect(listEl);
-      updatePreview();
+    }
+  }
+}
+function mergeRowUp(ta, prevRow, listEl) {
+  var prevTa = prevRow.querySelector('.le-input');
+  var prevLen = prevTa.value.length;
+  // Append current text to end of previous row
+  prevTa.value = prevTa.value + ta.value;
+  // Remove current row
+  ta.closest('.le-row').remove();
+  leAutoGrow(prevTa);
+  prevTa.focus();
+  prevTa.setSelectionRange(prevLen, prevLen);
+  leCollect(listEl);
+  updatePreview();
+}
+// beforeinput fires reliably on mobile for Backspace, unlike keydown
+function leBeforeInput(ta, ev) {
+  var listEl = ta.closest('.le-list');
+  if (ev.inputType === 'deleteContentBackward') {
+    var atStart = ta.selectionStart === 0 && ta.selectionEnd === 0;
+    if (atStart) {
+      var row = ta.closest('.le-row');
+      var prev = row.previousElementSibling;
+      if (prev) {
+        ev.preventDefault();
+        mergeRowUp(ta, prev, listEl);
+      }
     }
   }
 }
