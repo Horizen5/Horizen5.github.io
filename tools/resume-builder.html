@@ -315,7 +315,7 @@ body {
 .preview-panel {
   flex: 1; padding: 30px; overflow-y: auto; height: calc(100vh - 52px);
   display: flex; justify-content: center; align-items: safe center;
-  background: var(--resume-bg); order: 1;
+  background: #f2f3f5; order: 1;
 }
 .resume-pages { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
 /* Wrapper used to reserve scaled space when the A4 page is shrunk to fit mobile width */
@@ -324,7 +324,7 @@ body {
 /* ========== Resume Page (A4) ========== */
 .resume-page {
   width: 210mm; min-height: 297mm; background: var(--resume-bg);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12); position: relative; border: 1px solid #000;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12); position: relative;
   font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Noto Sans CJK SC", sans-serif;
   color: var(--resume-ink); overflow: hidden;
 }
@@ -465,7 +465,7 @@ body {
   .resume-page-wrap { width: auto !important; height: auto !important; }
   .resume-page {
     width: 210mm !important; min-height: 297mm !important; max-height: 297mm !important;
-    box-shadow: none !important; border: 1px solid #000 !important; margin: 0 !important; padding: 0 !important;
+    box-shadow: none !important; margin: 0 !important; padding: 0 !important;
     transform: none !important; transform-origin: top left !important;
     page-break-after: always !important; page-break-inside: avoid !important;
     overflow: hidden !important; box-sizing: border-box !important;
@@ -494,7 +494,7 @@ body {
   .editor-panel { width: 100%; min-width: 100%; height: auto; position: relative; top: 0; order: 1; border-left: none; border-bottom: 1px solid var(--rule); flex-direction: column; }
   .editor-nav { width: 100%; min-width: 0; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--rule); gap: 6px; padding-bottom: 2px; }
   .nav-item { white-space: nowrap; flex: 0 0 auto; }
-  .preview-panel { order: 2; height: auto; padding: 16px 10px; background: var(--resume-bg); }
+  .preview-panel { order: 2; height: auto; padding: 16px 10px; background: #f2f3f5; }
   /* Keep native A4 width; JS fitResumePages() scales it to fit screen width */
   .resume-pages { overflow-x: hidden; }
   .resume-page { width: 210mm; max-width: none; transform: none; }
