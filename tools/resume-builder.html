@@ -1629,32 +1629,59 @@ function leCollect(listEl) {
   vals.forEach(v => arr.push(v));
 }
 function leInput(ta) {
+  // Detect newline char (Enter on mobile virtual keyboards often inserts \n
+  // directly instead of firing keydown). Split the row at the newline.
+  var nlIdx = ta.value.indexOf('\n');
+  if (nlIdx >= 0) {
+    var listEl = ta.closest('.le-list');
+    if (listEl) {
+      var before = ta.value.substring(0, nlIdx);
+      var after = ta.value.substring(nlIdx + 1);
+      ta.value = before;
+      var row = ta.closest('.le-row');
+      var newRow = document.createElement('div');
+      newRow.className = 'le-row';
+      newRow.innerHTML = '<span class="le-dot">●</span>' +
+        '<textarea class="le-input" rows="1" oninput="leInput(this)" onkeydown="leKey(this,event)"></textarea>';
+      row.parentNode.insertBefore(newRow, row.nextSibling);
+      var newTa = newRow.querySelector('.le-input');
+      newTa.value = after;
+      leAutoGrow(ta);
+      leAutoGrow(newTa);
+      leCollect(listEl);
+      updatePreview();
+      newTa.focus();
+      newTa.setSelectionRange(0, 0);
+      // If pasted text had multiple newlines, handle recursively
+      if (after.indexOf('\n') >= 0) {
+        leInput(newTa);
+      }
+      return;
+    }
+  }
   leAutoGrow(ta);
   leCollect(ta.closest('.le-list'));
   updatePreview();
 }
 function leKey(ta, ev) {
-  const listEl = ta.closest('.le-list');
+  var listEl = ta.closest('.le-list');
   if (ev.key === 'Enter') {
-    ev.preventDefault();
-    const row = ta.closest('.le-row');
-    const newRow = document.createElement('div');
-    newRow.className = 'le-row';
-    newRow.innerHTML = '<span class="le-dot">●</span>' +
-      '<textarea class="le-input" rows="1" oninput="leInput(this)" onkeydown="leKey(this,event)"></textarea>';
-    row.parentNode.insertBefore(newRow, row.nextSibling);
-    newRow.querySelector('.le-input').focus();
-    leCollect(listEl);
+    // Let the browser insert \n, then leInput will split the row.
+    // This works reliably on both desktop and mobile.
   } else if (ev.key === 'Backspace' && ta.value === '') {
-    const rows = listEl.querySelectorAll('.le-row');
+    var rows = listEl.querySelectorAll('.le-row');
     if (rows.length > 1) {
       ev.preventDefault();
-      const row = ta.closest('.le-row');
-      const prev = row.previousElementSibling;
+      var row = ta.closest('.le-row');
+      var prev = row.previousElementSibling;
       row.remove();
-      const pta = prev && prev.querySelector('.le-input');
-      if (pta) pta.focus();
+      var pta = prev && prev.querySelector('.le-input');
+      if (pta) {
+        pta.focus();
+        pta.setSelectionRange(pta.value.length, pta.value.length);
+      }
       leCollect(listEl);
+      updatePreview();
     }
   }
 }
