@@ -444,10 +444,15 @@ body {
 .edu-detail { font-size: 10pt; margin-bottom: 0px; color: #414141; }
 .edu-detail-label { font-weight: 600; }
 
-/* Skills (no bullets, plain text) */
+/* Skills */
 .skills-list { list-style: none; padding-left: 0; }
 .skills-list li {
-  margin-bottom: 1px; line-height: 1.55; text-align: justify; font-size: 10pt; color: #414141;
+  position: relative; padding-left: 12px; margin-bottom: 1px; line-height: 1.55; text-align: justify; font-size: 10pt; color: #414141;
+}
+.skills-list li::before {
+  content: '●'; position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  font-size: 5px; line-height: 1; color: var(--resume-accent);
 }
 
 /* Self-eval */
